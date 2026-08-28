@@ -56,7 +56,7 @@ La ruta MAIN normal está completamente procesada y con los controles por defect
 
 ## Notas
 
-- Versión: 0.3.0.
+- Versión: 0.3.2.
 - Windows: x64, Windows 10/11.
 - macOS: Apple Silicon `arm64` o Intel `x86_64`, macOS 11 o posterior.
 - Linux: AppImage x86_64.
