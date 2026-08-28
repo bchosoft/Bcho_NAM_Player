@@ -1,0 +1,65 @@
+# Bcho NAM Player
+
+[English](README.md)
+
+![Bcho NAM Player](docs/Caratula_BNAMP.png)
+
+Bcho NAM Player es un procesador de guitarra standalone y portable desarrollado en C++20 con JUCE 8 y Neural Amp Modeler Core. Combina reproducción de modelos NAM A1/A2, impulsos de pantalla, efectos orientados a estudio, enrutamiento flexible, afinador estable y la interfaz fotorrealista del amplificador Bcho.
+
+## Descarga
+
+Descarga los paquetes actuales desde la [última release](https://github.com/bchosoft/Bcho_NAM_Player/releases/latest):
+
+- **Windows x64:** ZIP portable con `BchoNAMPlayer.exe`, ASIO/WASAPI y todos los recursos necesarios.
+- **macOS Universal 2:** ZIP con `BchoNAMPlayer.app` para Apple Silicon e Intel.
+- **Linux x86_64:** ZIP con un AppImage portable.
+- `SHA256SUMS.txt` permite verificar todos los ZIP descargados.
+
+Conserva junto todo el contenido del ZIP. Los modelos NAM no van incluidos; carga tus propios archivos `.nam` desde la pantalla central.
+
+## Funciones principales
+
+- Detección automática de la arquitectura NAM A1/A2.
+- Bloques móviles COMP, DELAY, CHORUS, FLANGER, PHASER, REVERB, OCTAVER y PITCH.
+- Segundo modelo NAM opcional como pedal de overdrive o distorsión.
+- Enrutamiento mediante arrastre antes del PREAMP, en el loop/pre-IR o después del IR.
+- Gate profesional, tonestack de cuatro bandas, convolución de IR y mezcla dry/IR.
+- Afinador sobre la señal DI intacta y selección de afinaciones alternativas.
+- Rutas de salida MAIN, PRE, DI y WET en la configuración de audio del standalone.
+- Presets portables `.bnpp` que incorporan el NAM principal, el pedal NAM opcional, IR, orden de efectos y todos los ajustes.
+
+## Instalación
+
+### Windows
+
+Descomprime el ZIP en una carpeta con permisos de escritura y ejecuta `BchoNAMPlayer.exe`. En **AUDIO SETUP** selecciona el sistema de audio, interfaz, canales habilitados, frecuencia de muestreo, buffer y rutas de salida. Para utilizar ASIO instala el controlador oficial del fabricante de tu interfaz.
+
+### macOS
+
+Descomprime el ZIP y abre `BchoNAMPlayer.app`. La compilación automática actual es Universal 2, pero todavía no está firmada ni notarizada; en el primer inicio haz clic derecho sobre la aplicación y selecciona **Abrir** si Gatekeeper solicita confirmación.
+
+### Linux
+
+Descomprime el ZIP, concede permiso de ejecución al AppImage si fuera necesario y ábrelo:
+
+```bash
+chmod +x BchoNAMPlayer-*.AppImage
+./BchoNAMPlayer-*.AppImage
+```
+
+La disponibilidad de ALSA/JACK y los permisos de audio en tiempo real dependen de la distribución y de la configuración del usuario.
+
+## Señal y enrutamiento de salidas
+
+La ruta MAIN normal está completamente procesada y con los controles por defecto es neutra. PRE siempre entrega el resultado del NAM principal sin el procesamiento del player; DI entrega la entrada intacta de la interfaz; WET permite grabar una rama procesada independiente. La configuración del dispositivo de audio permanece local al standalone y no se guarda en los presets `.bnpp`.
+
+## Notas
+
+- Versión: 0.3.0.
+- Windows: x64, Windows 10/11.
+- macOS: Universal 2, macOS 11 o posterior.
+- Linux: AppImage x86_64.
+- Bcho NAM Player no distribuye capturas NAM de terceros. Respeta la licencia de cada modelo e IR utilizado.
+
+Consulta los [avisos de terceros](THIRD_PARTY_NOTICES.md) para conocer las licencias del framework y sus dependencias.
+
