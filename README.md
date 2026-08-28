@@ -26,6 +26,8 @@ En Windows ejecuta `BchoNAMPlayer.exe` y usa **AUDIO SETUP** para elegir interfa
 
 La ruta MAIN por defecto es neutra; PRE entrega el NAM sin procesamiento del player y DI entrega la señal limpia de entrada. `SHA256SUMS.txt` permite verificar los ZIP.
 
+Consulta el [manual completo en español](docs/USER_MANUAL.es.md) o el [manual completo en inglés](docs/USER_MANUAL.en.md).
+
 ## English
 
 Bcho NAM Player is a portable standalone guitar processor built with C++20, JUCE 8 and Neural Amp Modeler Core. It combines NAM A1/A2 model playback, cabinet IRs, studio-oriented effects, flexible routing, a stable tuner and a photorealistic Bcho amplifier interface.
@@ -77,6 +79,8 @@ ALSA/JACK availability and real-time audio permissions depend on the Linux distr
 ## Signal and output routing
 
 The normal MAIN path is fully processed and is neutral at its default control values. PRE always carries the main NAM result without player processing; DI carries the untouched interface input; WET is useful for recording a dedicated processed branch. Audio-device settings remain local to the standalone application and are not stored inside `.bnpp` presets.
+
+See the [complete Spanish user manual](docs/USER_MANUAL.es.md) or the [complete English user manual](docs/USER_MANUAL.en.md).
 
 ## Notes
 
