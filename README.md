@@ -11,7 +11,8 @@ Bcho NAM Player is a portable standalone guitar processor built with C++20, JUCE
 Download the current packages from [Latest Release](https://github.com/bchosoft/Bcho_NAM_Player/releases/latest):
 
 - **Windows x64:** portable ZIP with `BchoNAMPlayer.exe`, ASIO/WASAPI support and all runtime resources.
-- **macOS Universal 2:** ZIP containing `BchoNAMPlayer.app` for Apple Silicon and Intel Macs.
+- **macOS Apple Silicon:** ZIP for `arm64` Macs (M1/M2/M3 and newer).
+- **macOS Intel:** ZIP for `x86_64` Macs.
 - **Linux x86_64:** ZIP containing a portable AppImage.
 - `SHA256SUMS.txt` lets you verify every downloaded ZIP.
 
@@ -36,7 +37,7 @@ Extract the ZIP to a writable folder and run `BchoNAMPlayer.exe`. Open **AUDIO S
 
 ### macOS
 
-Extract the ZIP and open `BchoNAMPlayer.app`. The current automated build is Universal 2 but unsigned and not notarized; on first launch, right-click the app and choose **Open** if Gatekeeper asks for confirmation.
+Extract the ZIP and open `BchoNAMPlayer.app`. The macOS packages are unsigned and not notarized; on first launch, right-click the app and choose **Open** if Gatekeeper asks for confirmation.
 
 ### Linux
 
@@ -57,9 +58,8 @@ The normal MAIN path is fully processed and is neutral at its default control va
 
 - Version: 0.3.0
 - Windows: x64, Windows 10/11.
-- macOS: Universal 2, macOS 11 or newer.
+- macOS: Apple Silicon `arm64` or Intel `x86_64`, macOS 11 or newer.
 - Linux: x86_64 AppImage.
 - Bcho NAM Player does not distribute third-party NAM captures. Respect the licence attached to every model and IR you use.
 
 See [third-party notices](THIRD_PARTY_NOTICES.md) for framework and dependency licensing information.
-
