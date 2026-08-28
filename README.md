@@ -4,6 +4,30 @@
 
 ![Bcho NAM Player](docs/Caratula_BNAMP.png)
 
+## Español
+
+Bcho NAM Player es un procesador de guitarra standalone y portable desarrollado en C++20 con JUCE 8 y Neural Amp Modeler Core. Combina modelos NAM A1/A2, respuestas impulsionales, efectos de estudio, enrutamiento flexible, afinador estable y una interfaz fotorrealista Bcho.
+
+### Descarga e instalación
+
+Descarga la [última release](https://github.com/bchosoft/Bcho_NAM_Player/releases/latest). Incluye paquetes independientes para Windows x64, Linux x86_64, macOS Intel (`x86_64`) y macOS Apple Silicon (`arm64`). Conserva juntos todos los archivos de cada ZIP. Los modelos `.nam` y las IR no se incluyen: carga tus propios archivos desde la pantalla central.
+
+En Windows ejecuta `BchoNAMPlayer.exe` y usa **AUDIO SETUP** para elegir interfaz, ASIO/WASAPI, entradas, salidas, frecuencia, buffer y enrutamiento. En macOS abre `BchoNAMPlayer.app`; los paquetes no están firmados ni notarizados. En Linux ejecuta el AppImage después de darle permiso de ejecución.
+
+### Funciones
+
+- Detección automática de NAM A1/A2.
+- Cadena arrastrable con COMP, DELAY, CHORUS, FLANGER, PHASER, REVERB, OCTAVER y PITCH.
+- Segundo NAM opcional para overdrive/distorsión.
+- Gate profesional, tonestack de cuatro bandas, convolución IR y mezcla dry/IR.
+- Afinador sobre la señal DI y afinaciones alternativas.
+- Salidas MAIN, PRE, DI y WET en el standalone.
+- Presets portables `.bnpp` con NAM, IR, orden de efectos y ajustes.
+
+La ruta MAIN por defecto es neutra; PRE entrega el NAM sin procesamiento del player y DI entrega la señal limpia de entrada. `SHA256SUMS.txt` permite verificar los ZIP.
+
+## English
+
 Bcho NAM Player is a portable standalone guitar processor built with C++20, JUCE 8 and Neural Amp Modeler Core. It combines NAM A1/A2 model playback, cabinet IRs, studio-oriented effects, flexible routing, a stable tuner and a photorealistic Bcho amplifier interface.
 
 ## Download
@@ -56,7 +80,7 @@ The normal MAIN path is fully processed and is neutral at its default control va
 
 ## Notes
 
-- Version: 0.3.0
+- Version: 0.3.2
 - Windows: x64, Windows 10/11.
 - macOS: Apple Silicon `arm64` or Intel `x86_64`, macOS 11 or newer.
 - Linux: x86_64 AppImage.
