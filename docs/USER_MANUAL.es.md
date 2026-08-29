@@ -12,11 +12,11 @@ Descarga el ZIP de tu sistema desde la [última release](https://github.com/bcho
 - macOS: usa `BchoNAMPlayer.app`; elige el paquete Intel o Apple Silicon.
 - Linux: ejecuta el AppImage y dale permiso de ejecución si es necesario.
 
-Los modelos NAM y las IR no se distribuyen con la aplicación. Carga tus propios archivos desde la pantalla central. En macOS los paquetes no están firmados ni notarizados.
+El paquete inicial incluye dos modelos NAM de demostración en `Models`; no incluye IRs. Puedes añadir tus propios modelos e IR desde la pantalla central o arrastrándolos desde el explorador. En macOS los paquetes no están firmados ni notarizados.
 
 ## 3. Panel principal
 
-El cabezal contiene, de izquierda a derecha, el interruptor **POWER**, los controles de entrada, el afinador, los controles del amplificador y los vúmetros. La pantalla central muestra el modelo activo, el nivel calibrado, la salida, el archivo IR y los controles de carga/borrado.
+El cabezal contiene, de izquierda a derecha, el interruptor **POWER**, los controles de entrada, el afinador, los controles del amplificador y los vúmetros. La pantalla central se divide en dos zonas iguales: **NAM MODELS** e **IR FILES**. Cada lista muestra cuatro elementos y añade scroll cuando hay más.
 
 Todos los potenciómetros usan el mismo mando metálico. Arrástralos verticalmente u horizontalmente para cambiar el valor. Un doble clic devuelve el control a su valor inicial: todos quedan a las 12 en punto salvo **Gate**, que vuelve a 0 y deja la puerta desactivada.
 
@@ -39,9 +39,9 @@ Activa el interruptor **TUNER**. El afinador analiza siempre la señal DI limpia
 
 ## 5. Modelos NAM e IR
 
-Haz clic en el perfil de la pantalla central para seleccionar un archivo `.nam`. La arquitectura A1/A2 se detecta automáticamente; no hay que elegirla manualmente. Al cargar otro NAM, los controles y switches vuelven a sus valores por defecto.
+Usa **BROWSE NAM** o arrastra un `.nam` a la lista central o al bloque **PreAmp/Amp (NAM Model)**. La arquitectura A1/A2 se detecta automáticamente; no hay que elegirla manualmente. También puedes navegar con las flechas arriba/abajo. **TONE3000** abre el buscador online y carga el modelo seleccionado. Al cargar otro NAM, los controles y switches vuelven a sus valores por defecto.
 
-La lista **IR FILES** busca archivos `.wav` en la carpeta `IRs` situada junto al ejecutable. Selecciona una IR y pulsa **LOAD IR**. **DELETE** elimina la IR activa. Las IR mono y estéreo se preparan para la frecuencia de audio seleccionada.
+Usa **BROWSE IR** o arrastra un `.wav` a la lista central o al bloque **IR**. La lista muestra los archivos de la carpeta donde se encuentra la IR seleccionada; las flechas permiten navegar por esa carpeta. El bloque IR permanece desactivado si no hay una IR cargada. Las IR mono y estéreo se preparan para la frecuencia de audio seleccionada.
 
 ## 6. Rack de efectos
 
@@ -77,11 +77,22 @@ Abre **AUDIO SETUP** para elegir:
 
 Las rutas disponibles son **MAIN** (procesada), **PRE** (NAM sin controles ni efectos del player), **DI** (entrada limpia) y **WET** (rama procesada posterior a la cabina). MAIN se dirige por defecto a las salidas 1/2 cuando están habilitadas. La última configuración de dispositivo y ruteo se recupera al iniciar de nuevo. El VST3 no muestra esta ventana porque el DAW gestiona el audio.
 
-## 8. Presets `.bnpp`
+## 8. Ajustes, skins y actualizaciones
+
+Pulsa la rueda dentada situada en la esquina derecha de la cabina para abrir **SETTINGS**. Desde ahí puedes:
+
+- elegir temporalmente una skin para previsualizarla; la skin solo queda aplicada al pulsar **APPLY**;
+- elegir otra skin instalada que mantenga las posiciones exactas de pantallas, potenciómetros, escalas y switches;
+- consultar la versión instalada;
+- usar **CHECK FOR UPDATES** para buscar manualmente una nueva versión;
+- activar o desactivar **CHECK ON STARTUP**, la comprobación automática al iniciar. El estado se indica con un LED discreto y la opción está oculta en Settings para no invadir el frontal.
+
+La búsqueda de actualizaciones solo informa de versiones publicadas; no cambia el preset, los modelos ni el audio sin confirmación del usuario. El VST3 conserva los controles, tuner, pantalla central, rack y skins, pero no muestra **AUDIO SETUP**, porque el DAW gestiona el dispositivo.
+
+## 9. Presets `.bnpp`
 
 **SAVE .BNPP** crea un preset portable autocontenido. Incluye el XML de estado, el NAM principal, el NAM de pedal opcional, la IR, el orden del rack, tipos, bypasses y todos los controles. **LOAD .BNPP** extrae sus recursos a una caché segura y restaura la configuración. La configuración de audio no se incluye para que el preset pueda viajar entre ordenadores y DAW.
 
-## 9. Estado y solución de problemas
+## 10. Estado y solución de problemas
 
 La aplicación recupera el último NAM, IR y preset utilizado. Si no hay audio, revisa POWER, el dispositivo seleccionado, las entradas activas, el buffer y el nivel del vúmetro INPUT. Si el NAM no suena, comprueba que el archivo sea válido y que su licencia permita su uso. Para reducir latencia empieza con un buffer ASIO pequeño y súbelo si aparecen clics.
-

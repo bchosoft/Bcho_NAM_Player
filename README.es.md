@@ -16,7 +16,7 @@ Descarga los paquetes actuales desde la [última release](https://github.com/bch
 - **Linux x86_64:** ZIP con un AppImage portable.
 - `SHA256SUMS.txt` permite verificar todos los ZIP descargados.
 
-Conserva junto todo el contenido del ZIP. Los modelos NAM no van incluidos; carga tus propios archivos `.nam` desde la pantalla central.
+Conserva junto todo el contenido del ZIP. Cada paquete incluye dos modelos NAM de demostración en `Models`; las IR no se incluyen inicialmente.
 
 ## Funciones principales
 
@@ -28,6 +28,8 @@ Conserva junto todo el contenido del ZIP. Los modelos NAM no van incluidos; carg
 - Afinador sobre la señal DI intacta y selección de afinaciones alternativas.
 - Rutas de salida MAIN, PRE, DI y WET en la configuración de audio del standalone.
 - Presets portables `.bnpp` que incorporan el NAM principal, el pedal NAM opcional, IR, orden de efectos y todos los ajustes.
+- Ajustes desde la rueda dentada: skins con previsualización y aplicación confirmada, versión instalada y búsqueda manual o automática de actualizaciones.
+- Listas NAM e IR iguales, con cuatro filas visibles, scroll, flechas de navegación y drag-and-drop.
 
 ## Instalación
 
@@ -50,13 +52,17 @@ chmod +x BchoNAMPlayer-*.AppImage
 
 La disponibilidad de ALSA/JACK y los permisos de audio en tiempo real dependen de la distribución y de la configuración del usuario.
 
+## Navegación de NAM e IR
+
+Usa **BROWSE NAM** o arrastra un `.nam` al bloque PreAmp/Amp o a la lista. Usa **BROWSE IR** o arrastra un `.wav` al bloque IR o a la lista. Las flechas recorren los archivos de la carpeta actual. El bloque IR comienza desactivado hasta cargar una respuesta impulsional.
+
 ## Señal y enrutamiento de salidas
 
 La ruta MAIN normal está completamente procesada y con los controles por defecto es neutra. PRE siempre entrega el resultado del NAM principal sin el procesamiento del player; DI entrega la entrada intacta de la interfaz; WET permite grabar una rama procesada independiente. La configuración del dispositivo de audio permanece local al standalone y no se guarda en los presets `.bnpp`.
 
 ## Notas
 
-- Versión: 0.3.0.
+- Versión: 0.3.3.
 - Windows: x64, Windows 10/11.
 - macOS: Apple Silicon `arm64` o Intel `x86_64`, macOS 11 o posterior.
 - Linux: AppImage x86_64.

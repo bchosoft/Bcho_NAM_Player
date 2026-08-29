@@ -12,11 +12,11 @@ Download the package for your system from the [latest release](https://github.co
 - macOS: open `BchoNAMPlayer.app`; choose Intel or Apple Silicon.
 - Linux: launch the AppImage, making it executable if needed.
 
-NAM models and IRs are not bundled. Load your own files from the centre display. macOS packages are currently unsigned and not notarized.
+The initial package includes two demonstration NAM models in `Models`; no IRs are bundled. Add your own models and IRs from the centre display or drag them from the file manager. macOS packages are currently unsigned and not notarized.
 
 ## 3. Main panel
 
-The head contains the **POWER** switch, input controls, tuner, amplifier controls and meters. The centre display shows the active model, calibrated level, output level, selected IR and load/delete controls.
+The head contains the **POWER** switch, input controls, tuner, amplifier controls and meters. The centre display is split into two equal zones: **NAM MODELS** and **IR FILES**. Each list shows four entries and adds scrolling when more are available.
 
 Drag a knob vertically or horizontally to change it. Double-click any knob to restore its initial value: every control returns to 12 o’clock except **Gate**, which returns to 0 and disables the gate.
 
@@ -39,9 +39,9 @@ Enable **TUNER**. It always analyses the clean DI signal before gate, NAM and ef
 
 ## 5. NAM models and IRs
 
-Click the profile area in the centre display to select a `.nam` file. A1/A2 architecture is detected automatically. Loading another NAM resets the controls and switches to their defaults.
+Use **BROWSE NAM** or drag a `.nam` file onto the centre list or the **PreAmp/Amp (NAM Model)** block. A1/A2 architecture is detected automatically. The up/down arrows navigate the current model folder and **TONE3000** opens the online browser and loads the selected model. Loading another NAM resets the controls and switches to their defaults.
 
-The **IR FILES** list scans `.wav` files in the `IRs` folder beside the executable. Select an IR and press **LOAD IR**. **DELETE** removes the active IR. Mono and stereo IRs are prepared for the selected audio rate.
+Use **BROWSE IR** or drag a `.wav` file onto the centre list or the **IR** block. The list shows files from the folder containing the selected IR, and the arrows navigate that folder. The IR block stays bypassed until an IR is loaded. Mono and stereo IRs are prepared for the selected audio rate.
 
 ## 6. Effects rack
 
@@ -70,11 +70,22 @@ Open **AUDIO SETUP** to select the audio system and driver, including ASIO on Wi
 
 Available taps are **MAIN** (processed), **PRE** (NAM without player controls or effects), **DI** (clean input) and **WET** (processed post-cab branch). MAIN defaults to outputs 1/2 when enabled. The last device and routing configuration is restored on the next launch. The VST3 does not show this panel because the DAW owns the audio device.
 
-## 8. `.bnpp` presets
+## 8. Settings, skins and updates
+
+Click the gear icon in the right-hand corner of the speaker cabinet to open **SETTINGS**. It lets you:
+
+- choose an installed skin for a temporary preview; it is not committed until you click **APPLY**;
+- select another skin while preserving the exact positions of displays, knobs, scales and switches;
+- view the installed application version;
+- use **CHECK FOR UPDATES** to search manually for a newer release;
+- enable or disable **CHECK ON STARTUP**, the automatic check performed when the app opens. A discreet LED shows its state, and the option lives inside Settings so it does not clutter the front panel.
+
+Update checks only report published versions; they do not alter presets, models or audio without user confirmation. The VST3 keeps the controls, tuner, centre display, rack and skins, but does not show **AUDIO SETUP** because the DAW owns the device.
+
+## 9. `.bnpp` presets
 
 **SAVE .BNPP** creates a self-contained portable preset containing the XML state, main NAM, optional NAM pedal, IR, rack order, types, bypass states and all controls. **LOAD .BNPP** extracts its resources to a safe cache and restores the state. Audio-device settings are excluded so presets remain portable across computers and DAWs.
 
-## 9. State and troubleshooting
+## 10. State and troubleshooting
 
 The application restores the last NAM, IR and preset used. If there is no sound, check POWER, the selected device, active inputs, buffer size and INPUT VU level. If a NAM is silent, verify the file and its licence. For low latency, start with a small ASIO buffer and increase it if clicks occur.
-

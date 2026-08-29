@@ -10,7 +10,7 @@ Bcho NAM Player es un procesador de guitarra standalone y portable desarrollado 
 
 ### Descarga e instalación
 
-Descarga la [última release](https://github.com/bchosoft/Bcho_NAM_Player/releases/latest). Incluye paquetes independientes para Windows x64, Linux x86_64, macOS Intel (`x86_64`) y macOS Apple Silicon (`arm64`). Conserva juntos todos los archivos de cada ZIP. Los modelos `.nam` y las IR no se incluyen: carga tus propios archivos desde la pantalla central.
+Descarga la [última release](https://github.com/bchosoft/Bcho_NAM_Player/releases/latest). Incluye paquetes independientes para Windows x64, Linux x86_64, macOS Intel (`x86_64`) y macOS Apple Silicon (`arm64`). Conserva juntos todos los archivos de cada ZIP. Cada paquete incluye dos modelos NAM de demostración en `Models`; las IR no se incluyen inicialmente.
 
 En Windows ejecuta `BchoNAMPlayer.exe` y usa **AUDIO SETUP** para elegir interfaz, ASIO/WASAPI, entradas, salidas, frecuencia, buffer y enrutamiento. En macOS abre `BchoNAMPlayer.app`; los paquetes no están firmados ni notarizados. En Linux ejecuta el AppImage después de darle permiso de ejecución.
 
@@ -23,6 +23,7 @@ En Windows ejecuta `BchoNAMPlayer.exe` y usa **AUDIO SETUP** para elegir interfa
 - Afinador sobre la señal DI y afinaciones alternativas.
 - Salidas MAIN, PRE, DI y WET en el standalone.
 - Presets portables `.bnpp` con NAM, IR, orden de efectos y ajustes.
+- Listas NAM e IR iguales, con cuatro filas visibles, scroll, flechas de navegación y drag-and-drop.
 
 La ruta MAIN por defecto es neutra; PRE entrega el NAM sin procesamiento del player y DI entrega la señal limpia de entrada. `SHA256SUMS.txt` permite verificar los ZIP.
 
@@ -42,7 +43,7 @@ Download the current packages from [Latest Release](https://github.com/bchosoft/
 - **Linux x86_64:** ZIP containing a portable AppImage.
 - `SHA256SUMS.txt` lets you verify every downloaded ZIP.
 
-Keep the complete contents of each ZIP together. NAM models are not bundled; load your own `.nam` files from the centre display.
+Keep the complete contents of each ZIP together. Two demonstration `.nam` models are included in `Models`; add more with **BROWSE NAM** or drag-and-drop. IRs are intentionally not bundled and can be loaded with **BROWSE IR** or drag-and-drop.
 
 ## Highlights
 
@@ -54,6 +55,8 @@ Keep the complete contents of each ZIP together. NAM models are not bundled; loa
 - Untouched DI tuner with alternate tunings.
 - MAIN, PRE, DI and WET output routes in the standalone Audio Setup panel.
 - Portable `.bnpp` presets embedding the selected NAM model, optional NAM pedal, IR, effect order and all settings.
+- Settings from the gear icon: temporary skin preview with explicit Apply, installed version, and manual or startup update checks.
+- Equal four-row NAM/IR browsers with up/down folder navigation and drag-and-drop loading.
 
 ## Installation
 
@@ -84,7 +87,7 @@ See the [complete Spanish user manual](docs/USER_MANUAL.es.md) or the [complete 
 
 ## Notes
 
-- Version: 0.3.2
+- Version: 0.3.3
 - Windows: x64, Windows 10/11.
 - macOS: Apple Silicon `arm64` or Intel `x86_64`, macOS 11 or newer.
 - Linux: x86_64 AppImage.
