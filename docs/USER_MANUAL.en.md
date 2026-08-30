@@ -24,7 +24,7 @@ Drag a knob vertically or horizontally to change it. Double-click any knob to re
 
 - **POWER**: enables or mutes the main processing path.
 - **Input Gain**: level entering the NAM model.
-- **Input Cali (Auto)**: compensates input level when the model provides `input_level_dbu`; otherwise no correction is applied.
+- **Input Cali (Auto)**: compares the configured interface reference with the model's `input_level_dbu` metadata. If the metadata is absent, the standard NAM reference of +12 dBu is used.
 - **Gate**: professional noise gate. At 0 it is fully bypassed. Increasing it raises the threshold; the detector uses a smoothed envelope, attack, hold and release to avoid abrupt cuts.
 - **Bass, Mid, Treble, Presence**: four-band EQ after the NAM preamp.
 - **IR Blend**: mixes the un-convolved signal with the cabinet-IR signal.

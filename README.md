@@ -87,7 +87,7 @@ See the [complete Spanish user manual](docs/USER_MANUAL.es.md) or the [complete 
 
 ## Notes
 
-- Version: 0.3.3
+- Version: 1.0.0
 - Windows: x64, Windows 10/11.
 - macOS: Apple Silicon `arm64` or Intel `x86_64`, macOS 11 or newer.
 - Linux: x86_64 AppImage.

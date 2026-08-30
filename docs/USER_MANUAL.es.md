@@ -24,7 +24,7 @@ Todos los potenciómetros usan el mismo mando metálico. Arrástralos verticalme
 
 - **POWER**: activa o silencia el procesamiento principal.
 - **Input Gain**: ajusta el nivel que entra al modelo NAM.
-- **Input Cali (Auto)**: compensa automáticamente el nivel de entrada cuando el modelo contiene el metadato `input_level_dbu`. Si el modelo no lo contiene, no aplica corrección.
+- **Input Cali (Auto)**: compara la referencia configurada de la interfaz con el metadato `input_level_dbu` del modelo. Si el metadato no existe, utiliza la referencia NAM estándar de +12 dBu.
 - **Gate**: puerta de ruido profesional. En 0 está completamente desactivada. Al subirlo aumenta el umbral; el detector usa envolvente suavizada, ataque, mantenimiento y liberación para evitar cortes bruscos.
 - **Bass, Mid, Treble, Presence**: ecualización de cuatro bandas después del preamplificador NAM.
 - **IR Blend**: mezcla la señal procesada sin IR con la señal convolucionada por la respuesta impulsional.
