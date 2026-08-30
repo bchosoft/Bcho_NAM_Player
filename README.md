@@ -33,7 +33,7 @@ Consulta el [manual completo en español](docs/USER_MANUAL.es.md) o el [manual c
 
 Bcho NAM Player is a portable standalone guitar processor built with C++20, JUCE 8 and Neural Amp Modeler Core. It combines NAM A1/A2 model playback, cabinet IRs, studio-oriented effects, flexible routing, a stable tuner and a photorealistic Bcho amplifier interface.
 
-## Release 1.0.0
+## Release 1.1.0
 
 This release includes the complete standalone front panel, the professional gate and the redesigned NAM/IR browser. Input Cali now shows a small green status LED when automatic calibration is enabled; it uses the selected interface reference and falls back to +12 dBu when the NAM has no input metadata. The default package contains no IR files, so the IR block starts disabled until a cabinet response is loaded. Both manuals are included in English and Spanish.
 
@@ -94,7 +94,7 @@ See the [complete Spanish user manual](docs/USER_MANUAL.es.md) or the [complete 
 
 ## Notes
 
-- Version: 1.0.0
+- Version: 1.1.0
 - Windows: x64, Windows 10/11.
 - macOS: Apple Silicon `arm64` or Intel `x86_64`, macOS 11 or newer.
 - Linux: x86_64 AppImage.
