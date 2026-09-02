@@ -1,4 +1,4 @@
-# Bcho NAM Player 1.5
+# Bcho NAM Player 1.5.1
 
 [English](README.md) | [Última release](https://github.com/bchosoft/Bcho_NAM_Player/releases/latest) | [Manual en español](docs/USER_MANUAL.es.md)
 
@@ -6,8 +6,9 @@
 
 Bcho NAM Player es un procesador de guitarra standalone y portable para Windows, macOS y Linux. Combina Neural Amp Modeler, respuestas impulsionales, rack de efectos reordenable, calibración automática, afinador DI, presets portables, enrutamiento flexible y una interfaz fotorrealista responsive.
 
-## Novedades de la versión 1.5
+## Novedades de la versión 1.5.1
 
+- Las ventanas Settings y Audio I/O escalan proporcionalmente al área disponible, incluidos controles, márgenes y tipografía, para que las secciones inferiores de routing y calibración sigan visibles en portátiles de 1366 x 768.
 - Frontal completamente rediseñado sobre una cuadrícula nativa de 1537 x 1023.
 - Controles y textos proporcionales al tamaño de la ventana, con mínimo del 50 por ciento.
 - Navegadores NAM e IR separados y más grandes, con cuatro filas, scroll y flechas.
@@ -21,10 +22,10 @@ Bcho NAM Player es un procesador de guitarra standalone y portable para Windows,
 
 La [última release](https://github.com/bchosoft/Bcho_NAM_Player/releases/latest) contiene:
 
-- `BchoNAMPlayer-v1.5.0-Windows-x64.zip`
-- `BchoNAMPlayer-v1.5.0-macOS-arm64.zip`
-- `BchoNAMPlayer-v1.5.0-macOS-x86_64.zip`
-- `BchoNAMPlayer-v1.5.0-Linux-x86_64.zip`
+- `BchoNAMPlayer-v1.5.1-Windows-x64.zip`
+- `BchoNAMPlayer-v1.5.1-macOS-arm64.zip`
+- `BchoNAMPlayer-v1.5.1-macOS-x86_64.zip`
+- `BchoNAMPlayer-v1.5.1-Linux-x86_64.zip`
 - Manuales PDF en español e inglés.
 - `SHA256SUMS.txt` para verificar la integridad.
 
