@@ -1,78 +1,88 @@
-# Bcho NAM Player
+# Bcho NAM Player 1.5
 
-[English](README.md)
+[English](README.md) | [Última release](https://github.com/bchosoft/Bcho_NAM_Player/releases/latest) | [Manual en español](docs/USER_MANUAL.es.md)
 
-![Bcho NAM Player](docs/Caratula_BNAMP.png)
+![Bcho NAM Player 1.5](docs/BchoNAM_Player_1-5-.png)
 
-Bcho NAM Player es un procesador de guitarra standalone y portable desarrollado en C++20 con JUCE 8 y Neural Amp Modeler Core. Combina reproducción de modelos NAM A1/A2, impulsos de pantalla, efectos orientados a estudio, enrutamiento flexible, afinador estable y la interfaz fotorrealista del amplificador Bcho.
+Bcho NAM Player es un procesador de guitarra standalone y portable para Windows, macOS y Linux. Combina Neural Amp Modeler, respuestas impulsionales, rack de efectos reordenable, calibración automática, afinador DI, presets portables, enrutamiento flexible y una interfaz fotorrealista responsive.
 
-## Release 1.1.0
+## Novedades de la versión 1.5
 
-Esta versión incluye el frontal standalone completo, la puerta de ruido profesional y el navegador rediseñado de NAM e IR. Input Cali muestra ahora un pequeño LED verde cuando la calibración automática está activa; utiliza la referencia de la interfaz seleccionada y aplica +12 dBu cuando el NAM no contiene metadatos de entrada. El paquete inicial no incluye archivos IR, por lo que el bloque IR comienza desactivado hasta cargar una respuesta de pantalla. Ambos manuales se incluyen en español e inglés.
+- Frontal completamente rediseñado sobre una cuadrícula nativa de 1537 x 1023.
+- Controles y textos proporcionales al tamaño de la ventana, con mínimo del 50 por ciento.
+- Navegadores NAM e IR separados y más grandes, con cuatro filas, scroll y flechas.
+- Vúmetros digitales LED simétricos y rack/afinador más limpio.
+- Movimiento visual de los conos según el nivel final real de salida. Solo afecta a la imagen, nunca al sonido.
+- Diez skins con geometría idéntica y nombres ingleses: Default, Tribal, Skulls, Hippie, Graffiti, Purple Velvet, Stainless Steel, Ripped Black Denim, Blue Denim y Spiderwebs.
+- Logotipo Bcho de la cabina con acabado de acero inoxidable pulido.
+- Restauración inicial y cambios de NAM/IR con suavizado antirruido.
 
 ## Descarga
 
-Descarga los paquetes actuales desde la [última release](https://github.com/bchosoft/Bcho_NAM_Player/releases/latest):
+La [última release](https://github.com/bchosoft/Bcho_NAM_Player/releases/latest) contiene:
 
-- **Windows x64:** ZIP portable con `BchoNAMPlayer.exe`, ASIO/WASAPI y todos los recursos necesarios.
-- **macOS Apple Silicon:** ZIP para Macs `arm64` (M1/M2/M3 y posteriores).
-- **macOS Intel:** ZIP para Macs `x86_64`.
-- **Linux x86_64:** ZIP con un AppImage portable.
-- `SHA256SUMS.txt` permite verificar todos los ZIP descargados.
+- `BchoNAMPlayer-v1.5.0-Windows-x64.zip`
+- `BchoNAMPlayer-v1.5.0-macOS-arm64.zip`
+- `BchoNAMPlayer-v1.5.0-macOS-x86_64.zip`
+- `BchoNAMPlayer-v1.5.0-Linux-x86_64.zip`
+- Manuales PDF en español e inglés.
+- `SHA256SUMS.txt` para verificar la integridad.
 
-Conserva junto todo el contenido del ZIP. Cada paquete incluye dos modelos NAM de demostración en `Models`; las IR no se incluyen inicialmente.
+Cada ZIP es autocontenido. Conserva juntos todos sus archivos y carpetas. Se incluyen dos modelos NAM de demostración en `Models`; no se incluye ninguna IR, por lo que el bloque IR comienza en bypass.
 
 ## Funciones principales
 
-- Detección automática de la arquitectura NAM A1/A2.
-- Bloques móviles COMP, DELAY, CHORUS, FLANGER, PHASER, REVERB, OCTAVER y PITCH.
-- Segundo modelo NAM opcional como pedal de overdrive o distorsión.
-- Enrutamiento mediante arrastre antes del PREAMP, en el loop/pre-IR o después del IR.
-- Gate profesional, tonestack de cuatro bandas, convolución de IR y mezcla dry/IR.
-- Afinador sobre la señal DI intacta y selección de afinaciones alternativas.
-- Rutas de salida MAIN, PRE, DI y WET en la configuración de audio del standalone.
-- Presets portables `.bnpp` que incorporan el NAM principal, el pedal NAM opcional, IR, orden de efectos y todos los ajustes.
-- Ajustes desde la rueda dentada: skins con previsualización y aplicación confirmada, versión instalada y búsqueda manual o automática de actualizaciones.
-- Listas NAM e IR iguales, con cuatro filas visibles, scroll, flechas de navegación y drag-and-drop.
-- Selección de carpetas para NAM e IR, selección automática del primer elemento, mensajes claros cuando no se encuentra el tipo de archivo y fade al cambiar de modelo o IR.
-- Doble clic en los potenciómetros para recuperar sus valores iniciales: las 12 en punto en los controles normales y totalmente a la izquierda/apagado en Gate.
-- LED de estado de Input Cali junto al interruptor: verde cuando está activado y apagado cuando está desactivado.
+- Detección automática de NAM A1, A2 Standard y A2 Nano.
+- **NAM AMP** principal y **NAM STOMP** opcional para capturas de overdrive/distorsión.
+- Bloques COMP, OCT, PITCH, NAM STOMP, CHOR, FLANG, PHASE, DELAY y REVERB reordenables alrededor de los anclajes NAM AMP e IR.
+- Tres tipos y seis parámetros avanzados por cada efecto convencional.
+- Carga de archivo, carpeta y drag-and-drop para NAM, NAM STOMP e IR.
+- Mensajes claros **NAM file not found** e **IR not found**.
+- Navegador de modelos TONE3000.
+- Convolución IR sin normalización; al pulsar de nuevo la IR seleccionada se deselecciona.
+- Gate profesional, Bass, Mid, Treble, Presence, Master Volume e IR Blend.
+- Afinador estable sobre DI intacta y afinaciones alternativas.
+- Rutas MAIN, PRE, DI y WET.
+- Presets `.bnpp` autocontenidos con recursos y hashes verificados.
+- Bypass con un clic y edición/carga diferenciada mediante doble clic.
 
-## Instalación
+## Instalación rápida
 
 ### Windows
 
-Descomprime el ZIP en una carpeta con permisos de escritura y ejecuta `BchoNAMPlayer.exe`. En **AUDIO SETUP** selecciona el sistema de audio, interfaz, canales habilitados, frecuencia de muestreo, buffer y rutas de salida. Para utilizar ASIO instala el controlador oficial del fabricante de tu interfaz.
+Descomprime el ZIP de Windows en una carpeta con permisos de escritura y ejecuta `BchoNAMPlayer.exe`. Abre la rueda dentada, elige **AUDIO SETUP** y selecciona ASIO/WASAPI, interfaz, canales activos, frecuencia, buffer y ruta de salida. Instala el driver ASIO oficial cuando exista.
 
 ### macOS
 
-Descomprime el ZIP y abre `BchoNAMPlayer.app`. Los paquetes de macOS todavía no están firmados ni notarizados; en el primer inicio haz clic derecho sobre la aplicación y selecciona **Abrir** si Gatekeeper solicita confirmación.
+Elige el ZIP Apple Silicon (`arm64`) o Intel (`x86_64`), descomprímelo y abre `BchoNAMPlayer.app`. La app tiene firma ad-hoc pero no está notarizada. En el primer inicio, haz clic derecho y selecciona **Abrir** si Gatekeeper solicita confirmación.
 
 ### Linux
 
-Descomprime el ZIP, concede permiso de ejecución al AppImage si fuera necesario y ábrelo:
+Descomprime el ZIP y ejecuta el AppImage x86_64. Si fuera necesario:
 
 ```bash
 chmod +x BchoNAMPlayer-*.AppImage
 ./BchoNAMPlayer-*.AppImage
 ```
 
-La disponibilidad de ALSA/JACK y los permisos de audio en tiempo real dependen de la distribución y de la configuración del usuario.
+## Carga de NAM e IR
 
-## Navegación de NAM e IR
+**BROWSE NAM** acepta un `.nam` o una carpeta. Seleccionar una carpeta añade todos los modelos y selecciona automáticamente el primero. **BROWSE IR** acepta una respuesta `.wav` adecuada o una carpeta y funciona igual. El drag-and-drop funciona sobre las listas y sobre los bloques NAM AMP, NAM STOMP e IR.
 
-Usa **BROWSE NAM** o arrastra un `.nam` al bloque PreAmp/Amp o a la lista. Usa **BROWSE IR** o arrastra un `.wav` al bloque IR o a la lista. Las flechas recorren los archivos de la carpeta actual. El bloque IR comienza desactivado hasta cargar una respuesta impulsional.
+Los cambios de NAM e IR usan fades para evitar clics. Las IR se adaptan a la frecuencia del dispositivo sin normalizar su ganancia original. Al pulsar de nuevo la IR activa se elimina la selección y el bloque queda en bypass.
 
-## Señal y enrutamiento de salidas
+## Input Cali
 
-La ruta MAIN normal está completamente procesada y con los controles por defecto es neutra. PRE siempre entrega el resultado del NAM principal sin el procesamiento del player; DI entrega la entrada intacta de la interfaz; WET permite grabar una rama procesada independiente. La configuración del dispositivo de audio permanece local al standalone y no se guarda en los presets `.bnpp`.
+Configura la referencia de la interfaz en **Settings > Audio Setup > Interface Input Reference / 0 dBFS Peak**. Input Cali resta la referencia de entrada del NAM a la de la interfaz. Prefiere el metadato `input_level_dbu` y, si no existe, presupone +12 dBu; la corrección se limita a -24/+24 dB. Para una PreSonus Studio 24c se utilizará +10 dBu. Un LED verde indica que la calibración está activa.
 
-## Notas
+## Rack, presets y ajustes
 
-- Versión: 1.1.0.
-- Windows: x64, Windows 10/11.
-- macOS: Apple Silicon `arm64` o Intel `x86_64`, macOS 11 o posterior.
-- Linux: AppImage x86_64.
-- Bcho NAM Player no distribuye capturas NAM de terceros. Respeta la licencia de cada modelo e IR utilizado.
+Arrastra los bloques para colocar efectos delante del ampli, en el loop/pre-IR o después de la cabina. Un clic cambia el bypass; un doble clic abre el editor o cargador sin provocar una falsa conmutación.
 
-Consulta los [avisos de terceros](THIRD_PARTY_NOTICES.md) para conocer las licencias del framework y sus dependencias.
+**SAVE .BNPP** guarda NAM principal, NAM STOMP opcional, IR opcional, orden, algoritmos, bypasses y controles en un solo archivo portable. El dispositivo de audio permanece local al ordenador.
+
+La rueda dentada contiene Audio Setup, previsualización/aplicación de skins, versión y comprobación manual o automática de actualizaciones. Una skin solo queda fijada al pulsar **APPLY SKIN**.
+
+Consulta el [manual completo en español](docs/USER_MANUAL.es.md), el [manual en inglés](docs/USER_MANUAL.en.md) y los [avisos de terceros](THIRD_PARTY_NOTICES.md).
+
+El repositorio público distribuye únicamente documentación y paquetes compilados. El código fuente permanece en el repositorio privado de desarrollo.

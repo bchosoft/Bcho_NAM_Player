@@ -1,102 +1,184 @@
-# Bcho NAM Player — Manual de usuario
+# Bcho NAM Player - Manual de usuario
 
-## 1. Qué es
+## 1. Descripción
 
-Bcho NAM Player es un procesador de guitarra standalone y portable para Windows, macOS y Linux. Reproduce modelos Neural Amp Modeler (`.nam`), respuestas impulsionales (`.wav`) y una cadena de efectos reordenable. La aplicación standalone controla también la interfaz de audio.
+Bcho NAM Player 1.5 es un procesador de guitarra standalone y portable para Windows, macOS y Linux. Reproduce capturas Neural Amp Modeler (`.nam`), respuestas impulsionales de pantalla (`.wav`) y una cadena reordenable de efectos de estudio. La aplicación standalone controla el dispositivo de audio, el ruteo y la latencia.
 
-## 2. Instalación rápida
+La ventana inicial utiliza el tamaño nativo de 1537 x 1023 siempre que lo permita el área disponible de la pantalla y aparece centrada. Todo el diseño es responsive: mueble, controles, listas, vúmetros y textos se escalan juntos. La ventana no puede reducirse por debajo del 50 por ciento para evitar que controles o serigrafías salgan de su zona.
 
-Descarga el ZIP de tu sistema desde la [última release](https://github.com/bchosoft/Bcho_NAM_Player/releases/latest) y conserva juntos todos sus archivos.
+## 2. Instalación
 
-- Windows: ejecuta `BchoNAMPlayer.exe`.
-- macOS: usa `BchoNAMPlayer.app`; elige el paquete Intel o Apple Silicon.
-- Linux: ejecuta el AppImage y dale permiso de ejecución si es necesario.
+Descarga el paquete correspondiente desde la [última release pública](https://github.com/bchosoft/Bcho_NAM_Player/releases/latest), descomprímelo y conserva juntos todos los archivos y carpetas incluidos.
 
-El paquete inicial incluye dos modelos NAM de demostración en `Models`; no incluye IRs. Puedes añadir tus propios modelos e IR desde la pantalla central o arrastrándolos desde el explorador. En macOS los paquetes no están firmados ni notarizados.
+- **Windows x64**: ejecuta `BchoNAMPlayer.exe`. Instala el driver ASIO oficial del fabricante cuando esté disponible.
+- **macOS Apple Silicon**: usa el ZIP `arm64` y abre `BchoNAMPlayer.app`.
+- **macOS Intel**: usa el ZIP `x86_64` y abre `BchoNAMPlayer.app`.
+- **Linux x86_64**: ejecuta el AppImage. Si no tiene permiso, usa `chmod +x BchoNAMPlayer-*.AppImage`.
 
-## 3. Panel principal
+Las aplicaciones macOS usan firma ad-hoc pero no están notarizadas. En el primer inicio haz clic derecho y selecciona **Abrir** si Gatekeeper pide confirmación.
 
-El cabezal contiene, de izquierda a derecha, el interruptor **POWER**, los controles de entrada, el afinador, los controles del amplificador y los vúmetros. La pantalla central se divide en dos zonas iguales: **NAM MODELS** e **IR FILES**. Cada lista muestra cuatro elementos y añade scroll cuando hay más.
+El paquete incluye dos modelos NAM de demostración en `Models`. No contiene ninguna IR de pantalla. Por eso el bloque IR comienza en bypass hasta cargar una respuesta.
 
-Todos los potenciómetros usan el mismo mando metálico. Arrástralos verticalmente u horizontalmente para cambiar el valor. Un doble clic devuelve el control a su valor inicial: todos quedan a las 12 en punto salvo **Gate**, que vuelve a 0 y deja la puerta desactivada.
+## 3. Panel frontal
 
-### Controles de entrada y amplificador
+El rack superior contiene los botones de preset, los bloques reordenables, el botón/pantalla del afinador y el selector de afinación. El cabezal contiene siete controles principales, vúmetros LED verticales simétricos, ganancias de entrada/salida, Input Cali, navegadores separados de NAM e IR, Settings y el interruptor rojo de encendido. La cabina muestra el logotipo Bcho y dos conos animados.
 
-- **POWER**: activa o silencia el procesamiento principal.
-- **Input Gain**: ajusta el nivel que entra al modelo NAM.
-- **Input Cali (Auto)**: compara la referencia configurada de la interfaz (obtenida en AUDIO SETUP) con el metadato `input_level_dbu` del modelo. Si el metadato no existe, utiliza la referencia NAM estándar más probable de +12 dBu. El pequeño LED situado a la derecha del interruptor se ilumina en verde cuando la calibración está activa y permanece apagado cuando está desactivada.
-- **Gate**: puerta de ruido profesional. En 0 está completamente desactivada. Al subirlo aumenta el umbral; el detector usa envolvente suavizada, ataque, mantenimiento y liberación para evitar cortes bruscos.
-- **Bass, Mid, Treble, Presence**: ecualización de cuatro bandas después del preamplificador NAM.
-- **IR Blend**: mezcla la señal procesada sin IR con la señal convolucionada por la respuesta impulsional.
-- **Master Vol**: nivel principal después de la cadena del reproductor.
-- **Output Gain**: ganancia final de salida.
+### Manejo de los potenciómetros
 
-Con los valores por defecto, la ruta MAIN es neutra y suena igual que PRE. La ruta PRE es una referencia independiente y nunca cambia al mover controles del reproductor. Al abrir la aplicación se aplica también el suavizado anti-ruido para evitar clics durante la restauración del estado.
+Arrastra un pote vertical u horizontalmente para modificarlo. El valor exacto aparece debajo. Un doble clic recupera el valor inicial: los controles normales vuelven a las 12 y Gate vuelve totalmente a la izquierda, en **OFF**.
 
-## 4. Afinador
+### Controles principales
 
-Activa el interruptor **TUNER**. El afinador analiza siempre la señal DI limpia, antes de la puerta, el NAM y los efectos. Las luces indican si la nota está baja, afinada o alta; la nota detectada aparece debajo. Permite elegir afinación estándar y alternativas. Para una lectura estable, toca una cuerda aislada con nivel suficiente y deja que desaparezca el ruido entre notas.
+- **POWER**: activa o silencia la ruta principal. El switch se ilumina en rojo cuando está encendido.
+- **INPUT GAIN**: ajusta la señal que entra al NAM principal.
+- **GATE**: puerta de ruido profesional. En 0 está completamente fuera de la ruta. Al subirlo aumenta el umbral; ataque, mantenimiento y liberación suavizados evitan cortes bruscos.
+- **BASS, MID, TREBLE, PRESENCE**: ecualización de cuatro bandas después del NAM.
+- **MASTER VOL**: nivel principal posterior al procesamiento.
+- **IR BLEND**: mezcla la señal sin convolución y la procesada mediante IR.
+- **OUTPUT GAIN**: nivel final de salida.
+- **INPUT VU / OUTPUT VU**: vúmetros LED de colores para la entrada y la salida final.
 
-## 5. Modelos NAM e IR
+El player aplica un fade protector al restaurar el estado inicial y al cargar un NAM o una IR. Esto evita clics o crujidos durante la transición.
 
-Usa **BROWSE NAM** o arrastra un `.nam` a la lista central o al bloque **PreAmp/Amp (NAM Model)**. También se admite elegir una carpeta: si contiene varios NAM, se muestran en la lista y se selecciona el primero. Si no se encuentra ninguno, aparece el mensaje en inglés **NAM file not found**. La arquitectura A1/A2 se detecta automáticamente; no hay que elegirla manualmente. La lista muestra cuatro filas, añade scroll cuando es necesario y las flechas arriba/abajo recorren los modelos disponibles; la flecha superior se desactiva en el primero y la inferior en el último. **TONE3000** abre el buscador online, descarga y carga el modelo conservando su nombre descriptivo. Al cargar otro NAM, los controles y switches vuelven a sus valores por defecto, y el cambio usa fade-out/fade-in para evitar clips.
+## 4. Movimiento de los conos
 
-Usa **BROWSE IR** o arrastra un `.wav` a la lista central o al bloque **IR**. También se admite elegir una carpeta: se filtran los WAV que pueden utilizarse como respuestas impulsionales, se muestran hasta cuatro filas con scroll y se selecciona automáticamente el primero. Si no se encuentra ninguno, aparece **IR not found**. Las flechas recorren la carpeta y se desactivan en sus límites. Si vuelves a hacer clic sobre la IR ya seleccionada, se deselecciona; el bloque IR queda entonces desactivado. Las IR mono y estéreo se preparan para la frecuencia de audio seleccionada sin normalizar su nivel. El cambio de IR usa suavizado para evitar chasquidos.
+Los dos conos responden visualmente al nivel RMS final real. Tocar más fuerte o aumentar Master Volume/Output Gain produce mayor recorrido; el silencio o apagar POWER los devuelve suavemente al reposo.
 
-## 6. Rack de efectos
+Solo se mueve la superficie interior. Aros, tornillos, rejilla, cabina y logotipo permanecen fijos. La animación se calcula a 60 fotogramas por segundo en el hilo gráfico y nunca modifica, retrasa ni realimenta la señal de audio.
 
-El rack se abre sobre el cabezal. Arrastra los bloques para cambiar su posición y haz clic para activar o poner en bypass. Doble clic abre la ventana avanzada; se cierra con **X**, Escape o haciendo clic fuera.
+## 5. Carga de modelos NAM
 
-Los anclajes **PREAMP** e **IR** indican la posición eléctrica. Un efecto antes de PREAMP equivale a un pedal delante del amplificador; entre PREAMP e IR equivale al loop; después de IR es post-cabina. El afinador no aparece en el rack porque siempre va primero. **NAM FX** permite añadir un segundo NAM como pedal de overdrive o distorsión. Los bloques **PreAmp/Amp**, **IR** y **NAM STOMP** también pueden activarse o desactivarse; si se desactivan, los demás efectos siguen pudiendo procesar la señal DI limpia. Un clic activa o pone en bypass; un doble clic abre el selector/editor sin cambiar accidentalmente el estado del bloque.
+Usa **BROWSE NAM** para seleccionar un `.nam` o una carpeta. Al elegir una carpeta, se añaden a la lista todos sus NAM y se selecciona automáticamente el primero. Si no encuentra ninguno, la aplicación muestra **NAM file not found**.
 
-Cada bloque tiene tres algoritmos y seis parámetros:
+La lista NAM muestra cuatro filas al tamaño nativo, añade scroll cuando es necesario y usa las flechas para seleccionar el elemento anterior o siguiente. Cada flecha se desactiva al llegar a su extremo. **TONE3000** abre el navegador online y carga el modelo descargado con su nombre descriptivo.
 
-| Bloque | Tipos | Parámetros |
+La aplicación identifica automáticamente NAM A1, A2 Standard y A2 Nano. No existe un selector manual de arquitectura. Cargar un NAM principal nuevo devuelve frontal y rack a valores seguros, activa NAM AMP y usa un fade antirruido.
+
+### Drag-and-drop
+
+Arrastra un `.nam` o una carpeta a la lista NAM o al bloque **NAM AMP**. Se utilizan el mismo escaneo y los mismos mensajes de error que con BROWSE NAM.
+
+## 6. NAM STOMP
+
+**NAM STOMP** carga un segundo `.nam` como captura de overdrive, distorsión u otro pedal. Usa **+ NAM STOMP**, haz doble clic en el bloque o arrastra el archivo/carpeta sobre él. El origen puede ser local o TONE3000. Cargar un modelo válido activa el bloque.
+
+NAM AMP y NAM STOMP son independientes. Al poner NAM AMP en bypass los efectos restantes pueden procesar la DI limpia; al poner NAM STOMP en bypass solo se elimina la captura de pedal.
+
+## 7. Carga de IR
+
+Usa **BROWSE IR** para seleccionar un `.wav` o una carpeta. La carpeta se filtra para localizar WAV cortos adecuados como respuestas impulsionales, se listan los válidos y se selecciona el primero. Si no se encuentra ninguno, aparece **IR not found**.
+
+La lista IR tiene el mismo tamaño y navegación que la lista NAM. Arrastra un WAV o una carpeta a la lista IR o al bloque **IR** para usar el mismo cargador. Las respuestas mono y estéreo se preparan para la frecuencia activa. Se conserva su ganancia original: Bcho NAM Player no normaliza las IR.
+
+Pulsa de nuevo la IR seleccionada para deseleccionarla. Se elimina la respuesta activa y el bloque queda en bypass. Cargar o cambiar de IR usa una transición antirruido.
+
+## 8. Rack y orden de señal
+
+Arrastra horizontalmente los bloques para cambiar el orden. **NAM AMP** e **IR** son anclajes eléctricos:
+
+- Antes de **NAM AMP**: pedales delante del amplificador.
+- Entre **NAM AMP** e **IR**: loop o procesamiento pre-cabina.
+- Después de **IR**: procesamiento posterior a la pantalla.
+
+El afinador siempre ocupa el primer lugar sobre la DI intacta y no pertenece al orden arrastrable. Un clic activa o pone en bypass. Un doble clic abre el editor o cargador sin interpretar el primer clic como cambio de bypass.
+
+Cada efecto convencional dispone de tres algoritmos y seis parámetros:
+
+| Bloque | Algoritmos | Parámetros |
 |---|---|---|
-| COMPRESSOR | Studio VCA, Optical, FET Punch | Threshold, Ratio, Attack, Release, Makeup, Mix |
+| COMP | Studio VCA, Optical, FET Punch | Threshold, Ratio, Attack, Release, Makeup, Mix |
 | DELAY | Digital Studio, Tape Echo, Analog BBD | Time, Feedback, Mix, Tone, Mod, Level |
-| CHORUS | Studio, Ensemble, Tri-Chorus | Rate, Depth, Mix, Delay, Feedback, Level |
-| FLANGER | Analog, Through-Zero, Jet | Rate, Depth, Mix, Feedback, Manual, Level |
-| PHASER | 4 Stage, 8 Stage, 12 Stage | Rate, Depth, Mix, Feedback, Centre, Level |
+| CHOR | Studio, Ensemble, Tri-Chorus | Rate, Depth, Mix, Delay, Feedback, Level |
+| FLANG | Analog, Through-Zero, Jet | Rate, Depth, Mix, Feedback, Manual, Level |
+| PHASE | 4 Stage, 8 Stage, 12 Stage | Rate, Depth, Mix, Feedback, Centre, Level |
 | REVERB | Studio Room, Plate, Concert Hall | Size, Damping, Mix, Width, Freeze, Level |
-| OCTAVER | Poly Clean, Classic Mono, Organ | Oct Down, Oct Up, Dry, Tone, Tracking, Level |
-| PITCH SHIFTER | Studio, Low Latency, Vintage | Semitones, Mix, Window, Feedback, Fine, Level |
+| OCT | Poly Clean, Classic Mono, Organ | Oct Down, Oct Up, Dry, Tone, Tracking, Level |
+| PITCH | Studio, Low Latency, Vintage | Semitones, Mix, Window, Feedback, Fine, Level |
 
-Los valores se muestran con sus unidades en la pantalla del bloque. Los cambios de bypass, parámetros y tipo se suavizan para evitar clics; los delays utilizan interpolación y las realimentaciones están limitadas para mantener el procesamiento estable.
+Los cambios de parámetro, tipo y bypass se suavizan. Las lecturas de delay están interpoladas y las realimentaciones limitadas para garantizar estabilidad.
 
-## 7. AUDIO SETUP — solo standalone
+## 9. Afinador
 
-Abre **AUDIO SETUP** desde la rueda dentada para elegir:
+Pulsa **TUNER** para activarlo. El texto se ilumina en verde y el botón simula estar presionado. La pantalla muestra la nota detectada y una indicación LED izquierda/derecha para baja, centrada o alta.
 
-- sistema de audio y driver, incluido ASIO en Windows;
+El afinador analiza la DI intacta antes de Gate, NAM y efectos. Cubre aproximadamente 65 a 700 Hz con frecuencias habituales entre 44,1 y 192 kHz. Las afinaciones disponibles son Standard, Drop D, D Standard, Eb y Open G. Toca una cuerda aislada con nivel suficiente y deja caer el ruido entre notas.
+
+## 10. Input Cali
+
+Input Cali compensa la relación entre el nivel máximo de entrada de la interfaz y la referencia utilizada al entrenar el NAM.
+
+Configura **Interface Input Reference / 0 dBFS Peak** en Audio Setup. Al activar Input Cali se calcula:
+
+`ganancia de calibración en dB = referencia dBu de la interfaz - referencia dBu del NAM`
+
+- Si el NAM contiene `input_level_dbu`, se utiliza ese metadato.
+- Si no tiene metadatos, se presupone la referencia NAM probable de +12 dBu.
+- La corrección se limita entre -24 y +24 dB.
+- Para una PreSonus Studio 24c introduce +10 dBu.
+- El pequeño LED junto a INPUT CALI se ilumina en verde cuando está activado y se apaga al desactivarlo.
+
+Input Cali modifica la ganancia antes del NAM; no reescribe ni normaliza el modelo. Si la interfaz ofrece varios modos de ganancia, usa el dBu correspondiente al modo físico de entrada utilizado.
+
+## 11. Audio Setup y ruteo
+
+Abre la rueda dentada y elige **AUDIO SETUP**. El panel controla:
+
+- sistema y driver, incluido ASIO en Windows;
 - interfaz de entrada/salida;
-- entradas y salidas activas;
-- frecuencia de muestreo y tamaño de buffer;
-- panel de control del fabricante cuando está disponible;
-- enrutamiento de salidas.
+- canales activos;
+- frecuencia de muestreo y buffer;
+- panel del fabricante cuando el driver lo ofrece;
+- referencia de entrada utilizada por Input Cali;
+- destinos físicos MAIN, PRE, DI y WET.
 
-La referencia de entrada de la interfaz se selecciona aquí y se utiliza por **Input Cali**. Para interfaces sin un valor documentado puede usarse el valor recomendado de la tabla incluida en la aplicación o +12 dBu como fallback NAM cuando el archivo no contiene metadatos.
+| Ruta | Señal | Uso habitual |
+|---|---|---|
+| MAIN | Salida completa procesada | Monitorización o grabación final |
+| PRE | NAM principal antes de tono/efectos/cabina | Reamping o comparación |
+| DI | Entrada intacta de la interfaz | Pista limpia de seguridad |
+| WET | Rama procesada post-cabina | Grabación procesada independiente |
 
-Las rutas disponibles son **MAIN** (procesada), **PRE** (NAM sin controles ni efectos del player), **DI** (entrada limpia) y **WET** (rama procesada posterior a la cabina). MAIN se dirige por defecto a las salidas 1/2 cuando están habilitadas. La última configuración de dispositivo y ruteo se recupera al iniciar de nuevo.
+MAIN utiliza normalmente las salidas 1/2. Desactiva una ruta no utilizada para evitar duplicados. Dispositivo, canales, frecuencia, buffer, referencia y ruteo se restauran al iniciar de nuevo.
 
-## 8. Ajustes, skins y actualizaciones
+## 12. Presets portables `.bnpp`
 
-Pulsa la rueda dentada situada en la esquina derecha de la cabina para abrir **SETTINGS**. Desde ahí puedes:
+**SAVE .BNPP** crea un preset autocontenido con:
 
-- elegir temporalmente una skin para previsualizarla; la skin solo queda aplicada al pulsar **APPLY**;
-- elegir otra skin instalada que mantenga las posiciones exactas de pantallas, potenciómetros, escalas y switches;
-- consultar la versión instalada;
-- usar **CHECK FOR UPDATES** para buscar manualmente una nueva versión;
-- activar o desactivar **CHECK ON STARTUP**, la comprobación automática al iniciar. El estado se indica con un LED discreto y la opción está oculta en Settings para no invadir el frontal.
+- NAM principal;
+- NAM STOMP opcional;
+- IR seleccionada opcional;
+- orden, algoritmos, parámetros y bypasses del rack;
+- potenciómetros, switches y ajustes del afinador.
 
-La rueda dentada también concentra AUDIO SETUP, la selección de skin, la versión y las opciones de actualización. La previsualización de skin es temporal: mover el selector cambia la vista inmediatamente, pero cancelar o cerrar sin **APPLY** conserva la skin anterior.
+Los recursos se verifican mediante SHA-256 al cargarlos. **LOAD .BNPP** los extrae en la caché de la aplicación y restaura el sonido. Dispositivo, interfaz y salidas físicas se excluyen para que el preset pueda trasladarse entre ordenadores.
 
-La búsqueda de actualizaciones solo informa de versiones publicadas; no cambia el preset, los modelos ni el audio sin confirmación del usuario.
+Debe existir un NAM principal cargado antes de guardar un `.bnpp`.
 
-## 9. Presets `.bnpp`
+## 13. Settings, skins y actualizaciones
 
-**SAVE .BNPP** crea un preset portable autocontenido. Incluye el XML de estado, el NAM principal, el NAM de pedal opcional, la IR, el orden del rack, tipos, bypasses y todos los controles. **LOAD .BNPP** extrae sus recursos a una caché segura y restaura la configuración. La configuración de audio no se incluye para que el preset pueda viajar entre ordenadores y DAW.
+Pulsa la rueda dentada para abrir **APPLICATION SETTINGS**. Contiene Audio Setup, selección de skin, versión instalada y comprobación manual o automática de actualizaciones.
 
-## 10. Estado y solución de problemas
+Las skins disponibles son **Default**, **Tribal**, **Skulls**, **Hippie**, **Graffiti**, **Purple Velvet**, **Stainless Steel**, **Ripped Black Denim**, **Blue Denim** y **Spiderwebs**. Todas mantienen la misma geometría. Seleccionar una previsualiza el cambio; solo queda aplicada al pulsar **APPLY SKIN**. Cerrar sin aplicar recupera la skin anterior.
 
-La aplicación recupera el último NAM, IR y preset utilizado, junto con el dispositivo y el ruteo de audio. Si no hay audio, revisa POWER, el dispositivo seleccionado, las entradas activas, el buffer y el nivel del vúmetro INPUT. Si el NAM no suena, comprueba que el archivo sea válido. Para reducir latencia empieza con un buffer ASIO pequeño y súbelo si aparecen clics.
+**CHECK FOR UPDATES** compara la versión instalada con la última release pública. La comprobación al iniciar puede activarse o desactivarse. Solo informa y nunca sustituye archivos, modelos o presets sin que el usuario abra la página de descarga.
+
+## 14. Estado y ubicaciones
+
+La aplicación restaura el NAM, IR, valores, skin, dispositivo y ruteo utilizados. Las carpetas portables con escritura guardan el estado junto al ejecutable. Los bundles de macOS y AppImage de Linux en modo lectura usan la carpeta de datos de usuario `Bcho/BchoNAMPlayer`.
+
+Conserva los dos archivos de demostración en `Models` si quieres mantenerlos disponibles. Las IR del usuario no forman parte del paquete distribuido.
+
+## 15. Solución de problemas
+
+- **No hay sonido**: revisa POWER, ruta MAIN, interfaz y canales activos, INPUT VU, modelo y buffer.
+- **NAM AMP no se activa**: carga un NAM válido y espera a que termine; una selección correcta activa el bloque automáticamente.
+- **IR permanece en bypass**: carga una IR válida y comprueba que no hayas pulsado una segunda vez el elemento seleccionado.
+- **Clics o cortes mientras tocas**: aumenta el buffer, usa ASIO oficial en Windows y evita buffers demasiado pequeños.
+- **La carpeta NAM o IR aparece vacía**: comprueba que contiene directamente `.nam` o respuestas `.wav` cortas y válidas.
+- **El nivel no coincide con otro reproductor NAM**: verifica la referencia 0 dBFS de la interfaz y el estado de Input Cali.
+- **macOS impide el primer inicio**: haz clic derecho, elige **Abrir** y autoriza la aplicación no notarizada.
+- **El AppImage no arranca**: concede permiso de ejecución y comprueba que el sistema dispone de audio x86_64 compatible.
+
+## 16. Integridad y licencias
+
+Compara los hashes de los ZIP con `SHA256SUMS.txt`. Bcho NAM Player incluye JUCE y Neural Amp Modeler Core; sus avisos están en `THIRD_PARTY_NOTICES.md`. La aplicación no concede derechos sobre capturas NAM o IR de terceros. Respeta la licencia incluida con cada archivo.
