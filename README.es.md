@@ -1,12 +1,12 @@
-# Bcho NAM Player 1.5.1
+# Bcho NAM Player 1.6.0
 
 [English](README.md) | [Última release](https://github.com/bchosoft/Bcho_NAM_Player/releases/latest) | [Manual en español](docs/USER_MANUAL.es.md)
 
-![Bcho NAM Player 1.5](docs/BchoNAM_Player_1-5-.png)
+![Bcho NAM Player 1.6.0](docs/Caratula_BNAMP.png)
 
 Bcho NAM Player es un procesador de guitarra standalone y portable para Windows, macOS y Linux. Combina Neural Amp Modeler, respuestas impulsionales, rack de efectos reordenable, calibración automática, afinador DI, presets portables, enrutamiento flexible y una interfaz fotorrealista responsive.
 
-## Novedades de la versión 1.5.1
+## Novedades de la versión 1.6.0
 
 - Las ventanas Settings y Audio I/O escalan proporcionalmente al área disponible, incluidos controles, márgenes y tipografía, para que las secciones inferiores de routing y calibración sigan visibles en portátiles de 1366 x 768.
 - Frontal completamente rediseñado sobre una cuadrícula nativa de 1537 x 1023.
@@ -14,7 +14,9 @@ Bcho NAM Player es un procesador de guitarra standalone y portable para Windows,
 - Navegadores NAM e IR separados y más grandes, con cuatro filas, scroll y flechas.
 - Vúmetros digitales LED simétricos y rack/afinador más limpio.
 - Movimiento visual de los conos según el nivel final real de salida. Solo afecta a la imagen, nunca al sonido.
-- Diez skins con geometría idéntica y nombres ingleses: Default, Tribal, Skulls, Hippie, Graffiti, Purple Velvet, Stainless Steel, Ripped Black Denim, Blue Denim y Spiderwebs.
+- Once skins con geometría idéntica y nombres ingleses: Astra / Obsidian, Tribal / Etched Titanium, Skulls / Bone & Carbon, Hippie / Sunset Paisley, Graffiti / Electric Ink, Purple Velvet / Amethyst, Stainless Steel / Precision, Ripped Black Denim / Roadworn, Blue Denim / Indigo, Spiderwebs / Black Widow y Classic Black / Levant Tolex.
+- Placas de material visto coordinadas, marcos de pantalla, esquineras metálicas y pies inferiores del rack conservan el apilado físico del rack, el head y la cabina.
+- Fader vertical independiente de volumen de cabina IR con escala dB alineada, fondo de backstage de escenario de rock a pantalla completa y acabados de controles propios de cada skin.
 - Logotipo Bcho de la cabina con acabado de acero inoxidable pulido.
 - Restauración inicial y cambios de NAM/IR con suavizado antirruido.
 
@@ -22,10 +24,10 @@ Bcho NAM Player es un procesador de guitarra standalone y portable para Windows,
 
 La [última release](https://github.com/bchosoft/Bcho_NAM_Player/releases/latest) contiene:
 
-- `BchoNAMPlayer-v1.5.1-Windows-x64.zip`
-- `BchoNAMPlayer-v1.5.1-macOS-arm64.zip`
-- `BchoNAMPlayer-v1.5.1-macOS-x86_64.zip`
-- `BchoNAMPlayer-v1.5.1-Linux-x86_64.zip`
+- `BchoNAMPlayer-v1.6.0-Windows-x64.zip`
+- `BchoNAMPlayer-v1.6.0-macOS-arm64.zip`
+- `BchoNAMPlayer-v1.6.0-macOS-x86_64.zip`
+- `BchoNAMPlayer-v1.6.0-Linux-x86_64.zip`
 - Manuales PDF en español e inglés.
 - `SHA256SUMS.txt` para verificar la integridad.
 
@@ -34,14 +36,14 @@ Cada ZIP es autocontenido. Conserva juntos todos sus archivos y carpetas. Se inc
 ## Funciones principales
 
 - Detección automática de NAM A1, A2 Standard y A2 Nano.
-- **NAM AMP** principal y **NAM STOMP** opcional para capturas de overdrive/distorsión.
-- Bloques COMP, OCT, PITCH, NAM STOMP, CHOR, FLANG, PHASE, DELAY y REVERB reordenables alrededor de los anclajes NAM AMP e IR.
+- Dos espacios genéricos e independientes, **BLOCK NAM 1** y **BLOCK NAM 2**, cada uno compatible con cualquier modelo `.nam`.
+- Bloques COMP, OCT, PITCH, BLOCK NAM 1, CHOR, FLANG, PHASE, DELAY y REVERB reordenables alrededor de los anclajes BLOCK NAM 2 e IR.
 - Tres tipos y seis parámetros avanzados por cada efecto convencional.
-- Carga de archivo, carpeta y drag-and-drop para NAM, NAM STOMP e IR.
+- Carga de archivo, carpeta y drag-and-drop para ambos bloques NAM e IR.
 - Mensajes claros **NAM file not found** e **IR not found**.
 - Navegador de modelos TONE3000.
 - Convolución IR sin normalización; al pulsar de nuevo la IR seleccionada se deselecciona.
-- Gate profesional, Bass, Mid, Treble, Presence, Master Volume e IR Blend.
+- Gate profesional, Bass, Mid, Treble, Presence, Master Volume, IR Blend y volumen independiente de la cabina IR.
 - Afinador estable sobre DI intacta y afinaciones alternativas.
 - Rutas MAIN, PRE, DI y WET.
 - Presets `.bnpp` autocontenidos con recursos y hashes verificados.
@@ -68,9 +70,9 @@ chmod +x BchoNAMPlayer-*.AppImage
 
 ## Carga de NAM e IR
 
-**BROWSE NAM** acepta un `.nam` o una carpeta. Seleccionar una carpeta añade todos los modelos y selecciona automáticamente el primero. **BROWSE IR** acepta una respuesta `.wav` adecuada o una carpeta y funciona igual. El drag-and-drop funciona sobre las listas y sobre los bloques NAM AMP, NAM STOMP e IR.
+**BROWSE LOCAL** acepta un `.nam` o una carpeta para la pestaña NAM activa. BLOCK NAM 1 y BLOCK NAM 2 conservan carpetas, listas y selecciones independientes. La opción **DEEP SEARCH** incluye subcarpetas y aparece desactivada cada vez que se abre el navegador. Al elegir una carpeta se carga automáticamente el primer modelo. **BROWSE IR** acepta una respuesta `.wav` adecuada o una carpeta. El drag-and-drop funciona sobre ambas pestañas/listas NAM y sobre los bloques BLOCK NAM 1, BLOCK NAM 2 e IR.
 
-Los cambios de NAM e IR usan fades para evitar clics. Las IR se adaptan a la frecuencia del dispositivo sin normalizar su ganancia original. Al pulsar de nuevo la IR activa se elimina la selección y el bloque queda en bypass.
+Los cambios de NAM e IR usan fades para evitar clics. Las IR se adaptan a la frecuencia del dispositivo sin normalizar su ganancia original. El fader vertical **IR Cabinet Volume** ofrece una ganancia independiente de la cabina húmeda entre -24 dB y 0 dB antes de IR Blend y comienza en -12 dB. Al pulsar de nuevo la IR activa se elimina la selección y el bloque queda en bypass.
 
 ## Input Cali
 
@@ -80,7 +82,7 @@ Configura la referencia de la interfaz en **Settings > Audio Setup > Interface I
 
 Arrastra los bloques para colocar efectos delante del ampli, en el loop/pre-IR o después de la cabina. Un clic cambia el bypass; un doble clic abre el editor o cargador sin provocar una falsa conmutación.
 
-**SAVE .BNPP** guarda NAM principal, NAM STOMP opcional, IR opcional, orden, algoritmos, bypasses y controles en un solo archivo portable. El dispositivo de audio permanece local al ordenador.
+**SAVE .BNPP** guarda los modelos de ambos bloques NAM, la IR opcional, orden, algoritmos, bypasses y controles en un solo archivo portable. El dispositivo de audio permanece local al ordenador.
 
 La rueda dentada contiene Audio Setup, previsualización/aplicación de skins, versión y comprobación manual o automática de actualizaciones. Una skin solo queda fijada al pulsar **APPLY SKIN**.
 

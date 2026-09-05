@@ -1,8 +1,10 @@
-# Bcho NAM Player - User Manual
+# Bcho NAM Player 1.6.0 - User Manual
 
 ## 1. Overview
 
-Bcho NAM Player 1.5 is a portable standalone guitar processor for Windows, macOS and Linux. It plays Neural Amp Modeler (`.nam`) captures, cabinet impulse responses (`.wav`) and a reorderable chain of studio effects. The standalone application owns the audio device, routing and latency configuration.
+Bcho NAM Player 1.6.0 is a portable standalone guitar processor for Windows, macOS and Linux. It plays Neural Amp Modeler (`.nam`) captures, cabinet impulse responses (`.wav`) and a reorderable chain of studio effects. The standalone application owns the audio device, routing and latency configuration.
+
+This release adds a photorealistic responsive interface, independent BLOCK NAM 1 and BLOCK NAM 2 browser tabs, automatic activation after loading a compatible NAM, deep folder search, independent IR Cabinet Volume, a visual output-driven speaker response, a full-window backstage background, and eleven coordinated skins.
 
 The initial window uses the native 1537 x 1023 interface size whenever the available screen area permits it and opens centred. The complete design is responsive: furniture, controls, lists, meters and text scale together. The window cannot be reduced below 50 percent of its native size, preventing controls or labels from leaving their intended areas.
 
@@ -30,11 +32,12 @@ Drag a knob vertically or horizontally to change its value. Its exact value appe
 ### Main controls
 
 - **POWER**: enables or mutes the main processing path. The switch is illuminated red while on.
-- **INPUT GAIN**: adjusts the signal entering the main NAM model.
+- **INPUT GAIN**: adjusts the signal entering the NAM processing chain.
 - **GATE**: professional noise gate. At 0 it is completely bypassed. Increasing it raises the threshold; attack, hold and release smoothing prevent abrupt cuts.
-- **BASS, MID, TREBLE, PRESENCE**: four-band tone shaping after the main NAM stage.
+- **BASS, MID, TREBLE, PRESENCE**: four-band tone shaping after BLOCK NAM 2.
 - **MASTER VOL**: main post-processing level.
 - **IR BLEND**: mixes the signal without cabinet convolution and the IR-processed signal.
+- **IR CABINET VOLUME**: vertical fader for independent wet-cabinet gain before IR Blend, adjustable from -24 dB to 0 dB. It defaults to -12 dB to leave headroom for loud IR captures. The scale and current dB value are shown beside the fader.
 - **OUTPUT GAIN**: final output level.
 - **INPUT VU / OUTPUT VU**: symmetrical colour LED meters for incoming and final processed levels.
 
@@ -52,17 +55,17 @@ Use **BROWSE NAM** to select either one `.nam` file or a folder. When a folder i
 
 The NAM list shows four rows at the native size, adds a scrollbar when required and uses the arrow buttons to select the previous or next entry. An arrow is disabled at its corresponding end of the list. **TONE3000** opens the online model browser and loads a downloaded model with its descriptive name.
 
-The application automatically identifies NAM A1, A2 Standard and A2 Nano models. There is no manual architecture switch. Loading a new main model resets the front-panel and rack settings to safe defaults, activates the NAM AMP block and uses an anti-click output fade.
+The application automatically identifies NAM A1, A2 Standard and A2 Nano models. There is no manual architecture switch. Loading a model into BLOCK NAM 2 resets the front-panel and rack settings to safe defaults, activates BLOCK NAM 2, keeps the selected IR cabinet active, and uses an anti-click output fade.
 
 ### Drag-and-drop
 
-Drop a `.nam` file or folder on the NAM list or the **NAM AMP** rack block. The same folder scanning and missing-file messages used by BROWSE NAM are applied.
+Drop a `.nam` file or folder on its NAM list or directly on the **BLOCK NAM 2** rack block. The same folder scanning and missing-file messages used by BROWSE LOCAL are applied.
 
-## 6. NAM STOMP
+## 6. BLOCK NAM 1 and BLOCK NAM 2
 
-**NAM STOMP** loads a second `.nam` as an overdrive, distortion or other pedal capture. Use **+ NAM STOMP**, double-click the NAM STOMP block, or drop a file/folder onto that block. The source can be local or TONE3000. Loading a valid model activates the block.
+Both blocks accept any compatible `.nam`; the app does not assume what equipment was captured. Use the corresponding tab, **+ BLOCK NAM 1**, double-click either NAM block, or drop a file/folder directly on its tab or block. The source can be local or TONE3000. Loading a valid model activates that block.
 
-NAM AMP and NAM STOMP are independent. Bypassing NAM AMP lets the remaining effects process clean DI; bypassing NAM STOMP removes only the pedal capture.
+BLOCK NAM 1 and BLOCK NAM 2 are independent. Each tab retains its own folder, deep-search mode, model list and selection. Bypassing either block removes only that NAM stage.
 
 ## 7. Loading cabinet IRs
 
@@ -70,14 +73,14 @@ Use **BROWSE IR** to select a `.wav` file or folder. Folder selection filters sh
 
 The IR list has the same size and navigation behaviour as the NAM list. Drop a WAV or folder on the IR list or the **IR** rack block to use the same loader. Mono and stereo responses are prepared for the active device sample rate. Their original gain is preserved: Bcho NAM Player does not normalize IRs.
 
-Click the selected IR entry again to deselect it. This clears the active response and bypasses the IR block. Loading or changing a response uses an anti-click transition.
+Click the selected IR entry again to deselect it. This clears the active response and bypasses the IR block. Loading or changing a response uses an anti-click transition. Use **IR CABINET VOLUME** to adjust the wet cabinet level independently of the dry/wet **IR BLEND** control.
 
 ## 8. Rack and signal order
 
-Drag blocks horizontally to reorder them. **NAM AMP** and **IR** act as electrical anchors:
+Drag blocks horizontally to reorder them. **BLOCK NAM 2** and **IR** act as electrical anchors:
 
-- Before **NAM AMP**: pedals in front of the amplifier.
-- Between **NAM AMP** and **IR**: effects loop or pre-cabinet processing.
+- Before **BLOCK NAM 2**: processing before the second NAM stage.
+- Between **BLOCK NAM 2** and **IR**: pre-cabinet processing.
 - After **IR**: post-cabinet processing.
 
 The tuner is always first on untouched DI and is not part of the draggable order. A single click enables or bypasses a block. A double-click opens its editor or loader without interpreting the first click as a bypass command.
@@ -134,7 +137,7 @@ Open the gear and choose **AUDIO SETUP**. The panel controls:
 | Route | Signal | Typical use |
 |---|---|---|
 | MAIN | Complete processed player output | Monitoring or recording the final sound |
-| PRE | Main NAM reference before player tone/effects/cab | Re-amping or comparison |
+| PRE | BLOCK NAM 2 reference before player tone/effects/cab | Re-amping or comparison |
 | DI | Untouched interface input | Recording a clean safety track |
 | WET | Processed post-cabinet branch | Separate processed recording path |
 
@@ -144,21 +147,32 @@ MAIN normally uses outputs 1/2. Set an unused route to disabled to prevent dupli
 
 **SAVE .BNPP** creates one self-contained preset containing:
 
-- main NAM model;
-- optional NAM STOMP model;
+- BLOCK NAM 2 model;
+- BLOCK NAM 1 model, when loaded;
 - optional selected IR;
 - rack order, algorithms, advanced parameters and bypass states;
 - front-panel knob, switch and tuner settings.
 
 Embedded resources are checked with SHA-256 when loaded. **LOAD .BNPP** extracts them to the application cache and restores the saved sound. Audio-device, interface and physical output settings are intentionally excluded so the preset can move between computers.
 
-A main NAM must be loaded before a `.bnpp` can be saved.
+A model must be loaded in BLOCK NAM 2 before a `.bnpp` can be saved.
 
 ## 13. Settings, skins and updates
 
+Open Settings using the gear to the right of Reverb in the upper rack.
+The current reconstruction adds coordinated metal mounting plates and screen
+frames, individual knob designs for each finish, and a backstage background
+that fills the whole maximized window. IR VOL has its own plate matching the
+height of the file browser panels.
+
+The collection also includes **Classic Black / Levant Tolex**, bringing the
+standalone total to eleven finishes. Materials remain exposed without clear
+overlay plates. Each enclosure has metal corner protectors, including both
+lower rack corners. Legend contrast is adapted to the selected finish.
+
 Press the gear to open **APPLICATION SETTINGS**. It contains Audio Setup, skin selection, installed version, manual update checking and automatic startup checking.
 
-Available skins are **Default**, **Tribal**, **Skulls**, **Hippie**, **Graffiti**, **Purple Velvet**, **Stainless Steel**, **Ripped Black Denim**, **Blue Denim** and **Spiderwebs**. Every skin has identical control geometry. Selecting one previews it immediately; it becomes permanent only after pressing **APPLY SKIN**. Closing without applying restores the previous skin.
+The Astra collection replaces the previous designs: **Astra / Obsidian**, **Tribal / Etched Titanium**, **Skulls / Bone & Carbon**, **Hippie / Sunset Paisley**, **Graffiti / Electric Ink**, **Purple Velvet / Amethyst**, **Stainless Steel / Precision**, **Ripped Black Denim / Roadworn**, **Blue Denim / Indigo**, and **Spiderwebs / Black Widow**. Every finish uses identical geometry: rack, head and cabinet have the same width, with separate feet and gaps. Selecting one previews it immediately; it becomes permanent only after pressing **APPLY SKIN**. Closing without applying restores the previous skin. The VST3 exclusively uses Astra / Obsidian.
 
 **CHECK FOR UPDATES** compares the installed version with the latest public release. Startup checks can be enabled or disabled. Update checking only reports availability and never replaces files, models or presets without the user opening the download page.
 
@@ -171,7 +185,7 @@ Keep the two demonstration files in `Models` if they should remain available. Us
 ## 15. Troubleshooting
 
 - **No sound**: check POWER, MAIN routing, the active interface input/output, INPUT VU, model selection and buffer configuration.
-- **NAM AMP cannot be enabled**: load a valid NAM and wait for loading to complete; a successfully selected model activates the block automatically.
+- **A NAM block cannot be enabled**: load a valid NAM into that block and wait for loading to complete; a successfully selected model activates it automatically.
 - **IR block is bypassed**: load a valid IR and make sure the selected entry has not been clicked a second time.
 - **Clicks or dropouts while playing**: increase the audio buffer, use the official ASIO driver on Windows and avoid overloading the CPU with very small buffers.
 - **NAM or IR folder appears empty**: confirm that it contains `.nam` files or short valid `.wav` responses directly inside the selected folder.
