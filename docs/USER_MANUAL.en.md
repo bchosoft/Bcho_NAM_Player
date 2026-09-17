@@ -1,8 +1,28 @@
-# Bcho NAM Player 1.6.0 - User Manual
+# Bcho NAM Player 1.7.0 - User Manual (Dual standalone)
+
+> This build adds two independent signal paths to everything described below.
+> The MONO / STEREO switch, the `NAM 1 L / NAM 2 L / NAM 1 R / NAM 2 R` and
+> `IR L / IR R` selectors, the separate BLOCK NAM 1 tone stack, the two rack
+> rows and the two-path `.bnpp` presets are documented in
+> [DUAL_STANDALONE.md](DUAL_STANDALONE.md). Every chapter below applies to each
+> path independently; in MONO only the left path is audible and the right-hand
+> selectors are hidden, so the player behaves exactly as described here.
 
 ## 1. Overview
 
-Bcho NAM Player 1.6.0 is a portable standalone guitar processor for Windows, macOS and Linux. It plays Neural Amp Modeler (`.nam`) captures, cabinet impulse responses (`.wav`) and a reorderable chain of studio effects. The standalone application owns the audio device, routing and latency configuration.
+### Practical changes in 1.7.0
+
+First launch starts in MONO, with every block disabled and no automatically loaded models. Subsequent launches restore the last normally closed session: controls, L/R paths, resources, order, effects and bypass. NAM/IR files must remain at their saved locations. An entirely bypassed chain passes dry audio; it does not mute POWER.
+
+In STEREO, DUAL MONO sends the summed input to both chains for one guitar with two rigs. SPLIT L/R sends input 1 to L and input 2 to R. NAM selectors choose the edited path and block; NAM 1 BASS/MID/TREBLE/PRESENCE are independent of NAM 2. IR L/R chooses which cabinet IR BLEND and IR VOL edit. Two rows show the racks. Standalone presets contain both paths and up to four NAM models and two IRs.
+
+TONE3000 offers TRENDING, LATEST, FAVOURITES, DOWNLOADED and MINE. Connect using the service's email/code flow. SEARCH FULL CATALOGUE opens its official picker. Windows and macOS use the same embedded browser for sign-in and search. An older session created externally may need one initial embedded login. Service-side expiry or revocation can require signing in again.
+
+Windows checks WebView2 before embedded sign-in or catalogue browsing. If missing or unavailable, choose an official Microsoft Evergreen Runtime download, the external browser or cancel. Nothing installs automatically. Reopen TONE3000 after installation. Local audio and files do not need WebView2. macOS uses WKWebView; Linux uses the external browser. External and embedded browsers do not share cookies.
+
+Hover over a capture or NAM block for metadata and artwork when available. IR VOL now has a separated scale and dedicated L/R line. Plate screws have symmetrical margins.
+
+Bcho NAM Player 1.7.0 is a portable standalone guitar processor for Windows, macOS and Linux. It plays Neural Amp Modeler (`.nam`) captures, cabinet impulse responses (`.wav`) and a reorderable chain of studio effects. The standalone application owns the audio device, routing and latency configuration.
 
 This release adds a photorealistic responsive interface, independent BLOCK NAM 1 and BLOCK NAM 2 browser tabs, automatic activation after loading a compatible NAM, deep folder search, independent IR Cabinet Volume, a visual output-driven speaker response, a full-window backstage background, and eleven coordinated skins.
 
@@ -12,9 +32,9 @@ The initial window uses the native 1537 x 1023 interface size whenever the avail
 
 Download the package for your system from the [latest public release](https://github.com/bchosoft/Bcho_NAM_Player/releases/latest), extract it and keep every included file and folder together.
 
-- **Windows x64**: run `BchoNAMPlayer.exe`. Install the official ASIO driver supplied by the audio-interface manufacturer when available.
-- **macOS Apple Silicon**: use the `arm64` ZIP and open `BchoNAMPlayer.app`.
-- **macOS Intel**: use the `x86_64` ZIP and open `BchoNAMPlayer.app`.
+- **Windows x64**: run `Bcho NAM Player.exe`. Install the official ASIO driver supplied by the audio-interface manufacturer when available.
+- **macOS Apple Silicon**: use the `arm64` ZIP and open `Bcho NAM Player.app`.
+- **macOS Intel**: use the `x86_64` ZIP and open `Bcho NAM Player.app`.
 - **Linux x86_64**: run the included AppImage. Use `chmod +x BchoNAMPlayer-*.AppImage` if execution permission is missing.
 
 The macOS applications use ad-hoc signing but are not notarized. On first launch, right-click the app and choose **Open** if Gatekeeper asks for confirmation.
@@ -51,7 +71,7 @@ Only the cone surfaces move. Metal rings, screws, grille, cabinet and Bcho logo 
 
 ## 5. Loading NAM models
 
-Use **BROWSE NAM** to select either one `.nam` file or a folder. When a folder is selected, all NAM files in that folder are added to the list and the first is selected automatically. If none is found, the application displays **NAM file not found**.
+Use **BROWSE LOCAL** to select either one `.nam` file or a folder. When a folder is selected, all NAM files in that folder are added to the list and the first is selected automatically. If none is found, the application displays **NAM file not found**.
 
 The NAM list shows four rows at the native size, adds a scrollbar when required and uses the arrow buttons to select the previous or next entry. An arrow is disabled at its corresponding end of the list. **TONE3000** opens the online model browser and loads a downloaded model with its descriptive name.
 
@@ -145,7 +165,7 @@ MAIN normally uses outputs 1/2. Set an unused route to disabled to prevent dupli
 
 ## 12. Portable `.bnpp` presets
 
-**SAVE .BNPP** creates one self-contained preset containing:
+**SAVE PRESET** creates one self-contained preset containing:
 
 - BLOCK NAM 2 model;
 - BLOCK NAM 1 model, when loaded;
@@ -153,7 +173,7 @@ MAIN normally uses outputs 1/2. Set an unused route to disabled to prevent dupli
 - rack order, algorithms, advanced parameters and bypass states;
 - front-panel knob, switch and tuner settings.
 
-Embedded resources are checked with SHA-256 when loaded. **LOAD .BNPP** extracts them to the application cache and restores the saved sound. Audio-device, interface and physical output settings are intentionally excluded so the preset can move between computers.
+Embedded resources are checked with SHA-256 when loaded. **LOAD PRESET** extracts them to the application cache and restores the saved sound. Audio-device, interface and physical output settings are intentionally excluded so the preset can move between computers.
 
 A model must be loaded in BLOCK NAM 2 before a `.bnpp` can be saved.
 
@@ -172,7 +192,7 @@ lower rack corners. Legend contrast is adapted to the selected finish.
 
 Press the gear to open **APPLICATION SETTINGS**. It contains Audio Setup, skin selection, installed version, manual update checking and automatic startup checking.
 
-The Astra collection replaces the previous designs: **Astra / Obsidian**, **Tribal / Etched Titanium**, **Skulls / Bone & Carbon**, **Hippie / Sunset Paisley**, **Graffiti / Electric Ink**, **Purple Velvet / Amethyst**, **Stainless Steel / Precision**, **Ripped Black Denim / Roadworn**, **Blue Denim / Indigo**, and **Spiderwebs / Black Widow**. Every finish uses identical geometry: rack, head and cabinet have the same width, with separate feet and gaps. Selecting one previews it immediately; it becomes permanent only after pressing **APPLY SKIN**. Closing without applying restores the previous skin. The VST3 exclusively uses Astra / Obsidian.
+The Astra collection replaces the previous designs: **Astra / Obsidian**, **Tribal / Etched Titanium**, **Skulls / Bone & Carbon**, **Hippie / Sunset Paisley**, **Graffiti / Electric Ink**, **Purple Velvet / Amethyst**, **Stainless Steel / Precision**, **Ripped Black Denim / Roadworn**, **Blue Denim / Indigo**, **Spiderwebs / Black Widow**, and **Classic Black / Levant Tolex**. Every finish uses identical geometry: rack, head and cabinet have the same width, with separate feet and gaps. Selecting one previews it immediately; it becomes permanent only after pressing **APPLY SKIN**. Closing without applying restores the previous skin. The VST3 exclusively uses Astra / Obsidian.
 
 **CHECK FOR UPDATES** compares the installed version with the latest public release. Startup checks can be enabled or disabled. Update checking only reports availability and never replaces files, models or presets without the user opening the download page.
 

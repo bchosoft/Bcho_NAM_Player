@@ -1,8 +1,29 @@
-# Bcho NAM Player 1.6.0 - Manual de usuario
+# Bcho NAM Player 1.7.0 - Manual de usuario (standalone dual)
+
+> Esta versión añade dos rutas de señal independientes a todo lo descrito más
+> abajo. El conmutador MONO / STEREO, los selectores
+> `NAM 1 L / NAM 2 L / NAM 1 R / NAM 2 R` e `IR L / IR R`, la sección de tono
+> propia de BLOCK NAM 1, las dos filas de rack y los presets `.bnpp` de dos
+> rutas están documentados en [DUAL_STANDALONE.md](DUAL_STANDALONE.md). Cada
+> capítulo se aplica a cada ruta por separado; en MONO solo suena la ruta
+> izquierda y los selectores de la derecha quedan ocultos, así que el
+> reproductor se comporta exactamente como se describe aquí.
 
 ## 1. Descripción
 
-Bcho NAM Player 1.6.0 es un procesador de guitarra standalone y portable para Windows, macOS y Linux. Reproduce capturas Neural Amp Modeler (`.nam`), respuestas impulsionales de pantalla (`.wav`) y una cadena reordenable de efectos de estudio. La aplicación standalone controla el dispositivo de audio, el ruteo y la latencia.
+### Novedades prácticas de la 1.7.0
+
+La primera apertura usa MONO, sin modelos cargados automáticamente y con todos los bloques desactivados. Después se recupera la última sesión al cerrar normalmente: controles, rutas L/R, modelos, IR, orden, efectos y bypass. Los archivos NAM/IR deben seguir disponibles en su ubicación. Una cadena en bypass deja pasar audio seco; no equivale a silenciar POWER.
+
+En STEREO, DUAL MONO envía la entrada sumada a ambas cadenas; úsalo para una guitarra con dos sonidos. SPLIT L/R envía entrada 1 a L y entrada 2 a R. Los selectores NAM determinan la ruta y el bloque que editas; BASS/MID/TREBLE/PRESENCE de NAM 1 son independientes de NAM 2. IR L/R determina a qué pantalla afectan IR BLEND e IR VOL. Dos filas muestran ambos racks. Los presets del standalone contienen ambas rutas y hasta cuatro NAM y dos IR.
+
+TONE3000 ofrece TRENDING, LATEST, FAVOURITES, DOWNLOADED y MINE. Conecta tu cuenta mediante el correo y código de TONE3000. SEARCH FULL CATALOGUE abre su buscador oficial. En Windows y macOS, conexión y búsqueda comparten el navegador integrado; una sesión antigua creada en el navegador externo puede requerir una conexión adicional inicial. La caducidad o revocación por el servicio puede exigir entrar de nuevo.
+
+Windows comprueba WebView2 antes de abrir el acceso o catálogo integrado. Si falta o no está disponible, ofrece descargar Evergreen Runtime desde Microsoft, usar navegador externo o cancelar. No instala nada automáticamente. Tras instalarlo vuelve a abrir TONE3000. WebView2 no es necesario para el audio ni los archivos locales. macOS usa WKWebView; Linux usa navegador externo. La sesión del navegador externo no se comparte con el integrado.
+
+Al situar el cursor sobre una captura o un bloque NAM aparece su ficha con metadatos y carátula cuando existen. El fader IR VOL tiene la escala separada y L/R en una línea independiente. Los tornillos de las placas mantienen márgenes simétricos.
+
+Bcho NAM Player 1.7.0 es un procesador de guitarra standalone y portable para Windows, macOS y Linux. Reproduce capturas Neural Amp Modeler (`.nam`), respuestas impulsionales de pantalla (`.wav`) y una cadena reordenable de efectos de estudio. La aplicación standalone controla el dispositivo de audio, el ruteo y la latencia.
 
 Esta versión añade una interfaz fotorrealista responsive, pestañas independientes para las listas BLOCK NAM 1 y BLOCK NAM 2, activación automática al cargar un NAM compatible, búsqueda profunda de carpetas, volumen independiente de la cabina IR, respuesta visual de los altavoces según la salida real, fondo de backstage a pantalla completa y once skins coordinadas.
 
@@ -12,9 +33,9 @@ La ventana inicial utiliza el tamaño nativo de 1537 x 1023 siempre que lo permi
 
 Descarga el paquete correspondiente desde la [última release pública](https://github.com/bchosoft/Bcho_NAM_Player/releases/latest), descomprímelo y conserva juntos todos los archivos y carpetas incluidos.
 
-- **Windows x64**: ejecuta `BchoNAMPlayer.exe`. Instala el driver ASIO oficial del fabricante cuando esté disponible.
-- **macOS Apple Silicon**: usa el ZIP `arm64` y abre `BchoNAMPlayer.app`.
-- **macOS Intel**: usa el ZIP `x86_64` y abre `BchoNAMPlayer.app`.
+- **Windows x64**: ejecuta `Bcho NAM Player.exe`. Instala el driver ASIO oficial del fabricante cuando esté disponible.
+- **macOS Apple Silicon**: usa el ZIP `arm64` y abre `Bcho NAM Player.app`.
+- **macOS Intel**: usa el ZIP `x86_64` y abre `Bcho NAM Player.app`.
 - **Linux x86_64**: ejecuta el AppImage. Si no tiene permiso, usa `chmod +x BchoNAMPlayer-*.AppImage`.
 
 Las aplicaciones macOS usan firma ad-hoc pero no están notarizadas. En el primer inicio haz clic derecho y selecciona **Abrir** si Gatekeeper pide confirmación.
@@ -51,7 +72,7 @@ Solo se mueve la superficie interior. Aros, tornillos, rejilla, cabina y logotip
 
 ## 5. Carga de modelos NAM
 
-Usa **BROWSE NAM** para seleccionar un `.nam` o una carpeta. Al elegir una carpeta, se añaden a la lista todos sus NAM y se selecciona automáticamente el primero. Si no encuentra ninguno, la aplicación muestra **NAM file not found**.
+Usa **BROWSE LOCAL** para seleccionar un `.nam` o una carpeta. Al elegir una carpeta, se añaden a la lista todos sus NAM y se selecciona automáticamente el primero. Si no encuentra ninguno, la aplicación muestra **NAM file not found**.
 
 La lista NAM muestra cuatro filas al tamaño nativo, añade scroll cuando es necesario y usa las flechas para seleccionar el elemento anterior o siguiente. Cada flecha se desactiva al llegar a su extremo. **TONE3000** abre el navegador online y carga el modelo descargado con su nombre descriptivo.
 
@@ -145,7 +166,7 @@ MAIN utiliza normalmente las salidas 1/2. Desactiva una ruta no utilizada para e
 
 ## 12. Presets portables `.bnpp`
 
-**SAVE .BNPP** crea un preset autocontenido con:
+**SAVE PRESET** crea un preset autocontenido con:
 
 - modelo de BLOCK NAM 2;
 - modelo de BLOCK NAM 1, si está cargado;
@@ -153,7 +174,7 @@ MAIN utiliza normalmente las salidas 1/2. Desactiva una ruta no utilizada para e
 - orden, algoritmos, parámetros y bypasses del rack;
 - potenciómetros, switches y ajustes del afinador.
 
-Los recursos se verifican mediante SHA-256 al cargarlos. **LOAD .BNPP** los extrae en la caché de la aplicación y restaura el sonido. Dispositivo, interfaz y salidas físicas se excluyen para que el preset pueda trasladarse entre ordenadores.
+Los recursos se verifican mediante SHA-256 al cargarlos. **LOAD PRESET** los extrae en la caché de la aplicación y restaura el sonido. Dispositivo, interfaz y salidas físicas se excluyen para que el preset pueda trasladarse entre ordenadores.
 
 Debe existir un modelo cargado en BLOCK NAM 2 antes de guardar un `.bnpp`.
 
@@ -172,7 +193,7 @@ también las lleva abajo. Las serigrafías usan contraste adaptado al acabado.
 
 Pulsa la rueda dentada para abrir **APPLICATION SETTINGS**. Contiene Audio Setup, selección de skin, versión instalada y comprobación manual o automática de actualizaciones.
 
-La colección Astra sustituye los diseños anteriores: **Astra / Obsidian**, **Tribal / Etched Titanium**, **Skulls / Bone & Carbon**, **Hippie / Sunset Paisley**, **Graffiti / Electric Ink**, **Purple Velvet / Amethyst**, **Stainless Steel / Precision**, **Ripped Black Denim / Roadworn**, **Blue Denim / Indigo** y **Spiderwebs / Black Widow**. Todas mantienen la misma geometría: rack, cabezal y cabina tienen el mismo ancho, con separación y apoyos propios. Seleccionar una previsualiza el cambio; solo queda aplicada al pulsar **APPLY SKIN**. Cerrar sin aplicar recupera la skin anterior. El VST3 utiliza exclusivamente Astra / Obsidian.
+La colección Astra sustituye los diseños anteriores: **Astra / Obsidian**, **Tribal / Etched Titanium**, **Skulls / Bone & Carbon**, **Hippie / Sunset Paisley**, **Graffiti / Electric Ink**, **Purple Velvet / Amethyst**, **Stainless Steel / Precision**, **Ripped Black Denim / Roadworn**, **Blue Denim / Indigo**, **Spiderwebs / Black Widow** y **Classic Black / Levant Tolex**. Todas mantienen la misma geometría: rack, cabezal y cabina tienen el mismo ancho, con separación y apoyos propios. Seleccionar una previsualiza el cambio; solo queda aplicada al pulsar **APPLY SKIN**. Cerrar sin aplicar recupera la skin anterior. El VST3 utiliza exclusivamente Astra / Obsidian.
 
 **CHECK FOR UPDATES** compara la versión instalada con la última release pública. La comprobación al iniciar puede activarse o desactivarse. Solo informa y nunca sustituye archivos, modelos o presets sin que el usuario abra la página de descarga.
 
