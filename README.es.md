@@ -68,6 +68,12 @@ Un preset incrusta sus capturas e IR (verificadas con SHA-256) junto con el orde
 
 Conecta tu cuenta de TONE3000 una vez; el reproductor guarda un token de refresco cifrado y no vuelve a necesitar un navegador en ese ordenador. Navega por **TRENDING, LATEST, FAVOURITES, DOWNLOADED y MINE**, preescucha seleccionando, o abre **SEARCH FULL CATALOGUE**. En Windows las páginas integradas usan **Microsoft WebView2**, que se detecta directamente (también dentro de los DAW, con una carpeta de datos por usuario con permisos de escritura). Si falta, puedes abrir la página oficial de descarga de Microsoft, usar tu navegador externo o cancelar: **nunca se instala nada automáticamente**, y el audio local no necesita WebView2. macOS usa WKWebView; Linux, el navegador del sistema.
 
+<table><tr><td bgcolor="#fff3cd">
+<strong>IMPORTANTE — elige conscientemente la variante del navegador</strong><br>
+<strong>EmbeddedBrowser</strong> muestra TONE3000 dentro de la aplicación. En Windows es la opción recomendada si tienes Microsoft Edge instalado y actualizado: el Runtime de WebView2 viene preinstalado en Windows 11 y normalmente ya está disponible en Windows 10, por lo que la experiencia integrada suele funcionar directamente.<br><br>
+<strong>ExternalBrowser</strong> no utiliza un WebView integrado. Abre TONE3000 en tu navegador habitual del sistema y es la alternativa para equipos donde WebView2 no está disponible o si prefieres no usar un navegador embebido. Las dos variantes tienen el mismo motor de audio; WebView2 solo afecta a las páginas integradas de TONE3000.
+</td></tr></table>
+
 ## Instalación
 
 **Standalone**: descomprime el ZIP y mantén juntos sus archivos.
@@ -97,12 +103,14 @@ Empieza con un nivel de escucha bajo. Con todos los bloques en bypass, pasa la s
 
 ## Descargas
 
+Los nombres siguientes son exactamente los archivos publicados en la release. Windows y macOS ofrecen las dos variantes de navegador; Linux conserva únicamente la versión que usa el navegador del sistema.
+
 Todos los archivos de esta versión: **[Bcho NAM Player v1.7.5](https://github.com/bchosoft/Bcho_NAM_Player/releases/tag/v1.7.5)**
 
 | Paquete | Archivo |
 | --- | --- |
-| Windows standalone (navegador integrado) | [BchoNAMPlayer-v1.7.5-Windows-x64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-Standalone-EmbeddedBrowser.zip) |
-| Windows VST3 (navegador integrado) | [BchoNAMPlayer-v1.7.5-Windows-x64-VST3-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-VST3-EmbeddedBrowser.zip) |
+| Windows standalone — EmbeddedBrowser (recomendado con Edge/WebView2) | [BchoNAMPlayer-v1.7.5-Windows-x64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-Standalone-EmbeddedBrowser.zip) |
+| Windows VST3 — EmbeddedBrowser (recomendado con Edge/WebView2) | [BchoNAMPlayer-v1.7.5-Windows-x64-VST3-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-VST3-EmbeddedBrowser.zip) |
 | Windows standalone (navegador externo) | [BchoNAMPlayer-v1.7.5-Windows-x64-Standalone-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-Standalone-ExternalBrowser.zip) |
 | Windows VST3 (navegador externo) | [BchoNAMPlayer-v1.7.5-Windows-x64-VST3-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-VST3-ExternalBrowser.zip) |
 | macOS Apple Silicon standalone (navegador integrado) | [BchoNAMPlayer-v1.7.5-macOS-arm64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-arm64-Standalone-EmbeddedBrowser.zip) |

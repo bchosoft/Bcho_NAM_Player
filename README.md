@@ -72,6 +72,12 @@ A preset embeds its captures and IR (verified with SHA-256) together with rack o
 
 Connect your TONE3000 account once; the player keeps an encrypted refresh token and never needs a browser again on that computer. Browse **TRENDING, LATEST, FAVOURITES, DOWNLOADED and MINE**, audition by selecting, or open **SEARCH FULL CATALOGUE**. On Windows the embedded pages use **Microsoft WebView2**; it is detected directly (also inside DAWs, with a writable per-user data folder). If it is missing you can open Microsoft's official download page, use your external browser or cancel - **nothing is installed automatically**, and local audio never needs WebView2. macOS uses WKWebView; Linux uses the system browser.
 
+<table><tr><td bgcolor="#fff3cd">
+<strong>IMPORTANT — choose the browser variant deliberately</strong><br>
+<strong>EmbeddedBrowser</strong> displays TONE3000 inside the application. On Windows, this is the recommended choice if Microsoft Edge is installed and up to date: the WebView2 Runtime is preinstalled on Windows 11 and is commonly already available on Windows 10, so the integrated experience usually works immediately.<br><br>
+<strong>ExternalBrowser</strong> does not use an embedded WebView. It opens TONE3000 in your normal system browser and is the fallback for machines where WebView2 is unavailable or where you prefer not to use an embedded browser. Both variants have the same audio engine; WebView2 is only relevant to the integrated TONE3000 pages.
+</td></tr></table>
+
 ### Installing
 
 **Standalone** - extract the ZIP and keep its files together.
@@ -103,10 +109,12 @@ Start at a low monitoring level. With every block bypassed the dry signal passes
 
 All files for this version: **[Bcho NAM Player v1.7.5](https://github.com/bchosoft/Bcho_NAM_Player/releases/tag/v1.7.5)**
 
+The filenames below are the exact assets published in the release. Windows and macOS provide both browser variants; Linux keeps the system-browser build only.
+
 | Package | File |
 | --- | --- |
-| Windows standalone (embedded browser) | [BchoNAMPlayer-v1.7.5-Windows-x64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-Standalone-EmbeddedBrowser.zip) |
-| Windows VST3 (embedded browser) | [BchoNAMPlayer-v1.7.5-Windows-x64-VST3-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-VST3-EmbeddedBrowser.zip) |
+| Windows standalone — EmbeddedBrowser (recommended with Edge/WebView2) | [BchoNAMPlayer-v1.7.5-Windows-x64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-Standalone-EmbeddedBrowser.zip) |
+| Windows VST3 — EmbeddedBrowser (recommended with Edge/WebView2) | [BchoNAMPlayer-v1.7.5-Windows-x64-VST3-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-VST3-EmbeddedBrowser.zip) |
 | Windows standalone (external browser) | [BchoNAMPlayer-v1.7.5-Windows-x64-Standalone-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-Standalone-ExternalBrowser.zip) |
 | Windows VST3 (external browser) | [BchoNAMPlayer-v1.7.5-Windows-x64-VST3-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-VST3-ExternalBrowser.zip) |
 | macOS Apple Silicon standalone (embedded browser) | [BchoNAMPlayer-v1.7.5-macOS-arm64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-arm64-Standalone-EmbeddedBrowser.zip) |
