@@ -1,72 +1,339 @@
-# Bcho NAM Player 1.7.0 - VST3 / AU Plugin Manual
+# Bcho NAM Player 1.7.5 - VST3 / AU Plug-in Manual
 
-## 1. Included formats
+Complete reference for the plug-in. It shares its engine, its rack, its
+effects, its TONE3000 library and its presets with the standalone application,
+so this manual documents the plug-in in full and points at the
+[standalone manual](USER_MANUAL.en.md) for the chapters that are identical.
 
-An audio-effect plugin, not a MIDI instrument. Two L/R paths, each with two NAM blocks, IR and effects rack. VST3 for Windows x64, macOS Intel/Apple Silicon and Linux x86_64. AU is macOS-only. Match the package to your DAW architecture. AAX is not included.
+---
 
-## 2. Installation
+## Contents
 
-Close the DAW before copying. Copy the entire bundle, not only its inner binary.
+1. [What the plug-in is](#1-what-the-plug-in-is)
+2. [Installing](#2-installing)
+3. [Your first track](#3-your-first-track)
+4. [Map of the editor](#4-map-of-the-editor)
+5. [MONO, STEREO and the channel layout](#5-mono-stereo-and-the-channel-layout)
+6. [Loading captures and cabinets](#6-loading-captures-and-cabinets)
+7. [Controls](#7-controls)
+8. [The rack and the eight effects](#8-the-rack-and-the-eight-effects)
+9. [Linking effects between L and R](#9-linking-effects-between-l-and-r)
+10. [Tuner and Input Cali](#10-tuner-and-input-cali)
+11. [TONE3000 inside the plug-in](#11-tone3000-inside-the-plug-in)
+12. [Projects, presets and automation](#12-projects-presets-and-automation)
+13. [Settings and support](#13-settings-and-support)
+14. [Differences from the standalone](#14-differences-from-the-standalone)
+15. [Troubleshooting](#15-troubleshooting)
+16. [Technical specifications](#16-technical-specifications)
+17. [Integrity and licences](#17-integrity-and-licences)
 
-- Windows: copy Bcho NAM Player.vst3 to C:/Program Files/Common Files/VST3. Administrator permission may be required.
-- macOS VST3: copy Bcho NAM Player.vst3 to ~/Library/Audio/Plug-Ins/VST3.
-- macOS AU: copy Bcho NAM Player.component to ~/Library/Audio/Plug-Ins/Components.
-- Linux: copy Bcho NAM Player.vst3 to ~/.vst3.
+---
 
-Restart the DAW and rescan plugins. The effect appears as Bcho NAM Player. Use VST3 in compatible hosts or AU in an Audio Unit host such as Logic. Match the DAW process architecture: Intel x86_64 or Apple Silicon arm64. macOS builds are ad-hoc signed, not notarized. If blocked, review Privacy & Security and host instructions; do not globally disable system protection.
+## 1. What the plug-in is
+
+An **audio-effect** plug-in - not a MIDI instrument. It carries two complete and
+independent signal paths (L and R), each with BLOCK NAM 1, BLOCK NAM 2, a
+cabinet IR, an eight-effect rack with free ordering, gate, tone stack, master
+level, IR blend, IR volume, input and output gain, power, calibration and tuner.
+
+| Format | Platforms |
+| --- | --- |
+| VST3 | Windows x64, macOS Intel and Apple Silicon, Linux x86_64 |
+| AU | macOS only |
+
+AAX is not included. Match the package to your DAW's process architecture.
+
+---
+
+## 2. Installing
+
+Close the DAW first, and copy the **entire bundle**, not just the binary inside
+it.
+
+| System | Destination |
+| --- | --- |
+| Windows | `C:\Program Files\Common Files\VST3` (administrator permission may be required) |
+| macOS VST3 | `~/Library/Audio/Plug-Ins/VST3` |
+| macOS AU | `~/Library/Audio/Plug-Ins/Components` |
+| Linux | `~/.vst3` |
+
+Start the DAW and rescan plug-ins. The effect appears as **Bcho NAM Player**.
+
+macOS builds are ad-hoc signed, not notarized. If the host blocks the plug-in,
+review Privacy & Security and your host's own validation - do not disable system
+protection globally.
+
+---
 
 ## 3. Your first track
 
-Insert the plugin as an effect on a mono or stereo audio track. Select the guitar input in your DAW and enable monitoring. Start at low levels and avoid double monitoring through both the interface and DAW.
+1. Insert the plug-in as an **effect** on a mono or stereo audio track.
+2. Select your guitar input in the DAW and enable monitoring. Avoid monitoring
+   the same signal twice, through the interface and the DAW.
+3. A new instance starts in **MONO** with every block disabled, so your dry
+   signal passes through until you load a capture. POWER can mute the path.
+4. Load a capture with **BROWSE LOCAL** or **TONE3000**, then a cabinet with
+   **BROWSE IR**.
+5. Set levels with INPUT GAIN, MASTER VOL and OUTPUT GAIN while watching the
+   meters.
 
-A new instance starts in MONO with all blocks disabled. Dry audio passes until processing is loaded/enabled. POWER can mute the path. Configure device, driver, sample rate and buffer in the DAW, not the plugin.
+> Driver, sample rate and buffer size belong to the DAW. The plug-in has no
+> audio-device window.
 
-MONO processes the L path and feeds the plugin outputs. On a stereo bus, STEREO processes L and R inputs separately. For one guitar through two stereo rigs, duplicate/send it to both channels in the DAW. The standalone DUAL MONO / SPLIT L/R input switch is not present in the plugin.
+---
 
-## 4. Loading models and cabinets
+## 4. Map of the editor
 
-Choose NAM 1 L or NAM 2 L; stereo also exposes NAM 1 R and NAM 2 R. Use BROWSE LOCAL or drop a compatible .nam capture. Loading activates that block. NAM 1 and NAM 2 have independent tone settings.
+![The plug-in editor in MONO](manual/img/plugin-mono.jpg)
 
-Choose IR L or IR R and use BROWSE IR for a .wav response. No IR is bundled; source gain is not normalized. IR BLEND mixes dry and cabinet audio. IR VOL adjusts the cabinet branch from -24 to 0 dB, with a separate L/R caption and unobstructed scale. Loading activates the IR; bypass its block to compare.
+The layout is the standalone's, minus the parts a host owns:
 
-Demo captures are provided in Models next to the package but are not loaded automatically. Locate them with BROWSE LOCAL. Save or consolidate resources before moving a project.
+- **Rack strip**: preset buttons, the eleven reorderable blocks, the tuner and
+  its display, the tuning selector, the MONO / STEREO switch and the settings
+  gear.
+- **Amplifier head**: Input VU, INPUT GAIN, INPUT CALI; the seven main knobs
+  with the NAM and IR selectors above them; the NAM and IR browsers with the IR
+  VOL fader; Output VU, OUTPUT GAIN and POWER.
+- **Cabinet**: the logo and two cones driven by the real output level.
 
-## 5. Controls and effects
+The editor is fully resizable and keeps its 1537 x 1023 proportions.
 
-INPUT GAIN and OUTPUT GAIN control levels; GATE controls the gate; MASTER VOL is the main level. BASS, MID, TREBLE and PRESENCE follow the selected NAM. IR BLEND and IR VOL follow the IR selector. Watch the input/output meters.
+---
 
-Each path has compressor, octaver, pitch shifter, chorus, flanger, phaser, delay and reverb. Click to enable/bypass, double-click for editing/loading and drag to reorder around the NAM 2 and IR anchors. Each conventional effect offers three algorithms and six parameters. Smoothed changes reduce abrupt transitions but do not replace sensible gain staging.
+## 5. MONO, STEREO and the channel layout
 
-TUNER analyses DI; play one isolated string. INPUT CALI uses the engine reference and model metadata; the plugin does not expose the standalone Audio Setup interface-reference setting. For a specific interface calibration, adjust gain externally or use standalone.
+The plug-in always presents a **stereo output**, even on a mono track, so both
+chains always have somewhere to go.
 
-## 6. Saving and automation
+| Mode | Behaviour |
+| --- | --- |
+| MONO | Only the left path runs. Its result is copied to both plug-in outputs |
+| STEREO | Left path processes input channel 1 and feeds output 1; right path processes input channel 2 and feeds output 2 |
 
-Save the DAW project to retain both paths, parameters, file references and rack states/order. DAW state references NAM/IR files on disk; it does NOT automatically embed them. Keep them available when reopening or moving projects.
+On a **mono track in STEREO**, both chains receive the same input signal, so one
+guitar drives two independent rigs. On a **stereo track in STEREO**, the two
+input channels are processed separately.
 
-SAVE PRESET writes a .bnpp for the selected path with NAM 1, NAM 2, IR and settings. LOAD PRESET replaces that path. Share both paths as two presets; use the DAW project to recall the full instance. Importing a two-path standalone preset uses its backwards-compatible left-path representation in the selected plugin path.
+![The plug-in in STEREO: two rack rows, four NAM selectors, two IR selectors](manual/img/plugin-stereo.jpg)
 
-The host can automate published parameters, including gains, tone, blend, IR VOL, power, calibration, tuner and MONO/STEREO. Not every rack control is a host automation parameter: order, algorithms and internal settings are saved in state. File changes involve loading and are not continuous automation.
+The standalone's DUAL MONO / SPLIT L/R switch is not present: in a DAW you
+decide that with the track's own routing.
 
-## 7. TONE3000 and WebView2
+The `L` / `R` tabs beside the racks choose which path the shared controls edit;
+the `NAM 1 L`, `NAM 2 L`, `NAM 1 R`, `NAM 2 R` and `IR L`, `IR R` selectors work
+exactly as in the standalone - see
+[Which control follows what](USER_MANUAL.en.md#12-mono-and-stereo-two-complete-rigs).
 
-TONE3000 provides favourites, downloads, latest, trending and your own captures. Connect your account, then use SEARCH FULL CATALOGUE for the official picker. Embedded login and search share a session; service-side expiry can still require authentication.
+---
 
-On Windows, missing/unavailable WebView2 offers an official Microsoft download, external browser or cancel. No automatic installation and no Microsoft installer in the ZIP. Install from Microsoft, then reopen TONE3000. Local audio does not need WebView2. macOS uses WKWebView and Linux the external browser. Network, account and catalogue availability depend on the external service.
+## 6. Loading captures and cabinets
 
-## 8. Differences from standalone
+Identical to the standalone
+([chapter 8](USER_MANUAL.en.md#8-block-nam-1-and-block-nam-2) and
+[chapter 9](USER_MANUAL.en.md#9-cabinet-impulse-responses)):
 
-Plugins use Astra / Obsidian, without standalone's eleven selectable skins, device setup, physical MAIN/PRE/DI/WET output routing or dual input-mode switch. Configure routing in the DAW. A new instance does not inherit the last standalone session; saved instances restore from their host project.
+- Choose the target block with the NAM selectors, then **BROWSE LOCAL**, the
+  list, **TONE3000**, a double-click on the block, or drag and drop.
+- **BROWSE IR** loads a `.wav` response; clicking the selected row again clears
+  it and bypasses the IR block.
+- Loading a valid file switches its block on. IR gain is never normalized.
+- NAM A1, A2 Standard and A2 Nano are detected automatically.
+- Hovering a NAM block or list row shows the capture information card.
 
-## 9. Troubleshooting
+Demonstration captures ship in the `Models` folder beside the package but are
+never loaded automatically; find them with BROWSE LOCAL.
 
-- Not listed: check folder, format and architecture, then rescan.
-- No audio: check track input, monitoring, POWER and DAW routes.
-- One silent side: in STEREO ensure the DAW feeds both channels.
-- Missing files: restore resource locations or load your .bnpp presets.
-- Dropouts: increase the buffer and reduce CPU load; four NAM slots across two paths may be demanding.
-- Empty TONE3000: check account/network/WebView2 or use the external browser.
-- macOS host rejection: review host validation and system permissions. Ad-hoc signing is not notarization.
+> The DAW project stores **references** to your `.nam` and `.wav` files, not the
+> files themselves. Keep them in place, or save `.bnpp` presets, which embed
+> them.
 
-## 10. Integrity and licences
+---
 
-Check ZIP hashes against SHA256SUMS.txt and read THIRD_PARTY_NOTICES.md. Respect the licences of captures and IRs shared in presets. These manuals do not imply certification in every DAW; host/system combinations need practical validation.
+## 7. Controls
+
+Ranges, defaults and behaviour are the same as the standalone - see
+[Amplifier controls, knob by knob](USER_MANUAL.en.md#10-amplifier-controls-knob-by-knob).
+
+In short: INPUT GAIN and OUTPUT GAIN ±12 dB; GATE from OFF to a -80…0 dB
+threshold; BASS / MID / TREBLE / PRESENCE ±12 dB at 70 Hz, 750 Hz, 4 kHz and
+6 kHz following the selected NAM block; MASTER VOL ±12 dB; IR BLEND 0-100 %;
+IR VOL -24…0 dB (default -12 dB) following the selected cabinet; POWER mutes the
+path. Drag a knob to change it, double-click to restore its default.
+
+---
+
+## 8. The rack and the eight effects
+
+Identical to the standalone
+([chapter 7](USER_MANUAL.en.md#7-the-rack-blocks-order-and-the-eye) and
+[chapter 11](USER_MANUAL.en.md#11-the-eight-effects-in-full)): single click
+enables or bypasses, double-click opens the editor or the file chooser, drag
+reorders around the BLOCK NAM 2 and IR anchors, and the eye chooses which block
+the shared controls describe.
+
+![The effect editor](manual/img/dialog-effect-editor.png)
+
+Compressor, octaver, pitch shifter, chorus, flanger, phaser, delay and reverb,
+each with three algorithms and six real-unit parameters. The full tables are in
+the [standalone manual](USER_MANUAL.en.md#11-the-eight-effects-in-full).
+
+---
+
+## 9. Linking effects between L and R
+
+In STEREO the chain icon links an effect of L with the same effect of R, so one
+edit changes both. Green = linked, grey = not. When the two blocks share a
+column the icon sits on the seam between the rows; when they do not, it moves to
+the lower-right corner of both blocks.
+
+![Linked and unlinked pairs in the plug-in's two rack rows](manual/img/zone-rack-stereo.jpg)
+
+Linked blocks share the algorithm and the six parameters; each keeps its own
+on/off switch and its own position. Linking two blocks that differ asks which
+side's settings to keep. BLOCK NAM 1, BLOCK NAM 2 and IR cannot be linked.
+**Links are saved in the DAW project.** Full description:
+[standalone chapter 13](USER_MANUAL.en.md#13-linking-effects-between-l-and-r).
+
+---
+
+## 10. Tuner and Input Cali
+
+**TUNER** works exactly as in the standalone: it listens to the untouched DI
+before the gate and the NAM blocks, covers roughly 65-700 Hz, reads centred
+within ±5 cents, and offers STANDARD, DROP D, D STANDARD, Eb and OPEN G. Play
+one isolated string at a useful level.
+
+**INPUT CALI** uses the engine's reference and the capture's `input_level_dbu`
+metadata (assuming +12 dBu when a capture has none), clamped to ±24 dB. The
+plug-in does **not** expose the standalone's interface-reference slider, because
+the interface belongs to the DAW: for a specific hardware calibration, set the
+gain outside the plug-in or use the standalone.
+
+---
+
+## 11. TONE3000 inside the plug-in
+
+The **TONE3000** button opens the same library window as the standalone.
+
+![The TONE3000 library](manual/img/tone3000-library.png)
+
+- Connect the account once; the encrypted refresh token is stored per user, so
+  the plug-in never needs a browser again on that computer.
+- TRENDING, LATEST, FAVOURITES, DOWNLOADED and MINE.
+- **Selecting a row loads that capture into the current NAM block immediately**;
+  the rest of the tone downloads in the background, and picking another row
+  cancels it. A tone already in your downloads loads instantly.
+- Rows marked **IR only - no NAM** hold only impulse responses and are not
+  auditioned.
+- **RESTORE PREVIOUS MODEL** puts back what the block held before the window was
+  opened; closing the window keeps the last audition.
+- **SEARCH FULL CATALOGUE** opens TONE3000's own picker inside the plug-in; when
+  you choose a tone the picker closes by itself and the download starts.
+
+On Windows the embedded browser uses WebView2. Inside a DAW the plug-in stores
+its WebView2 data in a per-user folder, so a host installed in Program Files
+never blocks it. If WebView2 is missing, the plug-in offers an official
+Microsoft download or your external browser and installs nothing automatically.
+Full detail: [standalone chapter 16](USER_MANUAL.en.md#16-tone3000-inside-the-player).
+
+---
+
+## 12. Projects, presets and automation
+
+**The DAW project** stores everything about the instance: both paths, every
+control, the file references, rack order, algorithms, parameters, bypass states,
+the L/R links, and MONO/STEREO.
+
+Reopening a project re-loads the saved NAM, pedal NAM and IR of **both** paths
+into the engine with their saved on/off states - whatever order the host uses to
+restore the state and prepare audio, and with the editor closed. Project
+restore, capture changes and audio re-initialisation (a sample-rate or
+buffer-size change) all fade in from silence, so nothing clicks.
+
+**`.bnpp` presets.** SAVE PRESET writes a portable archive for the **selected
+path** with its BLOCK NAM 1, BLOCK NAM 2, IR and settings embedded and checked
+with SHA-256; LOAD PRESET replaces that path. Share both paths as two presets;
+use the project to recall the whole instance. A two-path standalone preset loads
+its left-path representation into the selected plug-in path.
+
+**Automation.** The host can automate the published parameters, per path:
+
+| Parameter | Per path |
+| --- | --- |
+| Input Gain, Gate, Bass, Mid, Treble, Presence, Master Vol | `L_` and `R_` |
+| NAM 1 Bass, NAM 1 Mid, NAM 1 Treble, NAM 1 Presence | `L_` and `R_` |
+| IR Blend, IR Cabinet Volume, Output Gain | `L_` and `R_` |
+| Power, Input Cali, Tuner | `L_` and `R_` |
+| Stereo (MONO / STEREO) | one, global |
+
+Rack order, effect algorithms and effect parameters are part of the saved state,
+not host automation. Loading a file is a load, not a continuous parameter.
+
+---
+
+## 13. Settings and support
+
+The gear opens a short window with the version and a link to support the
+project.
+
+![Plug-in settings](manual/img/dialog-plugin-settings.png)
+
+---
+
+## 14. Differences from the standalone
+
+| The standalone has | The plug-in |
+| --- | --- |
+| Audio Setup: driver, interface, channels, sample rate, buffer | The DAW owns all of it |
+| Physical MAIN / PRE / DI / WET output routing | Route inside the DAW |
+| DUAL MONO / SPLIT L/R input switch | Decided by the track's routing |
+| Interface input reference slider for Input Cali | Not exposed; calibrate outside or use the standalone |
+| Eleven selectable skins | Always Astra / Obsidian |
+| Its own saved session between launches | State comes from the host project |
+| Update checking | Not included |
+
+Everything else - engine, rack, effects, links, tuner, browsers, TONE3000,
+information card, `.bnpp` presets - is the same code.
+
+---
+
+## 15. Troubleshooting
+
+| Symptom | What to check |
+| --- | --- |
+| Not listed after scanning | Folder, format and architecture match the host; then rescan |
+| No audio | Track input, monitoring, POWER, and the DAW's own routing |
+| Dry sound only | A capture is loaded and its block is lit; a fully bypassed chain passes dry audio |
+| One side silent in STEREO | The DAW must actually feed both channels; on a mono track both chains get the same input |
+| Missing files after moving a project | Restore the `.nam` / `.wav` locations, or load your `.bnpp` presets |
+| Dropouts | Raise the buffer and lower CPU load; four NAM blocks across two paths is demanding |
+| Empty TONE3000 window | Account, network, or WebView2 on Windows; or use the external browser |
+| macOS host rejects it | Review host validation and system permissions; ad-hoc signing is not notarization |
+| The DAW process stayed alive after closing a project | A plug-in unload deadlock fixed in 1.7.5. End the leftover process once from the task manager and update the plug-in |
+
+---
+
+## 16. Technical specifications
+
+| Item | Value |
+| --- | --- |
+| Plug-in type | Audio effect (no MIDI) |
+| Bus layout | Mono or stereo input, **always stereo output** |
+| Signal paths | 2 independent (L / R) |
+| NAM blocks | 2 per path; IR 1 per path; 8 effects per path |
+| Sample rates / buffers | Whatever the host provides; oversized host buffers are split internally |
+| NAM architectures | A1, A2 Standard, A2 Nano - automatic |
+| Start-up / re-prepare fade | 60 ms from silence |
+| NAM change fade | 15 ms out, silence until the new capture is installed, 20 ms in |
+| IR change fade | 12 ms crossfade |
+| Editor | 1537 x 1023 native, resizable, proportional |
+
+---
+
+## 17. Integrity and licences
+
+Check ZIP hashes against `SHA256SUMS.txt` and read `THIRD_PARTY_NOTICES.md`
+(JUCE and Neural Amp Modeler Core). Respect the licences of the captures and
+impulse responses you use or share inside presets. These manuals do not imply
+certification in every DAW; each host and system combination deserves a
+practical check.

@@ -1,48 +1,124 @@
-# Bcho NAM Player 1.7.0
+# Bcho NAM Player 1.7.5
 
-[English](README.md) | [Descargas](https://github.com/bchosoft/Bcho_NAM_Player/releases/latest) | [Manual standalone](docs/USER_MANUAL.es.md) | [Manual plugin](docs/PLUGIN_MANUAL.es.md)
+[English](README.md#english) · [Descargas](https://github.com/bchosoft/Bcho_NAM_Player/releases/tag/v1.7.5) · [Apoya el proyecto en Ko-fi](https://ko-fi.com/bchosoft)
 
-![Bcho NAM Player 1.7.0](docs/Caratula_BNAMP.png)
+![Bcho NAM Player 1.7.5](docs/Portada_1.7.5.png)
 
-Procesador de guitarra con Neural Amp Modeler, pantallas IR y efectos. Aplicación standalone y plugin VST3; en macOS también Audio Unit (AU).
+## Descripción general
 
-## Novedades de la 1.7.0
+Bcho NAM Player es un procesador de guitarra construido alrededor de capturas **Neural Amp Modeler**, **respuestas impulsionales** de pantalla y un rack de efectos de estudio. Está disponible como **aplicación standalone** portable y como **plugin** de efecto de audio (VST3 en Windows, macOS y Linux, y AU en macOS).
 
-- Dos rutas independientes L/R, cada una con BLOCK NAM 1, BLOCK NAM 2, IR y rack de efectos.
-- MONO / STEREO; en standalone, DUAL MONO envía una guitarra a ambas cadenas y SPLIT L/R procesa dos entradas por separado.
-- Selectores NAM 1 L, NAM 2 L, NAM 1 R, NAM 2 R e IR L/R. NAM 1 conserva su propia ecualización.
-- Dos filas de rack en estéreo, listas NAM/IR separadas y vúmetros por canal.
-- Tarjetas de información de las capturas con metadatos e imagen cuando están disponibles.
-- TONE3000: favoritos, descargados, tendencias, novedades, modelos propios y búsqueda del catálogo completo. Acceso y búsqueda integrada comparten sesión para evitar un segundo inicio innecesario.
-- Detección de WebView2 en Windows. Si no está disponible, permite descargarlo desde Microsoft, usar el navegador externo o cancelar. No instala nada automáticamente.
-- Recuperación de la última configuración del standalone, incluido el bypass. Primer inicio en MONO, con todos los bloques desactivados y sin cargar automáticamente modelos.
-- Escala IR VOL separada del fader, indicaciones L/R sin recortes y tornillos con márgenes simétricos.
-- Mejoras en recuperación de sesiones del plugin y procesamiento de bloques grandes durante renderizado.
+Tiene **dos rutas de señal completas e independientes, L y R**. Cada ruta tiene su propio BLOCK NAM 1, BLOCK NAM 2, IR de pantalla, rack de ocho efectos con orden libre, puerta de ruido, sección de tonos, volumen máster, IR blend, volumen de pantalla, **ganancia de entrada**, ganancia de salida, encendido, calibración de entrada y afinador. En **MONO** suena una ruta; en **STEREO** funcionan las dos a la vez.
 
-## Sonido y manejo
+## Novedades de la 1.7.5
 
-Dos bloques NAM por ruta, IR sin normalización, mezcla IR BLEND, volumen de cabina entre -24 y 0 dB, puerta de ruido, tono, ganancias y afinador. Compresor, octavador, pitch shifter, chorus, flanger, phaser, delay y reverb: tres algoritmos y seis parámetros por efecto.
+- **Las sesiones del DAW se restauran de verdad.** Al reabrir un proyecto, los NAM, NAM de pedal e IR guardados de **las dos** rutas vuelven a cargarse en el motor de audio —no solo sus nombres en las listas— con el estado activado/desactivado exacto de cada bloque. Funciona sea cual sea el orden en que el DAW restaura el estado y prepara el audio, y con el editor cerrado.
+- **Sin chasquidos ni ruido.** El arranque, la restauración de sesión, cargar o sustituir un NAM, cargar un NAM de pedal, preparar o reinicializar el audio y los cambios de frecuencia de muestreo o de tamaño de búfer entran con fundido desde silencio. Al pasar de un NAM a otro, la cadena hace fundido de salida, instala la captura nueva (ya precalentada) y vuelve con fundido de entrada, así que la onda nunca se corta.
+- **Salida del plugin siempre estéreo.** En una pista mono en STEREO, las dos cadenas reciben la misma entrada, así que una guitarra mueve dos equipos; L alimenta la salida izquierda y R la derecha. INPUT GAIN es independiente para L y R.
+- **Enlaces de efectos L/R.** En STEREO, un icono de cadena enlaza un efecto de L con el mismo efecto de R: una edición cambia ambos, y cada bloque conserva su interruptor y su posición.
+- **Selector de visualización con el ojo.** El cuerpo del bloque lo activa o lo pone en bypass; el ojo de cada bloque elige qué bloque describen los controles compartidos y los navegadores. Un bloque desactivado no se puede visualizar.
+- **Biblioteca TONE3000 más rápida y completa.** Seleccionar un tone lo carga al instante en el bloque NAM actual (alrededor de un segundo hasta que suena; inmediato si ya lo habías descargado). **RESTORE PREVIOUS MODEL** devuelve la captura que tenía el bloque antes. Las capturas A2 ya se cargan desde todas las listas, los tones que solo tienen IR se marcan, y el buscador del catálogo completo se cierra solo al elegir un tone.
+- **Cierre limpio en los DAW.** Cerrar un proyecto que contiene el plugin ya no deja el proceso del DAW en marcha.
+- **Apoya el proyecto** desde la ventana de ajustes: **[ko-fi.com/bchosoft](https://ko-fi.com/bchosoft)**.
+- **Manuales reescritos**, en inglés y español, con cada control documentado y capturas de pantalla.
 
-Presets portables `.bnpp` con recursos integrados y comprobación SHA-256. El standalone guarda ambas rutas; el plugin guarda una ruta por preset y ambas dentro del proyecto del DAW. Conserva los archivos NAM/IR originales para recuperar proyectos del DAW.
+## Compatibilidad
 
-El standalone añade Audio Setup, ASIO en Windows, rutas MAIN/PRE/DI/WET, calibración con referencia de interfaz, once skins, conos animados y comprobación de actualizaciones. El plugin utiliza el dispositivo y las conexiones del DAW y el acabado Astra / Obsidian; no incluye el panel de dispositivos ni las rutas físicas del standalone.
+| Plataforma | Standalone | Plugin |
+| --- | --- | --- |
+| Windows 10/11 x64 | `.exe` portable (ASIO, Windows Audio, DirectSound) | VST3 |
+| macOS 11+ Apple Silicon (`arm64`) | `.app` | VST3 y AU |
+| macOS 11+ Intel (`x86_64`) | `.app` | VST3 y AU |
+| Linux x86_64 | AppImage | VST3 |
 
-## Paquetes e inicio rápido
+Usa el paquete de plugin que coincida con la arquitectura de tu DAW. No se incluye AAX. Las versiones de macOS tienen firma ad-hoc y no están notarizadas por Apple.
 
-- Windows x64: standalone portable y VST3.
-- macOS Intel (`x86_64`) y Apple Silicon (`arm64`): standalone, VST3 y AU.
-- Linux x86_64: standalone AppImage y VST3.
+## Standalone
 
-Los adjuntos de la release indican los paquetes realmente disponibles. El plugin debe coincidir con la arquitectura del DAW. AU solo existe en macOS. Los paquetes macOS tienen firma ad-hoc, no notarización de Apple.
+- Su propio **Audio Setup**: driver (incluido ASIO en Windows), interfaz, canales activos, frecuencia de muestreo y tamaño de búfer.
+- **Cuatro rutas a salidas físicas**: MAIN (sonido final), PRE (BLOCK NAM 2 antes de tonos, efectos y pantalla), DI (entrada sin tocar) y WET (después de la pantalla).
+- **DUAL MONO / SPLIT L/R** en STEREO: una guitarra a las dos cadenas, o entrada 1 a L y entrada 2 a R. Los selectores de ruta L/R están a la derecha de las dos filas del rack, sin solaparse con el conmutador de entrada.
+- **Recuerda la última sesión** al cerrar con normalidad: las dos rutas, capturas, IR, orden de bloques, bypass, enlaces, acabado, dispositivo y ruteo. El primer arranque es seguro: MONO y sin nada cargado.
+- **Input Cali**: calibración automática a partir de la referencia en dBu de tu interfaz y de los metadatos `input_level_dbu` de la captura.
+- Once acabados del panel frontal, conos animados que siguen el nivel real de salida y comprobación de actualizaciones.
 
-Descomprime el ZIP. Para standalone abre **Bcho NAM Player**, configura AUDIO SETUP y carga NAM/IR. Para plugin consulta la ubicación de instalación en su manual, vuelve a escanear plugins y añádelo como efecto de audio en el DAW. Empieza con volumen bajo: con todos los bloques desactivados pasa señal seca.
+## Plugin VST3 / AU
 
-WebView2 solo se necesita para TONE3000 integrado en Windows, no para audio local. En macOS se usa WKWebView y en Linux el navegador del sistema. Obtén los drivers de tu interfaz de su fabricante.
+- Efecto de audio con **salida estéreo en pistas mono y estéreo**. MONO copia la ruta izquierda a las dos salidas; STEREO envía L a la salida izquierda y R a la derecha.
+- El proyecto del DAW guarda las dos rutas, todos los controles, las referencias a archivos, el orden del rack, algoritmos, parámetros, bypass y enlaces L/R. Las sesiones se restauran en el motor como se describe arriba.
+- Parámetros automatizables por ruta: ganancia de entrada, puerta, tonos (principales y de NAM 1), máster, IR blend, volumen de pantalla, ganancia de salida, encendido, calibración de entrada y afinador, además del conmutador global MONO/STEREO.
+- Usa el dispositivo de audio del DAW; siempre con el acabado Astra / Obsidian.
 
-## Documentación e integridad
+## Capturas, NAM de pedal e IR
 
-Los ZIP incluyen los manuales PDF de standalone y plugin en español e inglés. Versiones de lectura en [docs](docs). Comprueba los ZIP con `SHA256SUMS.txt`.
+- **BLOCK NAM 2** (amplificador) y **BLOCK NAM 1** (pedal o previo) por ruta, cada uno con su carpeta, su lista y su opción de búsqueda profunda. NAM A1, A2 Standard y A2 Nano se detectan automáticamente. BLOCK NAM 1 tiene sus propios BASS / MID / TREBLE / PRESENCE.
+- Carga desde **BROWSE LOCAL**, la lista, **TONE3000**, doble clic en el bloque, o arrastrando y soltando sobre la lista o el bloque.
+- Las **IR de pantalla** (`.wav`, mono o estéreo, hasta 8192 muestras) se remuestrean a la frecuencia del dispositivo y **nunca se normalizan**. **IR BLEND** mezcla seco y pantalla; **IR VOL** ajusta la rama de pantalla de -24 a 0 dB (por defecto -12 dB).
+- Pasa el ratón por un bloque NAM o una fila de la lista para ver la **ficha de la captura**: metadatos y carátula.
 
-El repositorio público contiene documentación y descargas, **no el código fuente de la aplicación**. Los archivos automáticos de GitHub llamados “Source code” corresponden únicamente al contenido documental del repositorio público.
+## Rack y efectos
 
-Consulta [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Los modelos e IR tienen sus propias licencias; compartir presets no concede derechos sobre recursos de terceros.
+Once bloques por ruta en orden de proceso, reordenables libremente alrededor de las anclas BLOCK NAM 2 e IR. **Clic en el cuerpo del bloque para activarlo o ponerlo en bypass; clic en el ojo para visualizarlo; doble clic para abrir su editor o su selector de archivo.** Compresor, octavador, transpositor, chorus, flanger, phaser, delay y reverb, cada uno con **tres algoritmos y seis parámetros en unidades reales**; los cambios se suavizan y la realimentación está acotada.
+
+## Presets portables `.bnpp`
+
+Un preset incrusta sus capturas e IR (verificadas con SHA-256) junto con el orden del rack, algoritmos, parámetros, bypass y controles. Los presets del standalone contienen las dos rutas y los enlaces L/R; los del plugin, la ruta seleccionada. El dispositivo de audio y el ruteo quedan fuera a propósito, para que los presets viajen entre ordenadores.
+
+## TONE3000 y WebView2
+
+Conecta tu cuenta de TONE3000 una vez; el reproductor guarda un token de refresco cifrado y no vuelve a necesitar un navegador en ese ordenador. Navega por **TRENDING, LATEST, FAVOURITES, DOWNLOADED y MINE**, preescucha seleccionando, o abre **SEARCH FULL CATALOGUE**. En Windows las páginas integradas usan **Microsoft WebView2**, que se detecta directamente (también dentro de los DAW, con una carpeta de datos por usuario con permisos de escritura). Si falta, puedes abrir la página oficial de descarga de Microsoft, usar tu navegador externo o cancelar: **nunca se instala nada automáticamente**, y el audio local no necesita WebView2. macOS usa WKWebView; Linux, el navegador del sistema.
+
+## Instalación
+
+**Standalone**: descomprime el ZIP y mantén juntos sus archivos.
+
+- Windows: ejecuta `Bcho NAM Player.exe`; instala el driver ASIO de tu interfaz para la latencia más baja.
+- macOS: abre `Bcho NAM Player.app` (clic derecho → **Abrir** la primera vez si Gatekeeper lo pide).
+- Linux: da permiso con `chmod +x` al AppImage y ejecútalo.
+
+**Plugin**: cierra el DAW, copia el **paquete completo**, reinicia y vuelve a escanear.
+
+| Sistema | Copiar en |
+| --- | --- |
+| Windows VST3 | `C:\Program Files\Common Files\VST3\Bcho NAM Player.vst3` |
+| macOS VST3 | `~/Library/Audio/Plug-Ins/VST3/Bcho NAM Player.vst3` |
+| macOS AU | `~/Library/Audio/Plug-Ins/Components/Bcho NAM Player.component` |
+| Linux VST3 | `~/.vst3/Bcho NAM Player.vst3` |
+
+## El standalone en cinco pasos
+
+1. Engranaje → **AUDIO SETUP**: elige driver, interfaz, canal de entrada, frecuencia y búfer, y comprueba que **MAIN** apunta a tus monitores.
+2. **BROWSE LOCAL** (o **TONE3000**) para cargar una captura de amplificador en BLOCK NAM 2.
+3. **BROWSE IR** para cargar una pantalla (sáltatelo si tu captura ya la incluye).
+4. Ajusta **INPUT GAIN** mirando el vúmetro de entrada y después **MASTER VOL** y **OUTPUT GAIN**.
+5. Pulsa los bloques de efecto para añadirlos; doble clic para editarlos.
+
+Empieza con un nivel de escucha bajo. Con todos los bloques en bypass, pasa la señal seca.
+
+## Descargas
+
+Todos los archivos de esta versión: **[Bcho NAM Player v1.7.5](https://github.com/bchosoft/Bcho_NAM_Player/releases/tag/v1.7.5)**
+
+| Paquete | Archivo |
+| --- | --- |
+| Windows standalone | [BchoNAMPlayer-v1.7.5-Windows-x64-Standalone.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-Standalone.zip) |
+| Windows VST3 | [BchoNAMPlayer-v1.7.5-Windows-x64-VST3.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-VST3.zip) |
+| macOS Apple Silicon standalone | [BchoNAMPlayer-v1.7.5-macOS-arm64-Standalone.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-arm64-Standalone.zip) |
+| macOS Apple Silicon VST3 + AU | [BchoNAMPlayer-v1.7.5-macOS-arm64-Plugins.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-arm64-Plugins.zip) |
+| macOS Intel standalone | [BchoNAMPlayer-v1.7.5-macOS-x86_64-Standalone.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-x86_64-Standalone.zip) |
+| macOS Intel VST3 + AU | [BchoNAMPlayer-v1.7.5-macOS-x86_64-Plugins.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-x86_64-Plugins.zip) |
+| Linux standalone (AppImage) | [BchoNAMPlayer-v1.7.5-Linux-x86_64-Standalone.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Linux-x86_64-Standalone.zip) |
+| Linux VST3 | [BchoNAMPlayer-v1.7.5-Linux-x86_64-VST3.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Linux-x86_64-VST3.zip) |
+| Sumas de verificación | [SHA256SUMS.txt](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/SHA256SUMS.txt) |
+
+Cada ZIP incluye su manual PDF en inglés y español en la carpeta `manuals`. Los manuales también están en línea: [standalone](docs/USER_MANUAL.es.md) · [plugin](docs/PLUGIN_MANUAL.es.md), y en PDF en [docs/manuals](docs/manuals).
+
+## Apoya el proyecto
+
+Bcho NAM Player es gratuito. Si te resulta útil, puedes apoyarlo en **[ko-fi.com/bchosoft](https://ko-fi.com/bchosoft)**, también accesible desde **SUPPORT PROJECT ON KO-FI** en los ajustes del standalone y **OPEN KO-FI** en los ajustes del plugin.
+
+## Créditos, licencias e integridad
+
+Bcho NAM Player, de **Bcho Soft**. Está construido con [JUCE 8.0.12](https://github.com/juce-framework/JUCE/tree/8.0.12) y [NeuralAmpModelerCore 0.5.4](https://github.com/sdatkinson/NeuralAmpModelerCore/tree/v0.5.4) (con Eigen y JSON for Modern C++); consulta [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Verifica las descargas con `SHA256SUMS.txt`.
+
+Este repositorio público contiene documentación y las descargas de cada versión, **no el código fuente de la aplicación**; los archivos automáticos "Source code" de GitHub solo contienen esta documentación. Las capturas NAM y las respuestas impulsionales tienen sus propias licencias: compartir presets no otorga derechos sobre recursos de terceros.
