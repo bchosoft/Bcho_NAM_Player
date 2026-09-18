@@ -72,7 +72,7 @@ Conecta tu cuenta de TONE3000 una vez; el reproductor guarda un token de refresc
 <strong>IMPORTANTE — elige conscientemente la variante del navegador</strong><br>
 <strong>¿Qué es WebView2?</strong> Es el componente web de Microsoft que permite mostrar las páginas de TONE3000 dentro de la aplicación. En Windows 11 viene instalado por defecto; en Windows 10 normalmente se instala mediante las actualizaciones de Windows o junto con Microsoft Edge. Si Edge está instalado y actualizado, WebView2 suele estar disponible.<br><br>
 <strong>EmbeddedBrowser</strong> muestra TONE3000 dentro de la aplicación y es la descarga recomendada cuando WebView2 está disponible.<br><br>
-<strong>ExternalBrowser</strong> no utiliza un WebView integrado. Abre TONE3000 en tu navegador habitual del sistema y es la alternativa para equipos donde WebView2 no está disponible o si prefieres no usar un navegador embebido. Las dos variantes tienen el mismo motor de audio; WebView2 solo afecta a las páginas integradas de TONE3000.
+<strong>ExternalBrowser</strong> no utiliza un WebView integrado. Abre TONE3000 en tu navegador habitual del sistema y es la alternativa para equipos donde WebView2 no está disponible o si prefieres no usar un navegador embebido. macOS utiliza el WKWebView de Apple, integrado en el sistema, y Linux el navegador del sistema; WebView2 solo es relevante en Windows. Las dos variantes tienen el mismo motor de audio.
 </td></tr></table>
 
 ## Instalación
