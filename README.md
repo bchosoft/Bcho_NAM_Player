@@ -74,7 +74,8 @@ Connect your TONE3000 account once; the player keeps an encrypted refresh token 
 
 <table><tr><td bgcolor="#fff3cd">
 <strong>IMPORTANT — choose the browser variant deliberately</strong><br>
-<strong>EmbeddedBrowser</strong> displays TONE3000 inside the application. On Windows, this is the recommended choice if Microsoft Edge is installed and up to date: the WebView2 Runtime is preinstalled on Windows 11 and is commonly already available on Windows 10, so the integrated experience usually works immediately.<br><br>
+<strong>What is WebView2?</strong> It is Microsoft's web runtime for displaying TONE3000 pages inside the application. On Windows 11 it is installed by default; on Windows 10 it is commonly installed through Windows updates or alongside Microsoft Edge. If Edge is installed and up to date, WebView2 is usually already available.<br><br>
+<strong>EmbeddedBrowser</strong> displays TONE3000 inside the application and is the recommended download when WebView2 is available.<br><br>
 <strong>ExternalBrowser</strong> does not use an embedded WebView. It opens TONE3000 in your normal system browser and is the fallback for machines where WebView2 is unavailable or where you prefer not to use an embedded browser. Both variants have the same audio engine; WebView2 is only relevant to the integrated TONE3000 pages.
 </td></tr></table>
 
