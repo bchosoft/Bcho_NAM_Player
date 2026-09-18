@@ -101,12 +101,18 @@ Todos los archivos de esta versión: **[Bcho NAM Player v1.7.5](https://github.c
 
 | Paquete | Archivo |
 | --- | --- |
-| Windows standalone | [BchoNAMPlayer-v1.7.5-Windows-x64-Standalone.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-Standalone.zip) |
-| Windows VST3 | [BchoNAMPlayer-v1.7.5-Windows-x64-VST3.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-VST3.zip) |
-| macOS Apple Silicon standalone | [BchoNAMPlayer-v1.7.5-macOS-arm64-Standalone.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-arm64-Standalone.zip) |
-| macOS Apple Silicon VST3 + AU | [BchoNAMPlayer-v1.7.5-macOS-arm64-Plugins.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-arm64-Plugins.zip) |
-| macOS Intel standalone | [BchoNAMPlayer-v1.7.5-macOS-x86_64-Standalone.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-x86_64-Standalone.zip) |
-| macOS Intel VST3 + AU | [BchoNAMPlayer-v1.7.5-macOS-x86_64-Plugins.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-x86_64-Plugins.zip) |
+| Windows standalone (navegador integrado) | [BchoNAMPlayer-v1.7.5-Windows-x64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-Standalone-EmbeddedBrowser.zip) |
+| Windows VST3 (navegador integrado) | [BchoNAMPlayer-v1.7.5-Windows-x64-VST3-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-VST3-EmbeddedBrowser.zip) |
+| Windows standalone (navegador externo) | [BchoNAMPlayer-v1.7.5-Windows-x64-Standalone-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-Standalone-ExternalBrowser.zip) |
+| Windows VST3 (navegador externo) | [BchoNAMPlayer-v1.7.5-Windows-x64-VST3-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-VST3-ExternalBrowser.zip) |
+| macOS Apple Silicon standalone (navegador integrado) | [BchoNAMPlayer-v1.7.5-macOS-arm64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-arm64-Standalone-EmbeddedBrowser.zip) |
+| macOS Apple Silicon VST3 + AU (navegador integrado) | [BchoNAMPlayer-v1.7.5-macOS-arm64-Plugins-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-arm64-Plugins-EmbeddedBrowser.zip) |
+| macOS Apple Silicon standalone (navegador externo) | [BchoNAMPlayer-v1.7.5-macOS-arm64-Standalone-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-arm64-Standalone-ExternalBrowser.zip) |
+| macOS Apple Silicon VST3 + AU (navegador externo) | [BchoNAMPlayer-v1.7.5-macOS-arm64-Plugins-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-arm64-Plugins-ExternalBrowser.zip) |
+| macOS Intel standalone (navegador integrado) | [BchoNAMPlayer-v1.7.5-macOS-x86_64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-x86_64-Standalone-EmbeddedBrowser.zip) |
+| macOS Intel VST3 + AU (navegador integrado) | [BchoNAMPlayer-v1.7.5-macOS-x86_64-Plugins-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-x86_64-Plugins-EmbeddedBrowser.zip) |
+| macOS Intel standalone (navegador externo) | [BchoNAMPlayer-v1.7.5-macOS-x86_64-Standalone-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-x86_64-Standalone-ExternalBrowser.zip) |
+| macOS Intel VST3 + AU (navegador externo) | [BchoNAMPlayer-v1.7.5-macOS-x86_64-Plugins-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-x86_64-Plugins-ExternalBrowser.zip) |
 | Linux standalone (AppImage) | [BchoNAMPlayer-v1.7.5-Linux-x86_64-Standalone.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Linux-x86_64-Standalone.zip) |
 | Linux VST3 | [BchoNAMPlayer-v1.7.5-Linux-x86_64-VST3.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Linux-x86_64-VST3.zip) |
 | Sumas de verificación | [SHA256SUMS.txt](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/SHA256SUMS.txt) |
