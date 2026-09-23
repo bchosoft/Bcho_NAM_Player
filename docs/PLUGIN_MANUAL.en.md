@@ -1,9 +1,6 @@
-# Bcho NAM Player 1.7.5 - VST3 / AU Plug-in Manual
+# Bcho NAM Player 1.8.0 - VST3 / AU Plug-in Manual
 
-Complete reference for the plug-in. It shares its engine, its rack, its
-effects, its TONE3000 library and its presets with the standalone application,
-so this manual documents the plug-in in full and points at the
-[standalone manual](USER_MANUAL.en.md) for the chapters that are identical.
+Complete reference for the 1.8.0 plugin: installation, routing, NORMAL / PLUS, NAM/IR files, controls, all effect parameters, HARMONIZER, presets and automation. The standalone-only DI player is not part of the plugin.
 
 ---
 
@@ -26,13 +23,14 @@ so this manual documents the plug-in in full and points at the
 15. [Troubleshooting](#15-troubleshooting)
 16. [Technical specifications](#16-technical-specifications)
 17. [Integrity and licences](#17-integrity-and-licences)
+18. [Appendix A: complete effects reference](#appendix-a-complete-effects-reference)
 
 ---
 
 ## 1. What the plug-in is
 
 An **audio-effect** plug-in - not a MIDI instrument. It carries two complete and
-independent signal paths (L and R), each with BLOCK NAM 1, BLOCK NAM 2, a
+independent signal paths (L and R), each with (in NORMAL) BLOCK NAM 1, BLOCK NAM 2, a
 cabinet IR, an eight-effect rack with free ordering, gate, tone stack, master
 level, IR blend, IR volume, input and output gain, power, calibration and tuner.
 
@@ -88,7 +86,7 @@ protection globally.
 
 The layout is the standalone's, minus the parts a host owns:
 
-- **Rack strip**: preset buttons, the eleven reorderable blocks, the tuner and
+- **Rack strip**: preset buttons, NORMAL / PLUS, the processing blocks, the tuner and
   its display, the tuning selector, the MONO / STEREO switch and the settings
   gear.
 - **Amplifier head**: Input VU, INPUT GAIN, INPUT CALI; the seven main knobs
@@ -119,6 +117,22 @@ input channels are processed separately.
 The standalone's DUAL MONO / SPLIT L/R switch is not present: in a DAW you
 decide that with the track's own routing.
 
+**PAN** (the bar between the two rack rows and the tuner, STEREO only): a
+horizontal fader that balances the level of the two paths.
+
+| Position | Result |
+| --- | --- |
+| Centre (`CENTER`, centre notch, green mark) | L and R play at their full level, exactly as without PAN |
+| Towards `L` | The right path fades out progressively; at the left stop (`L 100 %`) only L is heard |
+| Towards `R` | The left path fades out progressively; at the right stop (`R 100 %`) only R is heard |
+
+The `L` and `R` letters at the ends are lamps: the one on the side being faded
+dims, and the rail lights up from the centre towards the favoured side. Neither
+side ever gets louder than it is at the centre. Double-click returns the fader
+to the centre; the mouse wheel moves it in fine steps.
+
+In the plug-in PAN is an automatable parameter (`Pan`) and is saved with the project.
+
 The `L` / `R` tabs beside the racks choose which path the shared controls edit;
 the `NAM 1 L`, `NAM 2 L`, `NAM 1 R`, `NAM 2 R` and `IR L`, `IR R` selectors work
 exactly as in the standalone - see
@@ -144,21 +158,37 @@ Demonstration captures ship in the `Models` folder beside the package but are
 never loaded automatically; find them with BROWSE LOCAL.
 
 > The DAW project stores **references** to your `.nam` and `.wav` files, not the
-> files themselves. Keep them in place, or save `.bnpp` presets, which embed
+> files themselves, including PLUS AIFF/FLAC IR files. Keep them in place, or save `.bnpp` presets, which embed
 > them.
 
 ---
 
 ## 7. Controls
 
-Ranges, defaults and behaviour are the same as the standalone - see
-[Amplifier controls, knob by knob](USER_MANUAL.en.md#10-amplifier-controls-knob-by-knob).
+**Operating a knob**: drag vertically or horizontally; the exact value is
+printed underneath. **Double-click restores the default** - 12 o'clock for
+everything except GATE, which returns to fully left (OFF).
 
-In short: INPUT GAIN and OUTPUT GAIN ±12 dB; GATE from OFF to a -80…0 dB
-threshold; BASS / MID / TREBLE / PRESENCE ±12 dB at 70 Hz, 750 Hz, 4 kHz and
-6 kHz following the selected NAM block; MASTER VOL ±12 dB; IR BLEND 0-100 %;
-IR VOL -24…0 dB (default -12 dB) following the selected cabinet; POWER mutes the
-path. Drag a knob to change it, double-click to restore its default.
+| Control | Range | Default | Notes |
+| --- | --- | --- | --- |
+| INPUT GAIN | -12 … +12 dB | 0.0 dB | Level into the NAM chain; Input Cali is added on top |
+| GATE | OFF … -80 … 0 dB threshold | OFF | At the far left it is a true bypass. Attack 1.5 ms, hold 35 ms, release 90 ms, 3 dB hysteresis |
+| BASS | ±12 dB @ 70 Hz | 0.0 dB | Peaking, Q 0.72 |
+| MID | ±12 dB @ 750 Hz | 0.0 dB | Peaking, Q 0.72 |
+| TREBLE | ±12 dB @ 4 kHz | 0.0 dB | Peaking, Q 0.72 |
+| PRESENCE | ±12 dB @ 6 kHz | 0.0 dB | Peaking, Q 0.72 |
+| MASTER VOL | -12 … +12 dB | 0.0 dB | After the chain, before Output Gain |
+| IR BLEND | 0 … 100 % | 50 % | Dry against cabinet |
+| IR VOL | -24 … 0 dB | -12 dB | Cabinet branch only |
+| OUTPUT GAIN | -12 … +12 dB | 0.0 dB | Final level |
+| POWER | On / off | On | Mutes the processed path; the switch glows red while on |
+| INPUT CALI | On / off | Off | See Input Cali in chapter 10 |
+
+**The tone stack follows the selected NAM block.** With a **NAM 1** selector
+active, BASS / MID / TREBLE / PRESENCE drive BLOCK NAM 1's own four filters;
+with a **NAM 2** selector active they drive the main tone stack. Each set keeps
+its own values, and switching selectors recalls them. In the plug-in and in
+STEREO the plate prints which one you are editing.
 
 ---
 
@@ -171,11 +201,59 @@ enables or bypasses, double-click opens the editor or the file chooser, drag
 reorders around the BLOCK NAM 2 and IR anchors, and the eye chooses which block
 the shared controls describe.
 
-![The effect editor](manual/img/dialog-effect-editor.png)
+![The effect editor](manual/img/plugin-dialog-effect-editor.png)
 
 Compressor, octaver, pitch shifter, chorus, flanger, phaser, delay and reverb,
-each with three algorithms and six real-unit parameters. The full tables are in
-the [standalone manual](USER_MANUAL.en.md#11-the-eight-effects-in-full).
+each with three algorithms and six real-unit parameters. The complete parameter tables and HARMONIZER instructions are in Appendix A below.
+
+### NORMAL / PLUS: NAM and IR chains
+
+The lever switch on the left end of the rack chooses between two ways of using
+NAM captures:
+
+| Position | What the rack shows |
+| --- | --- |
+| NORMAL (lever down) | BLOCK NAM 1 and BLOCK NAM 2, exactly as described above |
+| PLUS (lever up) | One large **NAM / IR** block, twice as wide, at BLOCK NAM 1's position in the chain |
+
+![PLUS: one double-width NAM / IR block per path, with its chain topology under the name](manual/img/zone-plugin-rack-plus.png)
+
+The NAM / IR block of PLUS runs a **chain** of NAM and cabinet IR blocks. It switches on and off with
+a click and has the eye like any other NAM block; the line under its name shows
+the chain, for example `SERIES 2` or `PARALLEL 2 | 1`. **Double-click it** to open
+the PLUS CHAIN window:
+
+![The PLUS CHAIN window in parallel: lane A above, lane B below, the + buttons and the A / B MIX](manual/img/plugin-dialog-nam-chain.png)
+
+| Element | Use |
+| --- | --- |
+| Single-line / parallel-lines switch | **SERIES**: one lane from IN to OUT. **PARALLEL**: two lanes, A above and B below, fed by the same input and mixed back together |
+| NAM 1A / 2A and IR 1A / 2A (likewise B) | Up to two NAMs and two IRs per lane. Each lane retains one NAM placeholder. Blocks run in the displayed order |
+| Click on a block | On / off (an empty block opens the load menu instead) |
+| Double-click or right-click | NAM: load a local capture or use TONE3000. IR: load a local WAV, AIFF or FLAC. Remove block is available when allowed |
+| Drop a file | Drop `.nam` on a NAM card or + NAM; drop WAV, AIFF or FLAC on an IR card or + IR |
+| Eye (NAM cards only) | Select the NAM block edited by BASS, MID, TREBLE, PRESENCE and loaded from the NAM MODELS list or TONE3000 |
+| `-` (top right corner) | Remove the block, after confirmation. The last NAM of a lane cannot be removed; all IRs can be removed |
+| **+ NAM / + IR** | Add the chosen type; each button becomes unavailable at its two-block limit. New NAMs are inserted before IRs |
+| IR level | -24 to +12 dB, initially 0 dB; double-click to reset. WAV, AIFF and FLAC, mono or stereo averaged to mono, up to 8192 source samples, resampled without normalization |
+| Drag a block | Reorder it, also into the other lane (if its two-NAM / two-IR limits allow it) |
+| MIX A - B (PARALLEL only) | Linear crossfade: centre gives 50% of each lane; the ends give 100% of A or B. Unlike PAN, centre is not full level on both lanes |
+
+Each NAM block keeps its own capture, on/off switch and tone controls, just like
+BLOCK NAM 1 and BLOCK NAM 2. In PLUS the NAM selectors above the tone plate and
+over the list become one per path, captioned with the block being edited
+(`NAM 2A`), and the list shows the NAM models of that block.
+
+The first time PLUS is switched on, loaded NORMAL NAM captures are copied into lane A in rack order, with their bypass and tone settings. An empty NAM placeholder remains if neither capture is loaded. The general rack IR is not copied into a lane. NORMAL and PLUS keep separate settings: going back to
+NORMAL finds BLOCK NAM 1 and BLOCK NAM 2 exactly as they were. The switch, the
+chains and their captures are saved with the session, in presets (the `.bnpp`
+bundle embeds every chain capture and IR) and, in the plug-in, with the DAW project.
+Every change of the chain is applied behind a short fade, with a short transition to suppress clicks.
+With INPUT CALI on, PLUS calibrates to the first active NAM of lane A; standalone DI playback bypasses interface calibration.
+
+IRs within a lane run in series. To mix two cabinets, put one in each parallel lane and use A/B MIX. The rack IR remains a separate shared block: bypass it when using independent lane cabinets to avoid filtering the signal twice. IR files load in the background, and their level, order and bypass state are saved with the chain. Legacy chains with more than two NAMs per lane restore the first two and show a notice; keep the original preset if you need its older configuration.
+
+The PITCH block includes a scale-aware **HARMONIZER** (thirds and fifths that follow the key, octaves, AUTO key detection): see HARMONIZER in Appendix A.
 
 ---
 
@@ -186,7 +264,7 @@ edit changes both. Green = linked, grey = not. When the two blocks share a
 column the icon sits on the seam between the rows; when they do not, it moves to
 the lower-right corner of both blocks.
 
-![Linked and unlinked pairs in the plug-in's two rack rows](manual/img/zone-rack-stereo.jpg)
+![Linked and unlinked pairs in the plug-in's two rack rows](manual/img/zone-plugin-rack-stereo.jpg)
 
 Linked blocks share the algorithm and the six parameters; each keeps its own
 on/off switch and its own position. Linking two blocks that differ asks which
@@ -215,10 +293,10 @@ gain outside the plug-in or use the standalone.
 
 The **TONE3000** button opens the same library window as the standalone.
 
-![The TONE3000 library](manual/img/tone3000-library.png)
+![The TONE3000 library](manual/img/plugin-tone3000-library.png)
 
 - Connect the account once; the encrypted refresh token is stored per user, so
-  the plug-in never needs a browser again on that computer.
+  subsequent connections can reuse it while authorization remains valid. Reconnect if it expires or is revoked.
 - TRENDING, LATEST, FAVOURITES, DOWNLOADED and MINE.
 - **Selecting a row loads that capture into the current NAM block immediately**;
   the rest of the tone downloads in the background, and picking another row
@@ -251,7 +329,7 @@ restore, capture changes and audio re-initialisation (a sample-rate or
 buffer-size change) all fade in from silence, so nothing clicks.
 
 **`.bnpp` presets.** SAVE PRESET writes a portable archive for the **selected
-path** with its BLOCK NAM 1, BLOCK NAM 2, IR and settings embedded and checked
+path** with its NORMAL and PLUS NAM/IR files and settings embedded and checked
 with SHA-256; LOAD PRESET replaces that path. Share both paths as two presets;
 use the project to recall the whole instance. A two-path standalone preset loads
 its left-path representation into the selected plug-in path.
@@ -265,9 +343,10 @@ its left-path representation into the selected plug-in path.
 | IR Blend, IR Cabinet Volume, Output Gain | `L_` and `R_` |
 | Power, Input Cali, Tuner | `L_` and `R_` |
 | Stereo (MONO / STEREO) | one, global |
+| Pan (only acts in STEREO) | one, global |
 
 Rack order, effect algorithms and effect parameters are part of the saved state,
-not host automation. Loading a file is a load, not a continuous parameter.
+not host automation. PLUS mode, topology, per-block files, tone, levels and bypass are saved in state, without adding host automation parameters. DI playback adds no controls, parameters or state to the plugin. Loading a file is a load, not a continuous parameter.
 
 ---
 
@@ -291,6 +370,7 @@ project.
 | Eleven selectable skins | Always Astra / Obsidian |
 | Its own saved session between launches | State comes from the host project |
 | Update checking | Not included |
+| IN / DI player, CONFIG DI, transport and DI file state | Not included. Play and route DI audio tracks in the DAW |
 
 Everything else - engine, rack, effects, links, tuner, browsers, TONE3000,
 information card, `.bnpp` presets - is the same code.
@@ -306,10 +386,9 @@ information card, `.bnpp` presets - is the same code.
 | Dry sound only | A capture is loaded and its block is lit; a fully bypassed chain passes dry audio |
 | One side silent in STEREO | The DAW must actually feed both channels; on a mono track both chains get the same input |
 | Missing files after moving a project | Restore the `.nam` / `.wav` locations, or load your `.bnpp` presets |
-| Dropouts | Raise the buffer and lower CPU load; four NAM blocks across two paths is demanding |
+| Dropouts | Raise the buffer and lower CPU load; PLUS can run eight NAM blocks across two paths, in addition to IRs and effects |
 | Empty TONE3000 window | Account, network, or WebView2 on Windows; or use the external browser |
 | macOS host rejects it | Review host validation and system permissions; ad-hoc signing is not notarization |
-| The DAW process stayed alive after closing a project | A plug-in unload deadlock fixed in 1.7.5. End the leftover process once from the task manager and update the plug-in |
 
 ---
 
@@ -320,7 +399,9 @@ information card, `.bnpp` presets - is the same code.
 | Plug-in type | Audio effect (no MIDI) |
 | Bus layout | Mono or stereo input, **always stereo output** |
 | Signal paths | 2 independent (L / R) |
-| NAM blocks | 2 per path; IR 1 per path; 8 effects per path |
+| NORMAL | 2 NAM and 1 rack IR per path; 8 effects per path |
+| PLUS | 2 NAM + 2 IR per lane, up to 2 lanes per path; general rack IR remains separate |
+| Internal version | 1.8.0 (numeric version 0x10800); VST3 and AU metadata derive from the same project version |
 | Sample rates / buffers | Whatever the host provides; oversized host buffers are split internally |
 | NAM architectures | A1, A2 Standard, A2 Nano - automatic |
 | Start-up / re-prepare fade | 60 ms from silence |
@@ -337,3 +418,178 @@ Check ZIP hashes against `SHA256SUMS.txt` and read `THIRD_PARTY_NOTICES.md`
 impulse responses you use or share inside presets. These manuals do not imply
 certification in every DAW; each host and system combination deserves a
 practical check.
+
+---
+
+## Appendix A. Complete effects reference
+
+The eight effects offer **three algorithms** and **six main parameters** each. PITCH also includes the HARMONIZER controls described below. Double-click a
+block to open its editor; every knob shows a real unit, and double-clicking a
+knob restores its default.
+
+![The effect editor, here for DELAY](manual/img/plugin-dialog-effect-editor.png)
+
+The **ACTIVE** switch at the top right of the editor is the same bypass as
+clicking the block. **TYPE** chooses the algorithm. Parameter, algorithm and
+bypass changes are smoothed, delay-family reads are interpolated and feedback is
+bounded, so nothing clicks or runs away.
+
+### COMP - compressor
+Algorithms: **Studio VCA**, **Optical**, **FET Punch**.
+
+| Parameter | Range | Default |
+| --- | --- | --- |
+| Threshold | -55 … -2 dB | -31.2 dB |
+| Ratio | 1 … 20 :1 | 7.7:1 |
+| Attack | 1 … 100 ms | 15.9 ms |
+| Release | 20 … 600 ms | 223 ms |
+| Makeup | -12 … +12 dB | 0.0 dB |
+| Mix | 0 … 100 % | 100 % |
+
+### DELAY
+Algorithms: **Digital Studio**, **Tape Echo**, **Analog BBD**.
+
+| Parameter | Range | Default |
+| --- | --- | --- |
+| Time | 20 … 1200 ms | 398 ms |
+| Feedback | 0 … 92 % | 32 % |
+| Mix | 0 … 100 % | 28 % |
+| Tone | 0 … 100 % | 65 % |
+| Mod | 0 … 100 % | 8 % |
+| Level | -12 … +12 dB | 0.0 dB |
+
+### CHOR - chorus
+Algorithms: **Studio**, **Ensemble**, **Tri-Chorus**.
+
+| Parameter | Range | Default |
+| --- | --- | --- |
+| Rate | 0.05 … 5 Hz | 1.24 Hz |
+| Depth | 0.5 … 20 ms | 10.3 ms |
+| Mix | 0 … 100 % | 35 % |
+| Delay | 4 … 30 ms | 11.8 ms |
+| Feedback | -65 … +65 % | 0 % |
+| Level | -12 … +12 dB | 0.0 dB |
+
+### FLANG - flanger
+Algorithms: **Analog**, **Through-Zero**, **Jet**.
+
+| Parameter | Range | Default |
+| --- | --- | --- |
+| Rate | 0.03 … 2.5 Hz | 0.57 Hz |
+| Depth | 0.1 … 9 ms | 5.0 ms |
+| Mix | 0 … 100 % | 35 % |
+| Feedback | -85 … +85 % | 20 % |
+| Manual | 0.2 … 5 ms | 1.4 ms |
+| Level | -12 … +12 dB | 0.0 dB |
+
+### PHASE - phaser
+Algorithms: **4 Stage**, **8 Stage**, **12 Stage**.
+
+| Parameter | Range | Default |
+| --- | --- | --- |
+| Rate | 0.03 … 4 Hz | 0.82 Hz |
+| Depth | 0 … 100 % | 70 % |
+| Mix | 0 … 100 % | 40 % |
+| Feedback | -75 … +75 % | 12 % |
+| Centre | 180 … 2200 Hz | 887 Hz |
+| Level | -12 … +12 dB | 0.0 dB |
+
+### REVERB
+Algorithms: **Studio Room**, **Plate**, **Concert Hall**.
+
+| Parameter | Range | Default |
+| --- | --- | --- |
+| Size | 0 … 100 % | 55 % |
+| Damping | 0 … 100 % | 50 % |
+| Mix | 0 … 100 % | 25 % |
+| Width | 0 … 100 % | 80 % |
+| Freeze | OFF / ON | OFF |
+| Level | -12 … +12 dB | 0.0 dB |
+
+### OCT - octaver
+Algorithms: **Poly Clean**, **Classic Mono**, **Organ**.
+
+| Parameter | Range | Default |
+| --- | --- | --- |
+| Oct Down | 0 … 100 % | 45 % |
+| Oct Up | 0 … 100 % | 0 % |
+| Dry | 0 … 100 % | 80 % |
+| Tone | 0 … 100 % | 50 % |
+| Tracking | 0 … 100 % | 65 % |
+| Level | -12 … +12 dB | 0.0 dB |
+
+### PITCH - pitch shifter
+Algorithms: **Studio**, **Low Latency**, **Vintage**.
+
+| Parameter | Range | Default |
+| --- | --- | --- |
+| Semitones | -12 … +12 st | 0.0 st |
+| Mix | 0 … 100 % | 100 % |
+| Window | 20 … 120 ms | 65 ms |
+| Feedback | 0 … 55 % | 0 % |
+| Fine | -100 … +100 ct | 0 ct |
+| Level | -12 … +12 dB | 0.0 dB |
+
+
+#### HARMONIZER (scale-aware harmony)
+
+![The PITCH window with the HARMONIZER strip: switch, INTERVAL, KEY, SCALE, TUNING and the live display](manual/img/plugin-dialog-harmonizer.png)
+
+The strip at the bottom of the PITCH window turns the block into an intelligent
+harmonizer. With **HARMONIZER** on, every note you play gets a second voice a
+scale step away, using the selected or detected scale:
+
+| INTERVAL | Harmony voice |
+| --- | --- |
+| OCTAVE UP / OCTAVE DOWN | Always an octave; needs no key, sounds from the first note and also works on chords |
+| THIRD UP / THIRD DOWN | The third of the scale: **major or minor depending on the note**. In C major, C gets E (major third) and D gets F (minor third); in C minor, C gets Eb |
+| FIFTH UP / FIFTH DOWN | The fifth of the scale: perfect, or diminished on the seventh degree (B -> F in C major) |
+
+**KEY and SCALE.** With KEY on **AUTO** the key is learned from the notes you play:
+
+- It works on the seven notes in use, which is what decides the harmony. A key is
+  told apart from its parallel (C major / C minor) by the notes actually played (E
+  or Eb, A or Ab, B or Bb); a key, its relative and its modes (C major, A minor, D
+  dorian...) share their notes and therefore their harmony.
+- The tonic and the mode are named from where the playing dwells and, above all,
+  where phrases come to rest: the display can read `A MINOR`, `D DORIAN`,
+  `G MIXOLYDIAN`... Pentatonic playing is read as the natural minor / major until
+  other notes say otherwise. **Harmonic minor** is recognised when the raised
+  seventh is used throughout (G# and never G in A minor): the dominant then gets
+  its major third.
+- Two memories run side by side: a long one keeps the key steady and a short one
+  follows a real key change within a few seconds. The detector resists short passing notes; fix KEY manually if automatic detection does not match your phrase.
+- Until enough notes have been heard the display shows **LISTENING...** and thirds
+  and fifths stay silent, until detection has enough confidence. The bar under the key
+  shows how sure the detection is.
+
+Choose a tonic in **KEY** to fix the key yourself; **SCALE** then offers major,
+minor, the five other modes, harmonic minor and melodic minor.
+
+**TUNING.** **PURE** tunes each interval to the played note with simple ratios (5:4
+and 6:5 thirds, 3:2 fifths): the two voices lock together without beating, which
+is what keeps a harmony clean through an overdriven amp. **TEMPERED** uses the
+piano's equal semitones, to match keyboards exactly.
+
+**The voice.** The harmony is made by a shifter of its own whose splices are
+synchronised to the period of the note being played, so it sounds like a second
+guitar rather than an effect. It reads the guitar a few milliseconds late - the
+natural delay of a second player - and uses that time to know each new note
+before it sounds: a note never comes out with the interval of the previous one.
+Notes are recognised from low E (and drop tunings) up to the 24th fret, within a
+few cents, in about 25 ms (45 ms on the lowest strings). Bends and vibrato are
+followed continuously: in a bend from C to D in C major the harmony slides from E
+to F. Notes outside the key (a blue note, the G# of A minor) borrow the scale
+degree that gives a real third or fifth: G# gets B, Bb in C major gets D.
+
+**Knobs in HARMONIZER mode**: **MIX** balances the harmony against the note you
+play, which always stays (100 % = both at the same level, 0 % = no harmony);
+**FINE** detunes the harmony slightly for a wider sound; **LEVEL** works as usual.
+SEMITONES, WINDOW and FEEDBACK rest. TYPE chooses the character of the voice:
+**Studio**, **Low Latency** (a shorter delay; very fast phrases may lose a little
+accuracy on low notes) and **Vintage** (darker). The rack block reads **HARMONY**
+while the harmonizer is on.
+
+Play single notes: thirds and fifths follow melodies, riffs and solos. For thirds and fifths, use single-note playing. Polyphonic or unclear input can make pitch detection unreliable; the detector may suppress the harmony. Detection uses the clean
+guitar signal, before gain, NAM and effects. The HARMONIZER settings are saved
+with the PITCH block and follow an L / R link.

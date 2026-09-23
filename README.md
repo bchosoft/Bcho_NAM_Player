@@ -1,8 +1,8 @@
-# Bcho NAM Player 1.7.5
+# Bcho NAM Player 1.8.0
 
-**[English](#english)** · **[Español](#español)** · [Downloads / Descargas](https://github.com/bchosoft/Bcho_NAM_Player/releases/tag/v1.7.5) · [Support on Ko-fi](https://ko-fi.com/bchosoft)
+**[English](#english)** · **[Español](#español)** · [Downloads / Descargas](https://github.com/bchosoft/Bcho_NAM_Player/releases/tag/v1.8.0) · [Support on Ko-fi](https://ko-fi.com/bchosoft)
 
-![Bcho NAM Player 1.7.5](docs/Portada_1.7.5.png)
+![Bcho NAM Player 1.8.0](docs/Caratula_BNAMP.png)
 
 ---
 
@@ -14,7 +14,14 @@ Bcho NAM Player is a guitar processor built around **Neural Amp Modeler** captur
 
 It has **two complete, independent signal paths - L and R**. Each path owns its own BLOCK NAM 1, BLOCK NAM 2, cabinet IR, eight-effect rack with free block order, gate, tone stack, master level, IR blend, IR cabinet volume, **input gain**, output gain, power, input calibration and tuner. In **MONO** one path plays; in **STEREO** both run side by side.
 
-### What's new in 1.7.5
+### What's new in 1.8.0
+
+- **Standalone DI player.** Switch between the audio interface and one or two mono WAV, AIFF or FLAC guitar tracks. MONO and DUAL MONO share one DI; SPLIT L/R can use a different DI for each path. The integrated player provides load, remove, levels, seek, loop and transport controls. Returning from IN to DI never starts playback automatically. The plug-in continues to use the DAW's audio and has no DI file player.
+- **PLUS NAM chain.** Switch between the original NORMAL rack and a NAM chain with up to two NAMs and two IRs per lane, in series or in two parallel lanes, with an A/B mix. The chain and NORMAL settings are preserved separately.
+- **Stereo PAN.** Balance the two paths from the rack, with a centred full-level position and smooth changes.
+- **Scale-aware HARMONIZER.** Add a harmony voice in the PITCH block, with automatic or manual key and scale selection.
+
+### Previously in 1.7.5
 
 - **DAW sessions restore for real.** Reopening a project re-loads the saved NAM, pedal NAM and IR of **both** paths into the audio engine - not just their names in the lists - with every block's exact on/off state. It works whichever order the DAW uses to restore state and prepare audio, and with the editor closed.
 - **No clicks, no noise.** Start-up, session restore, loading or replacing a NAM, loading a pedal NAM, preparing or re-initialising audio, and sample-rate or buffer-size changes all fade in from silence. Switching from one NAM to another fades out, installs the new (pre-warmed) capture and fades back in, so the waveform is never cut.
@@ -108,27 +115,27 @@ Start at a low monitoring level. With every block bypassed the dry signal passes
 
 ### Downloads
 
-All files for this version: **[Bcho NAM Player v1.7.5](https://github.com/bchosoft/Bcho_NAM_Player/releases/tag/v1.7.5)**
+All files for this version: **[Bcho NAM Player v1.8.0](https://github.com/bchosoft/Bcho_NAM_Player/releases/tag/v1.8.0)**
 
 The filenames below are the exact assets published in the release. Windows and macOS provide both browser variants; Linux keeps the system-browser build only.
 
 | Package | File |
 | --- | --- |
-| Windows standalone — EmbeddedBrowser (recommended with Edge/WebView2) | [BchoNAMPlayer-v1.7.5-Windows-x64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-Standalone-EmbeddedBrowser.zip) |
-| Windows VST3 — EmbeddedBrowser (recommended with Edge/WebView2) | [BchoNAMPlayer-v1.7.5-Windows-x64-VST3-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-VST3-EmbeddedBrowser.zip) |
-| Windows standalone (external browser) | [BchoNAMPlayer-v1.7.5-Windows-x64-Standalone-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-Standalone-ExternalBrowser.zip) |
-| Windows VST3 (external browser) | [BchoNAMPlayer-v1.7.5-Windows-x64-VST3-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-VST3-ExternalBrowser.zip) |
-| macOS Apple Silicon standalone (embedded browser) | [BchoNAMPlayer-v1.7.5-macOS-arm64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-arm64-Standalone-EmbeddedBrowser.zip) |
-| macOS Apple Silicon VST3 + AU (embedded browser) | [BchoNAMPlayer-v1.7.5-macOS-arm64-Plugins-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-arm64-Plugins-EmbeddedBrowser.zip) |
-| macOS Apple Silicon standalone (external browser) | [BchoNAMPlayer-v1.7.5-macOS-arm64-Standalone-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-arm64-Standalone-ExternalBrowser.zip) |
-| macOS Apple Silicon VST3 + AU (external browser) | [BchoNAMPlayer-v1.7.5-macOS-arm64-Plugins-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-arm64-Plugins-ExternalBrowser.zip) |
-| macOS Intel standalone (embedded browser) | [BchoNAMPlayer-v1.7.5-macOS-x86_64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-x86_64-Standalone-EmbeddedBrowser.zip) |
-| macOS Intel VST3 + AU (embedded browser) | [BchoNAMPlayer-v1.7.5-macOS-x86_64-Plugins-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-x86_64-Plugins-EmbeddedBrowser.zip) |
-| macOS Intel standalone (external browser) | [BchoNAMPlayer-v1.7.5-macOS-x86_64-Standalone-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-x86_64-Standalone-ExternalBrowser.zip) |
-| macOS Intel VST3 + AU (external browser) | [BchoNAMPlayer-v1.7.5-macOS-x86_64-Plugins-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-x86_64-Plugins-ExternalBrowser.zip) |
-| Linux standalone (AppImage) | [BchoNAMPlayer-v1.7.5-Linux-x86_64-Standalone.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Linux-x86_64-Standalone.zip) |
-| Linux VST3 | [BchoNAMPlayer-v1.7.5-Linux-x86_64-VST3.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Linux-x86_64-VST3.zip) |
-| Checksums | [SHA256SUMS.txt](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/SHA256SUMS.txt) |
+| Windows standalone — EmbeddedBrowser (recommended with Edge/WebView2) | [BchoNAMPlayer-v1.8.0-Windows-x64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-Windows-x64-Standalone-EmbeddedBrowser.zip) |
+| Windows VST3 — EmbeddedBrowser (recommended with Edge/WebView2) | [BchoNAMPlayer-v1.8.0-Windows-x64-VST3-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-Windows-x64-VST3-EmbeddedBrowser.zip) |
+| Windows standalone (external browser) | [BchoNAMPlayer-v1.8.0-Windows-x64-Standalone-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-Windows-x64-Standalone-ExternalBrowser.zip) |
+| Windows VST3 (external browser) | [BchoNAMPlayer-v1.8.0-Windows-x64-VST3-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-Windows-x64-VST3-ExternalBrowser.zip) |
+| macOS Apple Silicon standalone (embedded browser) | [BchoNAMPlayer-v1.8.0-macOS-arm64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-arm64-Standalone-EmbeddedBrowser.zip) |
+| macOS Apple Silicon VST3 + AU (embedded browser) | [BchoNAMPlayer-v1.8.0-macOS-arm64-Plugins-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-arm64-Plugins-EmbeddedBrowser.zip) |
+| macOS Apple Silicon standalone (external browser) | [BchoNAMPlayer-v1.8.0-macOS-arm64-Standalone-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-arm64-Standalone-ExternalBrowser.zip) |
+| macOS Apple Silicon VST3 + AU (external browser) | [BchoNAMPlayer-v1.8.0-macOS-arm64-Plugins-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-arm64-Plugins-ExternalBrowser.zip) |
+| macOS Intel standalone (embedded browser) | [BchoNAMPlayer-v1.8.0-macOS-x86_64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-x86_64-Standalone-EmbeddedBrowser.zip) |
+| macOS Intel VST3 + AU (embedded browser) | [BchoNAMPlayer-v1.8.0-macOS-x86_64-Plugins-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-x86_64-Plugins-EmbeddedBrowser.zip) |
+| macOS Intel standalone (external browser) | [BchoNAMPlayer-v1.8.0-macOS-x86_64-Standalone-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-x86_64-Standalone-ExternalBrowser.zip) |
+| macOS Intel VST3 + AU (external browser) | [BchoNAMPlayer-v1.8.0-macOS-x86_64-Plugins-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-x86_64-Plugins-ExternalBrowser.zip) |
+| Linux standalone (AppImage) | [BchoNAMPlayer-v1.8.0-Linux-x86_64-Standalone.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-Linux-x86_64-Standalone.zip) |
+| Linux VST3 | [BchoNAMPlayer-v1.8.0-Linux-x86_64-VST3.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-Linux-x86_64-VST3.zip) |
+| Checksums | [SHA256SUMS.txt](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/SHA256SUMS.txt) |
 
 Every ZIP includes its English and Spanish PDF manual in a `manuals` folder. The manuals are also online: [standalone](docs/USER_MANUAL.en.md) · [plug-in](docs/PLUGIN_MANUAL.en.md), and as PDF in [docs/manuals](docs/manuals).
 
@@ -152,7 +159,14 @@ Bcho NAM Player es un procesador de guitarra construido alrededor de capturas **
 
 Tiene **dos rutas de señal completas e independientes, L y R**. Cada ruta tiene su propio BLOCK NAM 1, BLOCK NAM 2, IR de pantalla, rack de ocho efectos con orden libre, puerta de ruido, sección de tonos, volumen máster, IR blend, volumen de pantalla, **ganancia de entrada**, ganancia de salida, encendido, calibración de entrada y afinador. En **MONO** suena una ruta; en **STEREO** funcionan las dos a la vez.
 
-### Novedades de la 1.7.5
+### Novedades de la 1.8.0
+
+- **Reproductor DI en el standalone.** Elige entre la interfaz de audio y una o dos pistas de guitarra mono WAV, AIFF o FLAC. MONO y DUAL MONO comparten una DI; SPLIT L/R admite una DI distinta por ruta. El reproductor integrado permite cargar, quitar, ajustar niveles, desplazarse, definir bucles y controlar el transporte. Al volver de IN a DI, la reproducción no se inicia automáticamente. El plugin sigue usando el audio del DAW y no incorpora reproductor de archivos DI.
+- **Cadena NAM en modo PLUS.** Alterna entre el rack NORMAL y una cadena de hasta dos NAM y dos IR por línea, en serie o en dos líneas paralelas, con mezcla A/B. Los ajustes de NORMAL y PLUS se conservan por separado.
+- **PAN estéreo.** Equilibra las dos rutas desde el rack, con nivel completo en el centro y cambios suaves.
+- **HARMONIZER según la escala.** Añade una voz de armonía en el bloque PITCH, con selección automática o manual de tonalidad y escala.
+
+### Anteriormente en 1.7.5
 
 - **Las sesiones del DAW se restauran de verdad.** Al reabrir un proyecto, los NAM, NAM de pedal e IR guardados de **las dos** rutas vuelven a cargarse en el motor de audio —no solo sus nombres en las listas— con el estado activado/desactivado exacto de cada bloque. Funciona sea cual sea el orden en que el DAW restaura el estado y prepara el audio, y con el editor cerrado.
 - **Sin chasquidos ni ruido.** El arranque, la restauración de sesión, cargar o sustituir un NAM, cargar un NAM de pedal, preparar o reinicializar el audio y los cambios de frecuencia de muestreo o de tamaño de búfer entran con fundido desde silencio. Al pasar de un NAM a otro, la cadena hace fundido de salida, instala la captura nueva (ya precalentada) y vuelve con fundido de entrada, así que la onda nunca se corta.
@@ -246,27 +260,27 @@ Empieza con un nivel de escucha bajo. Con todos los bloques en bypass, pasa la s
 
 ### Descargas
 
-Todos los archivos de esta versión: **[Bcho NAM Player v1.7.5](https://github.com/bchosoft/Bcho_NAM_Player/releases/tag/v1.7.5)**
+Todos los archivos de esta versión: **[Bcho NAM Player v1.8.0](https://github.com/bchosoft/Bcho_NAM_Player/releases/tag/v1.8.0)**
 
 Los nombres siguientes son exactamente los archivos publicados en la release. Windows y macOS ofrecen las dos variantes de navegador; Linux conserva únicamente la versión que usa el navegador del sistema.
 
 | Paquete | Archivo |
 | --- | --- |
-| Windows standalone — EmbeddedBrowser (recomendado con Edge/WebView2) | [BchoNAMPlayer-v1.7.5-Windows-x64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-Standalone-EmbeddedBrowser.zip) |
-| Windows VST3 — EmbeddedBrowser (recomendado con Edge/WebView2) | [BchoNAMPlayer-v1.7.5-Windows-x64-VST3-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-VST3-EmbeddedBrowser.zip) |
-| Windows standalone — ExternalBrowser (navegador del sistema) | [BchoNAMPlayer-v1.7.5-Windows-x64-Standalone-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-Standalone-ExternalBrowser.zip) |
-| Windows VST3 — ExternalBrowser (navegador del sistema) | [BchoNAMPlayer-v1.7.5-Windows-x64-VST3-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Windows-x64-VST3-ExternalBrowser.zip) |
-| macOS Apple Silicon standalone — EmbeddedBrowser | [BchoNAMPlayer-v1.7.5-macOS-arm64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-arm64-Standalone-EmbeddedBrowser.zip) |
-| macOS Apple Silicon VST3 + AU — EmbeddedBrowser | [BchoNAMPlayer-v1.7.5-macOS-arm64-Plugins-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-arm64-Plugins-EmbeddedBrowser.zip) |
-| macOS Apple Silicon standalone — ExternalBrowser | [BchoNAMPlayer-v1.7.5-macOS-arm64-Standalone-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-arm64-Standalone-ExternalBrowser.zip) |
-| macOS Apple Silicon VST3 + AU — ExternalBrowser | [BchoNAMPlayer-v1.7.5-macOS-arm64-Plugins-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-arm64-Plugins-ExternalBrowser.zip) |
-| macOS Intel standalone — EmbeddedBrowser | [BchoNAMPlayer-v1.7.5-macOS-x86_64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-x86_64-Standalone-EmbeddedBrowser.zip) |
-| macOS Intel VST3 + AU — EmbeddedBrowser | [BchoNAMPlayer-v1.7.5-macOS-x86_64-Plugins-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-x86_64-Plugins-EmbeddedBrowser.zip) |
-| macOS Intel standalone — ExternalBrowser | [BchoNAMPlayer-v1.7.5-macOS-x86_64-Standalone-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-x86_64-Standalone-ExternalBrowser.zip) |
-| macOS Intel VST3 + AU — ExternalBrowser | [BchoNAMPlayer-v1.7.5-macOS-x86_64-Plugins-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-macOS-x86_64-Plugins-ExternalBrowser.zip) |
-| Linux standalone (AppImage) | [BchoNAMPlayer-v1.7.5-Linux-x86_64-Standalone.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Linux-x86_64-Standalone.zip) |
-| Linux VST3 | [BchoNAMPlayer-v1.7.5-Linux-x86_64-VST3.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/BchoNAMPlayer-v1.7.5-Linux-x86_64-VST3.zip) |
-| Sumas de verificación | [SHA256SUMS.txt](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.7.5/SHA256SUMS.txt) |
+| Windows standalone — EmbeddedBrowser (recomendado con Edge/WebView2) | [BchoNAMPlayer-v1.8.0-Windows-x64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-Windows-x64-Standalone-EmbeddedBrowser.zip) |
+| Windows VST3 — EmbeddedBrowser (recomendado con Edge/WebView2) | [BchoNAMPlayer-v1.8.0-Windows-x64-VST3-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-Windows-x64-VST3-EmbeddedBrowser.zip) |
+| Windows standalone — ExternalBrowser (navegador del sistema) | [BchoNAMPlayer-v1.8.0-Windows-x64-Standalone-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-Windows-x64-Standalone-ExternalBrowser.zip) |
+| Windows VST3 — ExternalBrowser (navegador del sistema) | [BchoNAMPlayer-v1.8.0-Windows-x64-VST3-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-Windows-x64-VST3-ExternalBrowser.zip) |
+| macOS Apple Silicon standalone — EmbeddedBrowser | [BchoNAMPlayer-v1.8.0-macOS-arm64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-arm64-Standalone-EmbeddedBrowser.zip) |
+| macOS Apple Silicon VST3 + AU — EmbeddedBrowser | [BchoNAMPlayer-v1.8.0-macOS-arm64-Plugins-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-arm64-Plugins-EmbeddedBrowser.zip) |
+| macOS Apple Silicon standalone — ExternalBrowser | [BchoNAMPlayer-v1.8.0-macOS-arm64-Standalone-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-arm64-Standalone-ExternalBrowser.zip) |
+| macOS Apple Silicon VST3 + AU — ExternalBrowser | [BchoNAMPlayer-v1.8.0-macOS-arm64-Plugins-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-arm64-Plugins-ExternalBrowser.zip) |
+| macOS Intel standalone — EmbeddedBrowser | [BchoNAMPlayer-v1.8.0-macOS-x86_64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-x86_64-Standalone-EmbeddedBrowser.zip) |
+| macOS Intel VST3 + AU — EmbeddedBrowser | [BchoNAMPlayer-v1.8.0-macOS-x86_64-Plugins-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-x86_64-Plugins-EmbeddedBrowser.zip) |
+| macOS Intel standalone — ExternalBrowser | [BchoNAMPlayer-v1.8.0-macOS-x86_64-Standalone-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-x86_64-Standalone-ExternalBrowser.zip) |
+| macOS Intel VST3 + AU — ExternalBrowser | [BchoNAMPlayer-v1.8.0-macOS-x86_64-Plugins-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-x86_64-Plugins-ExternalBrowser.zip) |
+| Linux standalone (AppImage) | [BchoNAMPlayer-v1.8.0-Linux-x86_64-Standalone.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-Linux-x86_64-Standalone.zip) |
+| Linux VST3 | [BchoNAMPlayer-v1.8.0-Linux-x86_64-VST3.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-Linux-x86_64-VST3.zip) |
+| Sumas de verificación | [SHA256SUMS.txt](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/SHA256SUMS.txt) |
 
 Cada ZIP incluye su manual PDF en inglés y español en la carpeta `manuals`. Los manuales también están en línea: [standalone](docs/USER_MANUAL.es.md) · [plugin](docs/PLUGIN_MANUAL.es.md), y en PDF en [docs/manuals](docs/manuals).
 

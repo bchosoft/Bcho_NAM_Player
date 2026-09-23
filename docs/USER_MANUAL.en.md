@@ -1,7 +1,7 @@
-# Bcho NAM Player 1.7.5 - Standalone User Manual
+# Bcho NAM Player 1.8.0 - Standalone User Manual
 
 Complete reference for the standalone application on Windows, macOS and Linux.
-Every control, window, file and message is documented here. For the VST3 / AU
+This guide covers the controls, file handling, signal paths and session behavior of version 1.8.0. For the VST3 / AU
 plug-in see [PLUGIN_MANUAL.en.md](PLUGIN_MANUAL.en.md).
 
 ---
@@ -14,6 +14,7 @@ plug-in see [PLUGIN_MANUAL.en.md](PLUGIN_MANUAL.en.md).
 4. [Quick start: sound in five steps](#4-quick-start-sound-in-five-steps)
 5. [Audio Setup: device, latency and routing](#5-audio-setup-device-latency-and-routing)
 6. [Signal flow](#6-signal-flow)
+   - [IN / DI player and transport](#in--di-choose-the-source-standalone-only)
 7. [The rack: blocks, order and the eye](#7-the-rack-blocks-order-and-the-eye)
 8. [BLOCK NAM 1 and BLOCK NAM 2](#8-block-nam-1-and-block-nam-2)
 9. [Cabinet impulse responses](#9-cabinet-impulse-responses)
@@ -44,11 +45,11 @@ sample rate, buffer size and physical output routing are configured inside the
 application.
 
 The player has **two complete and independent signal paths**, left and right.
-Each path owns its own BLOCK NAM 1, BLOCK NAM 2, cabinet IR, effects rack,
+In NORMAL, each path owns its own BLOCK NAM 1, BLOCK NAM 2, cabinet IR, effects rack,
 block order, gate, tone stack, master level, IR blend, IR cabinet volume, input
 and output gain, power switch, calibration and tuner. In **MONO** only the left
 path is audible and the right-hand controls are hidden; in **STEREO** both run
-at once.
+at once. PLUS expands each path into a series lane or two parallel lanes, each limited to two NAMs and two IRs. Standalone DI playback can replace the physical input (chapter 6).
 
 **What is in the package**
 
@@ -90,7 +91,7 @@ does not mute. Your first job is [Audio Setup](#5-audio-setup-device-latency-and
 and then loading a capture.
 
 Every later launch restores the last session you closed normally: controls, both
-paths, resources, block order, effects and bypass states.
+paths, resources, block order, effects and bypass states. The source always returns to IN and DI playback remains paused.
 
 ---
 
@@ -98,7 +99,7 @@ paths, resources, block order, effects and bypass states.
 
 ![The standalone in MONO with a capture, a cabinet and two effects running](manual/img/standalone-mono.jpg)
 
-The window has three pieces of furniture, from top to bottom:
+The window has three pieces of furniture, from top to bottom. The rack also holds NORMAL / PLUS and IN / DI. CONFIG DI and the gold-framed transport appear only in DI mode; PAN appears in STEREO.
 
 **1 - The rack strip.** Preset bay on the left, the reorderable processing
 blocks in the middle, the tuner button and display, the tuning selector, and on
@@ -168,7 +169,7 @@ physical output pair or switched **Off**:
 | --- | --- | --- |
 | MAIN / POST MASTER | The finished player output | Monitoring and recording the final sound |
 | PRE / NEUTRAL NAM | BLOCK NAM 2 before the player's tone stack, effects and cabinet | Re-amping, A/B comparison |
-| DI / CLEAN INPUT | The untouched interface input | A clean safety track |
+| DI / CLEAN INPUT | The selected input source before amplifier processing (physical input on IN, file playback on DI) | A clean safety track |
 | WET / POST CAB | The processed post-cabinet branch | A separate processed recording path |
 
 A pair can only be used by one route: choosing a pair that is already taken
@@ -189,12 +190,87 @@ computers.
 
 ## 6. Signal flow
 
+### IN / DI: choose the source (standalone only)
+
+The large **IN / DI** lever sits below DUAL MONO / SPLIT L/R. **IN** uses the
+configured physical inputs. **DI** replaces them with audio files before the
+existing effects, NAMs, IRs and output routing. The application starts on **IN**
+at every launch. Source changes use a short ramp to avoid clicks.
+
+Selecting DI opens the DI PLAYER modal. Close it with **CLOSE**, its window
+close button or Esc; playback continues. **CONFIG DI** reopens it without
+changing source. The cabinet and the main browsers stay clear.
+
+![DI source selector and CONFIG DI](manual/img/zone-di-source.png)
+
+| Processing mode | DI tracks |
+| --- | --- |
+| MONO | One mono file feeds the active left path |
+| STEREO + DUAL MONO | The same mono file feeds both paths |
+| STEREO + SPLIT L/R | Two mono files, DI L and DI R, independently feed the two paths |
+
+![The DI player in MONO / DUAL MONO](manual/img/dialog-di-mono.png)
+![The DI player in SPLIT L/R](manual/img/dialog-di-split.png)
+
+**Load and remove.** Use **LOAD DI**, **LOAD DI L** or **LOAD DI R**, or drop
+a file onto its row. In SPLIT you can drop two files together, one per path.
+WAV, AIFF and FLAC are accepted, **mono only**. A stereo or multichannel file
+is rejected with a message explaining that each DI must be a mono track; the
+previous file stays loaded. Use the red **X** next to a filename to unload that
+track from memory. It does not delete the original file. Removing a track
+pauses the shared transport and leaves the other track loaded.
+
+Files load in the background and play from memory. Each track may use a different
+sample rate; playback automatically resamples to the audio device. No automatic
+normalization is applied. The limit is 512 MiB of decoded audio per track.
+Each track has its own **-60 to +12 dB** level, initially **0 dB**; double-click
+its level slider to reset. INPUT GAIN remains available further down the chain.
+
+### Shared DI transport and loop
+
+The gold-framed transport above the NAM and IR browsers appears only in DI
+mode. From left to right: **back 5 seconds, PLAY, PAUSE, STOP, forward 5 seconds**.
+PLAY lights while playback is running.
+
+![The DI transport integrated into the gold-trimmed head](manual/img/zone-di-transport.png)
+
+| Control in the DI PLAYER | Action |
+| --- | --- |
+| PLAY | Play both tracks from the common position |
+| PAUSE | Keep the position and send silence into the processing paths; effect tails continue |
+| STOP | Pause and return to the beginning |
+| Return-to-start button | Go to the beginning without changing play/pause state |
+| POSITION | Seek with the slider or enter a time in seconds |
+| LOOP | Enable or disable repetition for both tracks |
+| LOOP IN / LOOP OUT | Set the common loop boundaries with sliders or numeric times |
+
+The timeline lasts as long as the longest loaded track. A shorter or unloaded
+track supplies silence; it never falls back to the physical input. Both tracks
+seek and loop together. Closing the modal does not stop the transport.
+
+**Switching sources:** DI to IN pauses DI and smoothly restores the physical
+input. Returning to DI recalls its files, gains, position and loop, but **does
+not start playback**. Press PLAY when ready. The physical input configuration
+and its calibration setting are retained while DI is selected.
+
+**Calibration:** interface-specific INPUT CALI is bypassed in DI mode, as shown
+by the player status. It resumes with its previous setting on IN. This bypass
+does not alter the per-file DI level or the amplifier's INPUT GAIN.
+
+**Recall:** a normal exit saves file paths, levels, position and loop with the
+standalone session. On relaunch the source is IN and DI is paused. Keep the files
+in their saved locations or load them again. DI files and transport settings
+are excluded from `.bnpp` presets. The plugin has no DI player, source switch,
+transport controls, DI parameters or DI playback state; use audio tracks in the DAW.
+
+### Processing order and output taps
+
 Each path processes its own audio in this order:
 
 ```
-interface input
+selected source: physical IN or DI file(s)
   → tuner tap (always the untouched DI, before everything)
-  → INPUT GAIN (+ Input Cali offset)
+  → INPUT GAIN (+ Input Cali offset only on physical IN)
   → GATE
   → [ rack blocks, in the order shown on screen ]
         ...effects before BLOCK NAM 2...
@@ -206,8 +282,11 @@ interface input
   → MASTER VOL
   → OUTPUT GAIN
   → POWER
-  → MAIN / PRE / DI / WET output routes
+  → MAIN output
+Other taps: DI before processing; PRE is a separate neutral NAM branch; WET is post-cabinet.
 ```
+
+The diagram describes NORMAL. In PLUS the NAM / IR chain runs at NAM 1's rack position and NAM 2 is skipped; the rack IR stays separate. PRE remains the independent neutral NORMAL NAM 2 branch, not a tap of the PLUS chain.
 
 BLOCK NAM 2 and IR are **anchors**: they cannot be dragged, and no block can be
 moved so that IR ends up before BLOCK NAM 2. Everything else is free.
@@ -218,7 +297,7 @@ moved so that IR ends up before BLOCK NAM 2. Everything else is free.
 
 ![The two rack rows in STEREO: BLOCK NAM 1 (red), BLOCK NAM 2 (gold), an enabled CHOR, and the chain icons that link L and R](manual/img/zone-rack-stereo.jpg)
 
-Eleven blocks per path, shown left to right in processing order. The default
+In NORMAL, eleven blocks per path, shown left to right in processing order. The default
 order is COMP · OCT · PITCH · BLOCK NAM 1 · BLOCK NAM 2 · CHOR · FLANG · PHASE ·
 IR · DELAY · REVERB.
 
@@ -293,10 +372,56 @@ downloads save it automatically; for your own captures, drop an image next to
 the file. Only the header of the file is read, so hovering a long list costs
 nothing.
 
-**Loading BLOCK NAM 1 from the front panel.** The rack's **+ BLOCK NAM 1**
-button (and the NAM 1 tab) asks where the capture should come from:
+**Loading BLOCK NAM 1.** Choose its NAM selector to target the browser, or double-click its rack block to choose the capture source:
 
 ![Choosing the source for BLOCK NAM 1](manual/img/dialog-block-nam1.png)
+
+### NORMAL / PLUS: NAM and IR chains
+
+The lever switch on the left end of the rack chooses between two ways of using
+NAM captures:
+
+| Position | What the rack shows |
+| --- | --- |
+| NORMAL (lever down) | BLOCK NAM 1 and BLOCK NAM 2, exactly as described above |
+| PLUS (lever up) | One large **NAM / IR** block, twice as wide, at BLOCK NAM 1's position in the chain |
+
+![PLUS: one double-width NAM / IR block per path, with its chain topology under the name](manual/img/zone-rack-plus.jpg)
+
+The NAM / IR block of PLUS runs a **chain** of NAM and cabinet IR blocks. It switches on and off with
+a click and has the eye like any other NAM block; the line under its name shows
+the chain, for example `SERIES 2` or `PARALLEL 2 | 1`. **Double-click it** to open
+the PLUS CHAIN window:
+
+![The PLUS CHAIN window in parallel: lane A above, lane B below, the + buttons and the A / B MIX](manual/img/dialog-nam-chain.png)
+
+| Element | Use |
+| --- | --- |
+| Single-line / parallel-lines switch | **SERIES**: one lane from IN to OUT. **PARALLEL**: two lanes, A above and B below, fed by the same input and mixed back together |
+| NAM 1A / 2A and IR 1A / 2A (likewise B) | Up to two NAMs and two IRs per lane. Each lane retains one NAM placeholder. Blocks run in the displayed order |
+| Click on a block | On / off (an empty block opens the load menu instead) |
+| Double-click or right-click | NAM: load a local capture or use TONE3000. IR: load a local WAV, AIFF or FLAC. Remove block is available when allowed |
+| Drop a file | Drop `.nam` on a NAM card or + NAM; drop WAV, AIFF or FLAC on an IR card or + IR |
+| Eye (NAM cards only) | Select the NAM block edited by BASS, MID, TREBLE, PRESENCE and loaded from the NAM MODELS list or TONE3000 |
+| `-` (top right corner) | Remove the block, after confirmation. The last NAM of a lane cannot be removed; all IRs can be removed |
+| **+ NAM / + IR** | Add the chosen type; each button becomes unavailable at its two-block limit. New NAMs are inserted before IRs |
+| IR level | -24 to +12 dB, initially 0 dB; double-click to reset. WAV, AIFF and FLAC, mono or stereo averaged to mono, up to 8192 source samples, resampled without normalization |
+| Drag a block | Reorder it, also into the other lane (if its two-NAM / two-IR limits allow it) |
+| MIX A - B (PARALLEL only) | Linear crossfade: centre gives 50% of each lane; the ends give 100% of A or B. Unlike PAN, centre is not full level on both lanes |
+
+Each NAM block keeps its own capture, on/off switch and tone controls, just like
+BLOCK NAM 1 and BLOCK NAM 2. In PLUS the NAM selectors above the tone plate and
+over the list become one per path, captioned with the block being edited
+(`NAM 2A`), and the list shows the NAM models of that block.
+
+The first time PLUS is switched on, loaded NORMAL NAM captures are copied into lane A in rack order, with their bypass and tone settings. An empty NAM placeholder remains if neither capture is loaded. The general rack IR is not copied into a lane. NORMAL and PLUS keep separate settings: going back to
+NORMAL finds BLOCK NAM 1 and BLOCK NAM 2 exactly as they were. The switch, the
+chains and their captures are saved with the session, in presets (the `.bnpp`
+bundle embeds every chain capture and IR) and, in the plug-in, with the DAW project.
+Every change of the chain is applied behind a short fade, with a short transition to suppress clicks.
+With INPUT CALI on, PLUS calibrates to the first active NAM of lane A; standalone DI playback bypasses interface calibration.
+
+IRs within a lane run in series. To mix two cabinets, put one in each parallel lane and use A/B MIX. The rack IR remains a separate shared block: bypass it when using independent lane cabinets to avoid filtering the signal twice. IR files load in the background, and their level, order and bypass state are saved with the chain. Legacy chains with more than two NAMs per lane restore the first two and show a notice; keep the original preset if you need its older configuration.
 
 ---
 
@@ -336,7 +461,7 @@ everything except GATE, which returns to fully left (OFF).
 
 | Control | Range | Default | Notes |
 | --- | --- | --- | --- |
-| INPUT GAIN | -12 … +12 dB | 0.0 dB | Level into the NAM chain; Input Cali is added on top |
+| INPUT GAIN | -12 … +12 dB | 0.0 dB | Level into the NAM chain; Input Cali is added on physical IN; bypassed for DI files |
 | GATE | OFF … -80 … 0 dB threshold | OFF | At the far left it is a true bypass. Attack 1.5 ms, hold 35 ms, release 90 ms, 3 dB hysteresis |
 | BASS | ±12 dB @ 70 Hz | 0.0 dB | Peaking, Q 0.72 |
 | MID | ±12 dB @ 750 Hz | 0.0 dB | Peaking, Q 0.72 |
@@ -362,7 +487,7 @@ STEREO the plate prints which one you are editing.
 
 ## 11. The eight effects in full
 
-Every effect offers **three algorithms** and **six parameters**. Double-click a
+The eight effects offer **three algorithms** and **six main parameters** each. PITCH also includes the HARMONIZER controls described below. Double-click a
 block to open its editor; every knob shows a real unit, and double-clicking a
 knob restores its default.
 
@@ -469,6 +594,70 @@ Algorithms: **Studio**, **Low Latency**, **Vintage**.
 | Fine | -100 … +100 ct | 0 ct |
 | Level | -12 … +12 dB | 0.0 dB |
 
+
+#### HARMONIZER (scale-aware harmony)
+
+![The PITCH window with the HARMONIZER strip: switch, INTERVAL, KEY, SCALE, TUNING and the live display](manual/img/dialog-harmonizer.png)
+
+The strip at the bottom of the PITCH window turns the block into an intelligent
+harmonizer. With **HARMONIZER** on, every note you play gets a second voice a
+scale step away, using the selected or detected scale:
+
+| INTERVAL | Harmony voice |
+| --- | --- |
+| OCTAVE UP / OCTAVE DOWN | Always an octave; needs no key, sounds from the first note and also works on chords |
+| THIRD UP / THIRD DOWN | The third of the scale: **major or minor depending on the note**. In C major, C gets E (major third) and D gets F (minor third); in C minor, C gets Eb |
+| FIFTH UP / FIFTH DOWN | The fifth of the scale: perfect, or diminished on the seventh degree (B -> F in C major) |
+
+**KEY and SCALE.** With KEY on **AUTO** the key is learned from the notes you play:
+
+- It works on the seven notes in use, which is what decides the harmony. A key is
+  told apart from its parallel (C major / C minor) by the notes actually played (E
+  or Eb, A or Ab, B or Bb); a key, its relative and its modes (C major, A minor, D
+  dorian...) share their notes and therefore their harmony.
+- The tonic and the mode are named from where the playing dwells and, above all,
+  where phrases come to rest: the display can read `A MINOR`, `D DORIAN`,
+  `G MIXOLYDIAN`... Pentatonic playing is read as the natural minor / major until
+  other notes say otherwise. **Harmonic minor** is recognised when the raised
+  seventh is used throughout (G# and never G in A minor): the dominant then gets
+  its major third.
+- Two memories run side by side: a long one keeps the key steady and a short one
+  follows a real key change within a few seconds. The detector resists short passing notes; fix KEY manually if automatic detection does not match your phrase.
+- Until enough notes have been heard the display shows **LISTENING...** and thirds
+  and fifths stay silent, until detection has enough confidence. The bar under the key
+  shows how sure the detection is.
+
+Choose a tonic in **KEY** to fix the key yourself; **SCALE** then offers major,
+minor, the five other modes, harmonic minor and melodic minor.
+
+**TUNING.** **PURE** tunes each interval to the played note with simple ratios (5:4
+and 6:5 thirds, 3:2 fifths): the two voices lock together without beating, which
+is what keeps a harmony clean through an overdriven amp. **TEMPERED** uses the
+piano's equal semitones, to match keyboards exactly.
+
+**The voice.** The harmony is made by a shifter of its own whose splices are
+synchronised to the period of the note being played, so it sounds like a second
+guitar rather than an effect. It reads the guitar a few milliseconds late - the
+natural delay of a second player - and uses that time to know each new note
+before it sounds: a note never comes out with the interval of the previous one.
+Notes are recognised from low E (and drop tunings) up to the 24th fret, within a
+few cents, in about 25 ms (45 ms on the lowest strings). Bends and vibrato are
+followed continuously: in a bend from C to D in C major the harmony slides from E
+to F. Notes outside the key (a blue note, the G# of A minor) borrow the scale
+degree that gives a real third or fifth: G# gets B, Bb in C major gets D.
+
+**Knobs in HARMONIZER mode**: **MIX** balances the harmony against the note you
+play, which always stays (100 % = both at the same level, 0 % = no harmony);
+**FINE** detunes the harmony slightly for a wider sound; **LEVEL** works as usual.
+SEMITONES, WINDOW and FEEDBACK rest. TYPE chooses the character of the voice:
+**Studio**, **Low Latency** (a shorter delay; very fast phrases may lose a little
+accuracy on low notes) and **Vintage** (darker). The rack block reads **HARMONY**
+while the harmonizer is on.
+
+Play single notes: thirds and fifths follow melodies, riffs and solos. For thirds and fifths, use single-note playing. Polyphonic or unclear input can make pitch detection unreliable; the detector may suppress the harmony. Detection uses the clean
+guitar signal, before gain, NAM and effects. The HARMONIZER settings are saved
+with the PITCH block and follow an L / R link.
+
 ---
 
 ## 12. MONO and STEREO: two complete rigs
@@ -494,7 +683,24 @@ paths.
 | DUAL MONO | The summed interface input feeds **both** chains - one guitar through two independent rigs |
 | SPLIT L/R | Input channel 1 feeds the left chain, input channel 2 feeds the right chain |
 
-This setting belongs to the application state, not to presets.
+This setting belongs to the application state, not to presets. The table describes physical IN. In DI mode MONO and DUAL MONO use the left file, while SPLIT L/R uses one file per path (chapter 6).
+
+**PAN** (the bar between the two rack rows and the tuner, STEREO only): a
+horizontal fader that balances the level of the two paths.
+
+| Position | Result |
+| --- | --- |
+| Centre (`CENTER`, centre notch, green mark) | L and R play at their full level, exactly as without PAN |
+| Towards `L` | The right path fades out progressively; at the left stop (`L 100 %`) only L is heard |
+| Towards `R` | The left path fades out progressively; at the right stop (`R 100 %`) only R is heard |
+
+The `L` and `R` letters at the ends are lamps: the one on the side being faded
+dims, and the rail lights up from the centre towards the favoured side. Neither
+side ever gets louder than it is at the centre. Double-click returns the fader
+to the centre; the mouse wheel moves it in fine steps.
+
+In the standalone PAN acts on the main and WET outputs (the PRE and DI taps stay
+untouched) and is saved with the application state and in presets.
 
 **The selectors.**
 
@@ -584,13 +790,13 @@ calibration gain (dB) = interface input reference (dBu) - NAM input reference (d
 - When a capture has no metadata, the standard NAM reference of **+12 dBu** is
   assumed.
 - The result is clamped to **-24 … +24 dB** and applied before the NAM blocks.
-- The small LED beside INPUT CALI is green while it is active.
+- The small LED beside INPUT CALI is green while it is active. The DI source bypasses interface calibration; returning to IN restores its setting.
 - While a replacement capture is still loading, the gain of the running capture
   is held - it never jumps to 0 dB mid-note.
 
 Input Cali changes gain only. It never rewrites or normalizes a model. If your
 interface has several input modes (instrument / line / pad), enter the dBu value
-of the mode you are actually using. For a PreSonus Studio 24c, that is +10 dBu.
+of the mode you are actually using, as specified by the interface manufacturer.
 
 ---
 
@@ -605,8 +811,8 @@ in a window of the player.
 in with an e-mail link, so that opens their sign-in page once; the player then
 keeps the returned refresh token, encrypted with a key derived from this
 machine, in `tone3000.session` beside the application. Every later listing and
-download renews the token silently, so no browser is needed again on that
-computer. **SIGN OUT** deletes the file.
+download normally renews the token silently on that
+computer while the saved authorization remains valid. If it expires or is revoked, reconnect. **SIGN OUT** deletes the file.
 
 ![The library: five lists, artwork, author, model count and paging](manual/img/tone3000-library.png)
 
@@ -646,22 +852,22 @@ so a session created in an older build may need one sign-in inside the player.
 
 - the BLOCK NAM 2 capture of each path;
 - the BLOCK NAM 1 capture of each path, when loaded;
-- the selected IR of each path, when loaded (up to six embedded resources);
+- the selected rack IR of each path, when loaded;
+- NORMAL / PLUS mode and every PLUS NAM and IR file, lane order, bypass, tone, IR level and A/B mix;
 - rack order, algorithms, all effect parameters and every bypass state;
-- all knob, switch and tuner settings;
+- all amplifier knob, switch and tuner settings (not the DI player);
 - the L/R effect links.
 
 Embedded resources are verified with SHA-256 when loaded, extracted to the
 application's preset cache and restored. Audio device, interface reference and
-physical routing are deliberately excluded so a preset can move between
+physical routing, DI files and DI transport are deliberately excluded so a preset can move between
 computers.
 
 **LOAD PRESET** restores it. A preset written by the single-path player, or by
 NAM PLAYER DUAL, loads into the **currently selected path**. A preset written
-here still opens in the older single-path player, because the left path is also
-written in the old flat layout.
+here includes a left-path compatibility representation. Older players cannot reproduce features they do not implement, including the current PLUS chain; use 1.8.0 to recall the full configuration.
 
-> A capture must be loaded in BLOCK NAM 2 before a `.bnpp` can be saved.
+> To save from NORMAL, load BLOCK NAM 2 on the left path. PLUS also permits saving with a loaded file in its left-path chain. DI files are never embedded.
 
 ---
 
@@ -670,7 +876,7 @@ written in the old flat layout.
 **Session state** is written on a normal exit and restored on the next launch:
 both paths, all controls, the selected captures and IRs, block order and bypass
 states, links, MONO/STEREO, DUAL MONO/SPLIT, skin, audio device, channels, rate,
-buffer, interface reference and the four routes.
+buffer, interface reference and the four routes. PLUS chains and DI file paths, levels, position and loop are also recalled. The source always starts on IN, with DI paused; switching back to DI never starts playback automatically.
 
 | File | Where | What it holds |
 | --- | --- | --- |
@@ -756,11 +962,13 @@ interface thread and never touches, delays or feeds back into the audio.
 
 | Symptom | What to check |
 | --- | --- |
+| DI is silent | Press PLAY; returning from IN never resumes automatically. Check the loaded file, its gain and whether the playhead has reached its end |
+| DI file rejected | Each file must be mono WAV, AIFF or FLAC; export each side separately from your DAW |
 | No sound at all | POWER is on; MAIN route points at the outputs you monitor; the right input channel is ticked in Audio Setup; INPUT VU moves when you play |
 | Sound, but no amp tone | A capture is loaded and BLOCK NAM 2 is lit; the chain is not entirely bypassed (a bypassed chain passes dry audio) |
 | A NAM block will not switch on | Load a valid capture into that block and wait for the load to finish; a valid capture enables it automatically |
 | IR block stays bypassed | Load a valid response, and check you have not clicked the selected row a second time (that deselects it) |
-| Clicks or dropouts while playing | Raise the audio buffer, use the manufacturer ASIO driver on Windows, and avoid very small buffers with four NAM blocks running |
+| Clicks or dropouts while playing | Raise the audio buffer, use the manufacturer ASIO driver on Windows, and avoid very small buffers with several NAM blocks running, especially PLUS in parallel |
 | A folder appears empty | It must contain `.nam` files, or short valid `.wav` responses, directly inside the folder - unless DEEP SEARCH is ticked |
 | Level does not match other NAM software | Check the interface reference in Audio Setup and whether Input Cali is on |
 | A capture sounds too loud or too quiet | Check IR VOL (-12 dB by default) and Input Cali before changing INPUT GAIN |
@@ -777,10 +985,11 @@ interface thread and never touches, delays or feeds back into the audio.
 | Item | Value |
 | --- | --- |
 | Signal paths | 2 independent (L / R) |
-| NAM blocks | 2 per path (4 in total) |
-| Cabinet IR | 1 per path |
-| Effects | 8 per path, 3 algorithms and 6 parameters each |
-| Rack positions | 11 per path, freely reorderable around the BLOCK NAM 2 and IR anchors |
+| NAM blocks | NORMAL: 2 per path. PLUS: 2 per lane, 2 lanes per path (up to 8 across L/R) |
+| Cabinet IR | 1 shared rack IR per path; PLUS adds up to 2 per lane (4 per path) |
+| DI file player | Standalone only; 1 shared mono file or 2 mono files in SPLIT; WAV / AIFF / FLAC, automatic resampling |
+| Effects | 8 per path, 3 algorithms and 6 main parameters each; PITCH adds HARMONIZER |
+| Rack positions | NORMAL: 11. PLUS replaces the two NAM tiles with one double-width NAM / IR tile at NAM 1; the general IR stays separate |
 | NAM architectures | A1, A2 Standard, A2 Nano - detected automatically |
 | Sample rates | Whatever the device offers, 44.1 - 192 kHz |
 | Buffer size | Whatever the driver offers; the engine internally uses at least 32 samples and splits oversized host buffers |

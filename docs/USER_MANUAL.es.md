@@ -1,7 +1,7 @@
-# Bcho NAM Player 1.7.5 - Manual de usuario (standalone)
+# Bcho NAM Player 1.8.0 - Manual de usuario (standalone)
 
 Referencia completa de la aplicación standalone para Windows, macOS y Linux.
-Aquí está documentado cada control, ventana, archivo y mensaje. Para el plugin
+Esta guía describe los controles, archivos, recorridos de señal y recuperación de sesión de la versión 1.8.0. Para el plugin
 VST3 / AU, consulta el [manual del plugin](PLUGIN_MANUAL.es.md).
 
 ---
@@ -14,6 +14,7 @@ VST3 / AU, consulta el [manual del plugin](PLUGIN_MANUAL.es.md).
 4. [Inicio rápido: sonido en cinco pasos](#4-inicio-rápido-sonido-en-cinco-pasos)
 5. [Audio Setup: dispositivo, latencia y ruteo](#5-audio-setup-dispositivo-latencia-y-ruteo)
 6. [Recorrido de la señal](#6-recorrido-de-la-señal)
+   - [Reproductor IN / DI y transporte](#in--di-elegir-la-fuente-solo-standalone)
 7. [El rack: bloques, orden y el ojo](#7-el-rack-bloques-orden-y-el-ojo)
 8. [BLOCK NAM 1 y BLOCK NAM 2](#8-block-nam-1-y-block-nam-2)
 9. [Respuestas impulsionales de pantalla](#9-respuestas-impulsionales-de-pantalla)
@@ -44,7 +45,7 @@ dispositivo de audio: driver, canales, frecuencia de muestreo, tamaño de búfer
 ruteo a salidas físicas se configuran dentro de la aplicación.
 
 El reproductor tiene **dos rutas de señal completas e independientes**, izquierda
-y derecha. Cada ruta tiene su propio BLOCK NAM 1, BLOCK NAM 2, IR de pantalla,
+y derecha. En NORMAL, cada ruta tiene su propio BLOCK NAM 1, BLOCK NAM 2, IR de pantalla,
 rack de efectos, orden de bloques, puerta de ruido, sección de tonos, volumen
 máster, IR blend, volumen de pantalla, ganancias de entrada y salida,
 interruptor de encendido, calibración y afinador. En **MONO** solo suena la ruta
@@ -62,8 +63,8 @@ dos a la vez.
 | `tone3000.session` | Aparece solo al conectar una cuenta TONE3000 (cifrado) |
 
 > La ventana se abre centrada a su tamaño nativo de 1537 x 1023 siempre que la
-> pantalla lo permita. Todo el diseño es adaptable —mueble, mandos, listas,
-> vúmetros y textos escalan juntos— y no puede reducirse por debajo del 50 % del
+> pantalla lo permita. Todo el diseño es adaptable -mueble, mandos, listas,
+> vúmetros y textos escalan juntos- y no puede reducirse por debajo del 50 % del
 > tamaño nativo, así que ningún control ni rótulo puede salirse de su placa.
 
 ---
@@ -99,6 +100,8 @@ bypass.
 ---
 
 ## 3. Mapa de la ventana
+
+El rack incluye NORMAL / PLUS e IN / DI. CONFIG DI y el transporte con marco dorado solo aparecen en DI; PAN aparece en STEREO.
 
 ![El standalone en MONO con una captura, una pantalla y dos efectos activos](manual/img/standalone-mono.jpg)
 
@@ -172,7 +175,7 @@ asignada a un par de salidas físicas o en **Off**:
 | --- | --- | --- |
 | MAIN / POST MASTER | La salida final del reproductor | Escucha y grabación del sonido definitivo |
 | PRE / NEUTRAL NAM | BLOCK NAM 2 antes de tonos, efectos y pantalla | Reamplificación, comparación A/B |
-| DI / CLEAN INPUT | La entrada de la interfaz sin tocar | Pista limpia de seguridad |
+| DI / CLEAN INPUT | La fuente seleccionada antes del amplificador: entrada física en IN, archivo en DI | Pista limpia de seguridad |
 | WET / POST CAB | La rama procesada posterior a la pantalla | Ruta de grabación procesada aparte |
 
 Un par solo puede usarlo una ruta: si eliges uno ya ocupado, ese selector vuelve
@@ -184,8 +187,8 @@ de 0 a 30 dBu. Le dice a [Input Cali](#15-input-cali-calibración-automática-de
 cuál es el nivel máximo de entrada de tu interfaz. No tiene efecto con Input Cali
 desactivado.
 
-Todo lo de esta ventana —dispositivo, canales, frecuencia, búfer, referencia y
-las cuatro rutas— se guarda por máquina y se restaura en el siguiente arranque.
+Todo lo de esta ventana -dispositivo, canales, frecuencia, búfer, referencia y
+las cuatro rutas- se guarda por máquina y se restaura en el siguiente arranque.
 Deliberadamente **no** se guarda en los presets `.bnpp`, para que un preset pueda
 viajar entre ordenadores.
 
@@ -193,12 +196,87 @@ viajar entre ordenadores.
 
 ## 6. Recorrido de la señal
 
+### IN / DI: elegir la fuente (solo standalone)
+
+La palanca grande **IN / DI** está debajo de DUAL MONO / SPLIT L/R. **IN** usa
+las entradas físicas configuradas. **DI** las sustituye por archivos de audio
+antes de los efectos, NAM, IR y rutas de salida existentes. La aplicación arranca
+siempre en **IN**. Los cambios de fuente aplican una rampa breve para evitar clics.
+
+Elegir DI abre la ventana modal DI PLAYER. Puedes cerrarla con **CLOSE**, el
+botón de cierre o Esc; la reproducción continúa. **CONFIG DI** permite volver a
+abrirla sin cambiar de fuente. La cabina y los navegadores principales quedan libres.
+
+![Selector de fuente DI y CONFIG DI](manual/img/zone-di-source.png)
+
+| Modo de procesamiento | Pistas DI |
+| --- | --- |
+| MONO | Un archivo mono alimenta la ruta izquierda activa |
+| STEREO + DUAL MONO | El mismo archivo mono alimenta ambas rutas |
+| STEREO + SPLIT L/R | Dos archivos mono, DI L y DI R, alimentan las rutas por separado |
+
+![Reproductor DI en MONO / DUAL MONO](manual/img/dialog-di-mono.png)
+![Reproductor DI en SPLIT L/R](manual/img/dialog-di-split.png)
+
+**Cargar y quitar.** Usa **LOAD DI**, **LOAD DI L** o **LOAD DI R**, o arrastra
+un archivo a su fila. En SPLIT puedes soltar dos archivos juntos, uno por ruta.
+Admite WAV, AIFF y FLAC, **solo mono**. Si el archivo es estéreo o multicanal,
+aparece un mensaje que pide una pista mono y se conserva el archivo anterior.
+La **X roja** junto al nombre descarga esa pista de la memoria, sin borrar el
+archivo original. Quitar una pista pausa el transporte común y conserva la otra.
+
+La carga se realiza en segundo plano y la reproducción desde memoria. Cada pista
+puede tener una frecuencia de muestreo distinta; se adapta automáticamente a la
+del dispositivo. No se aplica normalización automática. El límite es de 512 MiB
+de audio decodificado por pista. Cada pista tiene un nivel propio de **-60 a
++12 dB**, inicialmente **0 dB**; el doble clic en el deslizador recupera 0 dB.
+INPUT GAIN sigue disponible después de la fuente.
+
+### Transporte DI común y bucle
+
+El transporte con marco dorado sobre los navegadores NAM e IR solo aparece en DI.
+De izquierda a derecha: **retroceder 5 segundos, PLAY, PAUSE, STOP y avanzar
+5 segundos**. PLAY se ilumina durante la reproducción.
+
+![Transporte DI integrado en el cabezal con marco dorado](manual/img/zone-di-transport.png)
+
+| Control de DI PLAYER | Acción |
+| --- | --- |
+| PLAY | Reproducir ambas pistas desde la posición común |
+| PAUSE | Conservar la posición y enviar silencio a las cadenas; continúan las colas de efectos |
+| STOP | Pausar y volver al inicio |
+| Botón de retorno al inicio | Volver al principio sin cambiar el estado de reproducción o pausa |
+| POSITION | Desplazarse con el deslizador o introducir segundos |
+| LOOP | Activar o desactivar la repetición de ambas pistas |
+| LOOP IN / LOOP OUT | Seleccionar los límites comunes mediante deslizadores o tiempos numéricos |
+
+La duración total es la de la pista más larga. Una pista terminada o vacía
+produce silencio; nunca recupera por sí sola la entrada física. Ambas pistas
+comparten desplazamiento y bucle. Cerrar la ventana no detiene el transporte.
+
+**Cambiar de fuente:** pasar de DI a IN pausa la DI y recupera suavemente la
+entrada física. Volver a DI recupera archivos, niveles, posición y bucle, pero
+**no inicia la reproducción**. Pulsa PLAY cuando quieras escucharla. La
+configuración de entrada física y su calibración se conservan al usar DI.
+
+**Calibración:** INPUT CALI específica de la interfaz queda anulada en DI,
+como indica el estado del reproductor. Recupera su ajuste anterior al volver a
+IN. Esto no modifica el nivel de cada archivo ni INPUT GAIN del amplificador.
+
+**Recuperar la sesión:** un cierre normal guarda rutas de archivos, niveles,
+posición y bucle. Al arrancar de nuevo la fuente es IN y la DI está pausada.
+Conserva los archivos en su ubicación o vuelve a cargarlos. Los archivos DI y
+su transporte quedan fuera de los presets `.bnpp`. El plugin no tiene reproductor,
+selector de fuente, transporte, parámetros ni estado DI: usa las pistas del DAW.
+
+### Orden de procesamiento y tomas de salida
+
 Cada ruta procesa su audio en este orden:
 
 ```
-entrada de la interfaz
+fuente seleccionada: entrada física IN o archivo(s) DI
   → toma del afinador (siempre la DI sin tocar, antes de todo)
-  → INPUT GAIN (+ desplazamiento de Input Cali)
+  → INPUT GAIN (+ Input Cali solo con entrada física IN)
   → GATE
   → [ bloques del rack, en el orden que se ve en pantalla ]
         ...efectos antes de BLOCK NAM 2...
@@ -210,8 +288,11 @@ entrada de la interfaz
   → MASTER VOL
   → OUTPUT GAIN
   → POWER
-  → rutas de salida MAIN / PRE / DI / WET
+  → salida MAIN
+Otras tomas: DI antes del procesamiento; PRE es una rama NAM neutra independiente; WET es posterior a la pantalla.
 ```
+
+El esquema describe NORMAL. En PLUS la cadena NAM / IR se ejecuta en la posición de NAM 1 y se omite NAM 2; el IR general queda separado. PRE sigue siendo la rama neutra independiente del NAM 2 de NORMAL, no una toma de la cadena PLUS.
 
 BLOCK NAM 2 e IR son **anclas**: no se pueden arrastrar, y ningún bloque puede
 moverse de forma que IR quede antes de BLOCK NAM 2. Todo lo demás es libre.
@@ -222,7 +303,7 @@ moverse de forma que IR quede antes de BLOCK NAM 2. Todo lo demás es libre.
 
 ![Las dos filas del rack en STEREO: BLOCK NAM 1 (rojo), BLOCK NAM 2 (dorado), un CHOR activo y los iconos de cadena que enlazan L y R](manual/img/zone-rack-stereo.jpg)
 
-Once bloques por ruta, mostrados de izquierda a derecha en orden de proceso. El
+En NORMAL, once bloques por ruta, mostrados de izquierda a derecha en orden de proceso. El
 orden por defecto es COMP · OCT · PITCH · BLOCK NAM 1 · BLOCK NAM 2 · CHOR ·
 FLANG · PHASE · IR · DELAY · REVERB.
 
@@ -286,8 +367,8 @@ la carga se rechaza y el bloque se queda como estaba.
 
 **La ficha de información de la captura.** Al pasar el ratón por un bloque NAM o
 por cualquier fila de la lista aparecen los metadatos escritos en la cabecera del
-`.nam` —título, marca y modelo del equipo, quién lo modeló, tipo de equipo,
-arquitectura, frecuencia de muestreo y nivel de referencia de entrada— además de
+`.nam` -título, marca y modelo del equipo, quién lo modeló, tipo de equipo,
+arquitectura, frecuencia de muestreo y nivel de referencia de entrada- además de
 la carátula cuando existe.
 
 ![La ficha de información de la captura](manual/img/tone-card.png)
@@ -298,10 +379,56 @@ descargas de TONE3000 la guardan solas; para tus propias capturas, basta con
 dejar una imagen al lado. Solo se lee la cabecera del archivo, así que recorrer
 una lista larga con el ratón no cuesta nada.
 
-**Cargar BLOCK NAM 1 desde el panel frontal.** El botón **+ BLOCK NAM 1** del
-rack (y la pestaña NAM 1) pregunta de dónde debe venir la captura:
+**Cargar BLOCK NAM 1.** Selecciona su pestaña NAM para dirigir el navegador, o haz doble clic en su bloque del rack para elegir el origen de la captura:
 
 ![Elegir el origen para BLOCK NAM 1](manual/img/dialog-block-nam1.png)
+
+### NORMAL / PLUS: cadenas NAM e IR
+
+El interruptor de palanca del extremo izquierdo del rack elige entre dos formas
+de usar las capturas NAM:
+
+| Posición | Qué muestra el rack |
+| --- | --- |
+| NORMAL (palanca abajo) | BLOCK NAM 1 y BLOCK NAM 2, tal como se describe arriba |
+| PLUS (palanca arriba) | Un único bloque **NAM / IR** grande, del doble de ancho, en el lugar de BLOCK NAM 1 dentro de la cadena |
+
+![PLUS: un bloque NAM / IR doble por ruta, con la topología de su cadena bajo el nombre](manual/img/zone-rack-plus.jpg)
+
+El bloque NAM / IR de PLUS ejecuta una **cadena** de bloques NAM e IR de pantalla. Se enciende y apaga
+con un clic y tiene el ojo como cualquier otro bloque NAM; la línea bajo su nombre
+resume la cadena, por ejemplo `SERIES 2` o `PARALLEL 2 | 1`. **Haz doble clic** sobre
+él para abrir la ventana PLUS CHAIN:
+
+![La ventana PLUS CHAIN en paralelo: ruta A arriba, ruta B abajo, los botones + y la mezcla A / B](manual/img/dialog-nam-chain.png)
+
+| Elemento | Uso |
+| --- | --- |
+| Conmutador de línea simple / líneas paralelas | **SERIES**: una sola ruta de IN a OUT. **PARALLEL**: dos rutas, A arriba y B abajo, alimentadas con la misma entrada y mezcladas de nuevo |
+| NAM 1A / 2A e IR 1A / 2A (igual en B) | Máximo dos NAM y dos IR por línea. Cada línea conserva un bloque NAM. El audio sigue el orden mostrado |
+| Clic en un bloque | Encender / apagar (un bloque vacío abre el menú de carga en su lugar) |
+| Doble clic o clic derecho | NAM: cargar captura local o desde TONE3000. IR: cargar WAV, AIFF o FLAC local. Remove block aparece cuando se permite quitar el bloque |
+| Soltar un archivo | `.nam` sobre una tarjeta NAM o + NAM; WAV, AIFF o FLAC sobre una tarjeta IR o + IR |
+| Ojo (solo tarjetas NAM) | Elegir el bloque NAM que editan BASS, MID, TREBLE y PRESENCE y en el que carga la lista NAM MODELS o TONE3000 |
+| `-` (esquina superior derecha) | Eliminar el bloque, previa confirmación. El último NAM de cada línea no se puede quitar; todos los IR se pueden quitar |
+| **+ NAM / + IR** | Añadir el tipo elegido; cada botón se desactiva al alcanzar dos bloques de ese tipo. Los nuevos NAM se insertan antes de los IR |
+| Nivel del IR | De -24 a +12 dB, inicialmente 0 dB; doble clic para restablecer. WAV, AIFF y FLAC mono o estéreo promediado a mono; hasta 8192 muestras de origen, remuestreadas sin normalización |
+| Arrastrar un bloque | Cambiarlo de posición, también a la otra ruta (si respeta los límites de dos NAM y dos IR) |
+| MIX A - B (solo PARALLEL) | Mezcla lineal: centro al 50% de cada línea; extremos al 100% de A o B. A diferencia de PAN, el centro no conserva ambas líneas a nivel completo |
+
+Cada bloque NAM de la cadena tiene su propia captura, su interruptor y sus controles
+de tono, igual que BLOCK NAM 1 y BLOCK NAM 2. En PLUS los selectores NAM sobre la
+placa de tono y sobre la lista pasan a ser uno por ruta, con el nombre del bloque
+que se edita (`NAM 2A`), y la lista muestra los modelos NAM de ese bloque.
+
+La primera vez que se activa PLUS, las capturas NORMAL cargadas se copian a la línea A en orden de rack, con sus ajustes de bypass y tono. Si no hay capturas, queda un bloque NAM vacío. El IR general no se copia a las líneas. NORMAL y PLUS guardan ajustes separados: al volver a
+NORMAL, BLOCK NAM 1 y BLOCK NAM 2 están exactamente como estaban. El interruptor,
+las cadenas y sus capturas se guardan con la sesión, en los presets (el paquete
+`.bnpp` incluye todas las capturas e IR de la cadena) y, en el plugin, con el proyecto
+del DAW. Todo cambio de la cadena se aplica tras un breve fundido, sin clics. Con
+INPUT CALI activado, PLUS calibra según el primer NAM activo de la línea A; la reproducción DI del standalone anula esa calibración de interfaz.
+
+Los IR de una línea se procesan en serie. Para mezclar dos pantallas, coloca una en cada línea paralela y usa A/B MIX. El IR del rack sigue siendo un bloque compartido independiente: ponlo en bypass si utilizas pantallas por línea para evitar filtrar dos veces. Los IR se cargan en segundo plano y guardan nivel, orden y bypass con la cadena. Las cadenas antiguas con más de dos NAM por línea restauran los dos primeros y muestran un aviso; conserva el preset original si necesitas recuperar la configuración anterior.
 
 ---
 
@@ -341,7 +468,7 @@ todos menos GATE, que vuelve al extremo izquierdo (OFF).
 
 | Control | Rango | Por defecto | Notas |
 | --- | --- | --- | --- |
-| INPUT GAIN | -12 … +12 dB | 0.0 dB | Nivel hacia la cadena NAM; Input Cali se suma encima |
+| INPUT GAIN | -12 … +12 dB | 0.0 dB | Nivel hacia la cadena NAM; Input Cali se suma en IN físico; queda anulado con archivos DI |
 | GATE | OFF … umbral de -80 a 0 dB | OFF | En el extremo izquierdo es bypass real. Ataque 1,5 ms, retención 35 ms, caída 90 ms, histéresis de 3 dB |
 | BASS | ±12 dB @ 70 Hz | 0.0 dB | Campana, Q 0,72 |
 | MID | ±12 dB @ 750 Hz | 0.0 dB | Campana, Q 0,72 |
@@ -475,6 +602,74 @@ Algoritmos: **Studio**, **Low Latency**, **Vintage**.
 | Fine | -100 … +100 ct | 0 ct |
 | Level | -12 … +12 dB | 0.0 dB |
 
+
+#### HARMONIZER (armonía según la escala)
+
+![La ventana de PITCH con la franja HARMONIZER: interruptor, INTERVAL, KEY, SCALE, TUNING y el visor](manual/img/dialog-harmonizer.png)
+
+La franja inferior de la ventana de PITCH convierte el bloque en un armonizador
+inteligente. Con **HARMONIZER** activado, cada nota que tocas recibe una segunda
+voz a un intervalo de la escala, de modo que la armonía siempre está en tono:
+
+| INTERVAL | Segunda voz |
+| --- | --- |
+| OCTAVE UP / OCTAVE DOWN | Siempre una octava; no necesita tonalidad, suena desde la primera nota y funciona también con acordes |
+| THIRD UP / THIRD DOWN | La tercera de la escala: **mayor o menor según la nota**. En Do mayor, Do recibe Mi (tercera mayor) y Re recibe Fa (tercera menor); en Do menor, Do recibe Mib |
+| FIFTH UP / FIFTH DOWN | La quinta de la escala: justa, o disminuida sobre el séptimo grado (Si -> Fa en Do mayor) |
+
+**KEY y SCALE.** Con KEY en **AUTO** la tonalidad se aprende de las notas que tocas:
+
+- Trabaja sobre las siete notas en uso, que es lo que decide la armonía. Una
+  tonalidad se distingue de su homónima (Do mayor / Do menor) por las notas que
+  realmente suenan (Mi o Mib, La o Lab, Si o Sib); una tonalidad, su relativa y sus
+  modos (Do mayor, La menor, Re dórico...) comparten notas y por tanto armonía.
+- La tónica y el modo se nombran según dónde se detiene lo que tocas y, sobre
+  todo, dónde reposan las frases: el visor puede indicar `A MINOR`, `D DORIAN`,
+  `G MIXOLYDIAN`... Tocar en pentatónica se interpreta como menor / mayor natural
+  hasta que otras notas digan lo contrario. La **menor armónica** se reconoce cuando
+  la séptima elevada se usa de forma constante (Sol# y nunca Sol en La menor): la
+  dominante recibe entonces su tercera mayor.
+- Trabajan dos memorias a la vez: una larga mantiene estable la tonalidad y una
+  corta sigue un cambio real de tonalidad en pocos segundos. Una nota de paso
+  nunca cambia la tonalidad.
+- Hasta haber oído suficientes notas el visor muestra **LISTENING...** y las
+  terceras y quintas no suenan, así que nunca se añade una nota equivocada. La
+  barra bajo la tonalidad indica lo segura que es la detección.
+
+Elige una tónica en **KEY** para fijar tú la tonalidad; **SCALE** ofrece entonces
+mayor, menor, los otros cinco modos, menor armónica y menor melódica.
+
+**TUNING.** **PURE** afina cada intervalo respecto a la nota tocada con proporciones
+simples (terceras 5:4 y 6:5, quintas 3:2): las dos voces encajan sin batidos, que es
+lo que mantiene limpia una armonía a través de un ampli saturado. **TEMPERED** usa
+los semitonos iguales del piano, para coincidir exactamente con teclados.
+
+**La voz.** La armonía la genera un desplazador propio cuyos empalmes se
+sincronizan con el periodo de la nota que suena, de modo que suena a segunda
+guitarra y no a efecto. Lee la guitarra con unos milisegundos de retraso -el
+retraso natural de un segundo músico- y usa ese tiempo para conocer cada nota nueva
+antes de que suene: una nota nunca sale con el intervalo de la anterior. Las notas
+se reconocen desde el Mi grave (y afinaciones drop) hasta el traste 24, con un
+error de pocos cents, en unos 25 ms (45 ms en las cuerdas más graves). Los bendings
+y el vibrato se siguen de forma continua: en un bending de Do a Re en Do mayor la
+armonía se desliza de Mi a Fa. Las notas fuera de la tonalidad (una blue note, el
+Sol# de La menor) toman el grado de la escala que da una tercera o quinta real:
+Sol# recibe Si, Sib en Do mayor recibe Re.
+
+**Mandos en modo HARMONIZER**: **MIX** equilibra la armonía con la nota que tocas,
+que siempre se mantiene (100 % = las dos al mismo nivel, 0 % = sin armonía);
+**FINE** desafina ligeramente la armonía para un sonido más ancho; **LEVEL** funciona
+como siempre. SEMITONES, WINDOW y FEEDBACK descansan. TYPE elige el carácter de la
+voz: **Studio**, **Low Latency** (menos retraso; en frases muy rápidas puede perder
+algo de precisión en notas graves) y **Vintage** (más oscura). El bloque del rack
+indica **HARMONY** mientras el armonizador está activo.
+
+Toca notas sueltas: las terceras y quintas siguen melodías, riffs y solos. Los
+acordes confunden cualquier detección de nota, así que simplemente suenan sin
+armonía. La detección usa la señal limpia de la guitarra, antes de la ganancia, el
+NAM y los efectos. Los ajustes de HARMONIZER se guardan con el bloque PITCH y
+siguen un enlace L / R.
+
 ---
 
 ## 12. MONO y STEREO: dos equipos completos
@@ -501,7 +696,24 @@ audibles.
 | DUAL MONO | La entrada sumada de la interfaz alimenta **las dos** cadenas: una guitarra por dos equipos independientes |
 | SPLIT L/R | El canal de entrada 1 alimenta la cadena izquierda y el canal 2 la derecha |
 
-Este ajuste pertenece al estado de la aplicación, no a los presets.
+Este ajuste pertenece al estado de la aplicación, no a los presets. La tabla describe IN físico. En DI, MONO y DUAL MONO usan el archivo izquierdo; SPLIT L/R usa un archivo por ruta (capítulo 6).
+
+**PAN** (la barra entre las dos filas del rack y el afinador, solo en STEREO):
+un fader horizontal que reparte el nivel entre las dos rutas.
+
+| Posición | Resultado |
+| --- | --- |
+| Centro (`CENTER`, muesca central, marca verde) | L y R suenan a su nivel completo, igual que sin PAN |
+| Hacia `L` | La ruta derecha se atenúa progresivamente; en el tope izquierdo (`L 100 %`) solo suena L |
+| Hacia `R` | La ruta izquierda se atenúa progresivamente; en el tope derecho (`R 100 %`) solo suena R |
+
+Las letras `L` y `R` de los extremos son testigos: la del lado que se atenúa se
+va apagando, y el carril se ilumina desde el centro hacia el lado favorecido.
+Ningún lado sube nunca por encima de su nivel en el centro. Doble clic devuelve
+el fader al centro; la rueda del ratón lo mueve en pasos finos.
+
+En el standalone PAN actúa sobre las salidas principal y WET (las tomas PRE y DI
+quedan intactas) y se guarda con el estado de la aplicación y en los presets.
 
 **Los selectores.**
 
@@ -580,6 +792,8 @@ derecha para bajo, centrado o alto.
 
 ## 15. Input Cali (calibración automática de entrada)
 
+La fuente DI anula temporalmente la calibración de interfaz; al volver a IN se recupera su ajuste anterior.
+
 Las capturas NAM se entrenan a un nivel de entrada conocido. Input Cali ajusta tu
 interfaz a ese nivel para que una captura suene como se capturó.
 
@@ -601,8 +815,7 @@ ganancia de calibración (dB) = referencia de entrada de la interfaz (dBu) - ref
 
 Input Cali solo cambia ganancia. Nunca reescribe ni normaliza un modelo. Si tu
 interfaz tiene varios modos de entrada (instrumento / línea / atenuador),
-introduce el valor en dBu del modo que estés usando realmente. Para una PreSonus
-Studio 24c es +10 dBu.
+introduce el valor en dBu del modo que estés usando realmente. Consulta la especificación del fabricante para ese modo de entrada.
 
 ---
 
@@ -617,8 +830,7 @@ en línea en una ventana del reproductor.
 sesión con un enlace por correo, así que eso abre su página de acceso una vez; el
 reproductor guarda después el token de refresco devuelto, cifrado con una clave
 derivada de esta máquina, en `tone3000.session` junto a la aplicación. Cada
-listado y descarga posterior renueva el token en silencio, así que en ese
-ordenador no vuelve a hacer falta un navegador. **SIGN OUT** borra el archivo.
+listado y descarga posterior intenta renovar el token en silencio. Si la autorización caduca o se revoca, vuelve a conectar la cuenta. **SIGN OUT** borra el archivo.
 
 ![La biblioteca: cinco listas, carátulas, autor, número de modelos y paginación](manual/img/tone3000-library.png)
 
@@ -659,24 +871,23 @@ requerir un acceso dentro del reproductor.
 
 - la captura de BLOCK NAM 2 de cada ruta;
 - la captura de BLOCK NAM 1 de cada ruta, si está cargada;
-- la IR seleccionada de cada ruta, si está cargada (hasta seis recursos
-  incrustados);
+- la IR general seleccionada de cada ruta, si está cargada;
+- el modo NORMAL / PLUS y todos los archivos NAM e IR de PLUS, orden de líneas, bypass, tono, nivel IR y mezcla A/B;
 - orden del rack, algoritmos, todos los parámetros de efecto y cada estado de
   bypass;
-- todos los mandos, interruptores y ajustes del afinador;
+- todos los mandos del amplificador, interruptores y ajustes del afinador (no el reproductor DI);
 - los enlaces de efectos L/R.
 
 Los recursos incrustados se verifican con SHA-256 al cargarlos, se extraen a la
 caché de presets de la aplicación y se restauran. El dispositivo de audio, la
-referencia de interfaz y el ruteo físico quedan fuera a propósito, para que un
+referencia de interfaz, ruteo físico, archivos DI y transporte DI quedan fuera a propósito, para que un
 preset pueda moverse entre ordenadores.
 
 **LOAD PRESET** lo restaura. Un preset escrito por el reproductor de una sola
 ruta, o por NAM PLAYER DUAL, se carga en la **ruta seleccionada**. Un preset
-escrito aquí sigue abriéndose en el reproductor antiguo de una ruta, porque la
-ruta izquierda también se escribe en el formato plano anterior.
+escrito aquí incluye una representación compatible de la ruta izquierda. Un reproductor antiguo no puede reproducir funciones que no implemente, como la cadena PLUS actual; usa 1.8.0 para recuperar la configuración completa.
 
-> Debe haber una captura cargada en BLOCK NAM 2 para poder guardar un `.bnpp`.
+> Para guardar desde NORMAL, carga BLOCK NAM 2 en la ruta izquierda. PLUS también permite guardar con un archivo cargado en su cadena izquierda. Los archivos DI nunca se incrustan.
 
 ---
 
@@ -686,7 +897,7 @@ ruta izquierda también se escribe en el formato plano anterior.
 siguiente arranque: las dos rutas, todos los controles, las capturas e IR
 seleccionadas, el orden de bloques y los bypass, los enlaces, MONO/STEREO, DUAL
 MONO/SPLIT, el acabado, el dispositivo de audio, los canales, la frecuencia, el
-búfer, la referencia de interfaz y las cuatro rutas de salida.
+búfer, la referencia de interfaz y las cuatro rutas de salida. También se recuperan las cadenas PLUS y las rutas de archivos DI, niveles, posición y bucle. El selector siempre arranca en IN y la DI pausada; volver a DI no inicia la reproducción.
 
 | Archivo | Dónde | Qué guarda |
 | --- | --- | --- |
@@ -773,11 +984,13 @@ realimenta el audio.
 
 | Síntoma | Qué comprobar |
 | --- | --- |
+| DI en silencio | Pulsa PLAY: volver desde IN no reanuda automáticamente. Comprueba archivo, nivel y posición al final de pista |
+| Archivo DI rechazado | Cada pista debe ser WAV, AIFF o FLAC mono; exporta cada canal por separado desde el DAW |
 | No suena nada | POWER encendido; la ruta MAIN apunta a las salidas que escuchas; el canal de entrada correcto está marcado en Audio Setup; el vúmetro de entrada se mueve al tocar |
 | Suena, pero sin amplificador | Hay una captura cargada y BLOCK NAM 2 está encendido; la cadena no está entera en bypass (una cadena en bypass deja pasar el sonido seco) |
 | Un bloque NAM no se enciende | Carga una captura válida en ese bloque y espera a que termine; una captura válida lo activa sola |
 | El bloque IR sigue en bypass | Carga una respuesta válida y comprueba que no has pulsado dos veces la fila seleccionada (eso la deselecciona) |
-| Chasquidos o cortes al tocar | Sube el búfer de audio, usa el driver ASIO del fabricante en Windows y evita búferes muy pequeños con cuatro bloques NAM activos |
+| Chasquidos o cortes al tocar | Sube el búfer de audio, usa el driver ASIO del fabricante en Windows y evita búferes muy pequeños con varios bloques NAM activos, especialmente PLUS en paralelo |
 | Una carpeta aparece vacía | Debe contener archivos `.nam`, o respuestas `.wav` cortas y válidas, directamente dentro de la carpeta, salvo que marques DEEP SEARCH |
 | El nivel no coincide con otro software NAM | Revisa la referencia de interfaz en Audio Setup y si Input Cali está activo |
 | Una captura suena demasiado alta o baja | Revisa IR VOL (-12 dB por defecto) e Input Cali antes de tocar INPUT GAIN |
@@ -794,10 +1007,11 @@ realimenta el audio.
 | Elemento | Valor |
 | --- | --- |
 | Rutas de señal | 2 independientes (L / R) |
-| Bloques NAM | 2 por ruta (4 en total) |
-| IR de pantalla | 1 por ruta |
+| Bloques NAM | NORMAL: 2 por ruta. PLUS: 2 por línea y 2 líneas por ruta (hasta 8 entre L/R) |
+| IR de pantalla | 1 IR general por ruta; PLUS añade hasta 2 por línea (4 por ruta) |
+| Reproductor DI | Solo standalone; 1 archivo mono compartido o 2 en SPLIT; WAV / AIFF / FLAC, remuestreo automático |
 | Efectos | 8 por ruta, con 3 algoritmos y 6 parámetros cada uno |
-| Posiciones del rack | 11 por ruta, reordenables libremente alrededor de las anclas BLOCK NAM 2 e IR |
+| Posiciones del rack | NORMAL: 11. PLUS sustituye los dos NAM por un bloque NAM / IR doble en NAM 1; el IR general sigue separado |
 | Arquitecturas NAM | A1, A2 Standard, A2 Nano, detectadas automáticamente |
 | Frecuencias de muestreo | Las que ofrezca el dispositivo, de 44,1 a 192 kHz |
 | Tamaño de búfer | El que ofrezca el driver; el motor usa internamente 32 muestras como mínimo y divide los búferes excesivos |
