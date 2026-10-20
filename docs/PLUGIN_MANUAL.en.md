@@ -1,6 +1,6 @@
-# Bcho NAM Player 1.8.0 - VST3 / AU Plug-in Manual
+# Bcho NAM Player 1.8.5 - VST3 / AU Plug-in Manual
 
-Complete reference for the 1.8.0 plugin: installation, routing, NORMAL / PLUS, NAM/IR files, controls, all effect parameters, HARMONIZER, presets and automation. The standalone-only DI player is not part of the plugin.
+Complete reference for the 1.8.5 plugin: installation, routing, NORMAL / PLUS, NAM/IR files, controls, all effect parameters, HARMONIZER, presets and automation. The standalone-only DI player is not part of the plugin.
 
 ---
 
@@ -45,6 +45,21 @@ AAX is not included. Match the package to your DAW's process architecture.
 
 ## 2. Installing
 
+### Choosing EmbeddedBrowser or ExternalBrowser
+
+Version 1.8.5 provides two variants for both **Standalone** and **VST3** on Windows x64:
+
+| ZIP variant | TONE3000 sign-in and catalogue | Browser requirement |
+| --- | --- | --- |
+| EmbeddedBrowser | Opens sign-in pages and SEARCH FULL CATALOGUE inside the application | Microsoft WebView2 |
+| ExternalBrowser | Opens those pages in your default system browser | Does not require WebView2 |
+
+The TONE3000 library remains available through the TONE3000 button in both variants. The audio engine, controls, NAM models, IRs and presets are the same; only the browser used for sign-in and catalogue selection changes. Local files work offline in both.
+
+Choose a **Standalone** ZIP to run the application, or **VST3** to use it in your DAW. Both VST3 variants share the same plug-in name and identity: install only one at a time. To switch, close the DAW, replace the entire `Bcho NAM Player.vst3` folder and rescan plug-ins. Do not combine files from the two packages. You can keep both standalone variants in separate folders. Keep your models, IRs and presets when replacing a variant.
+
+The cover image is a standalone screenshot; the plug-in manual describes the controls available inside a DAW. Embedded browser examples refer to EmbeddedBrowser; in ExternalBrowser, complete those steps in your system browser.
+
 Close the DAW first, and copy the **entire bundle**, not just the binary inside
 it.
 
@@ -87,7 +102,7 @@ protection globally.
 The layout is the standalone's, minus the parts a host owns:
 
 - **Rack strip**: preset buttons, NORMAL / PLUS, the processing blocks, the tuner and
-  its display, the tuning selector, the MONO / STEREO switch and the settings
+  its display and CHROMATIC indicator, the MONO / STEREO switch and the settings
   gear.
 - **Amplifier head**: Input VU, INPUT GAIN, INPUT CALI; the seven main knobs
   with the NAM and IR selectors above them; the NAM and IR browsers with the IR
@@ -132,6 +147,23 @@ side ever gets louder than it is at the centre. Double-click returns the fader
 to the centre; the mouse wheel moves it in fine steps.
 
 In the plug-in PAN is an automatable parameter (`Pan`) and is saved with the project.
+
+**OUT** is a shared post-chain output trim (-60 to +12 dB, 0 dB by default). It changes both processed channels together without changing their relative balance. Double-click the strip to return to 0 dB. In the standalone it affects MAIN and WET, not the PRE and DI reference taps. In the plug-in it acts on the final stereo output.
+
+### Cabinet position
+
+**CAB POS** places the two complete processed cabinet paths in the final stereo
+field. Its **IR L** slider moves the left cabinet path and **IR R** moves the
+right one. Initially they are hard left and hard right. Move IR L to CENTER to
+hear that cabinet in both speakers while IR R remains on the right; center both
+to hear both cabinets from both speakers. These sliders do not select or blend
+IR files. In PLUS, two IRs in a lane run in series: CAB POS moves the lane's
+combined result, not each IR separately. **PAN** subsequently balances the L
+and R paths; **OUT** changes the final level of both together; **OUTPUT GAIN**
+belongs to the selected path. Position moves are smoothed to avoid clicks. The
+two positions and OUT are automatable and saved with the DAW project.
+
+![Cabinet position controls for the left and right processed paths](manual/img/dialog-cabinet-position.png)
 
 The `L` / `R` tabs beside the racks choose which path the shared controls edit;
 the `NAM 1 L`, `NAM 2 L`, `NAM 1 R`, `NAM 2 R` and `IR L`, `IR R` selectors work
@@ -180,15 +212,71 @@ everything except GATE, which returns to fully left (OFF).
 | MASTER VOL | -12 … +12 dB | 0.0 dB | After the chain, before Output Gain |
 | IR BLEND | 0 … 100 % | 50 % | Dry against cabinet |
 | IR VOL | -24 … 0 dB | -12 dB | Cabinet branch only |
-| OUTPUT GAIN | -12 … +12 dB | 0.0 dB | Final level |
+| OUTPUT GAIN | MUTE, then -60 … +12 dB | 0.0 dB | Final level of the selected path; centre is unity |
 | POWER | On / off | On | Mutes the processed path; the switch glows red while on |
 | INPUT CALI | On / off | Off | See Input Cali in chapter 10 |
+
+At the far-left stop, **OUTPUT GAIN** displays **MUTE** and the selected
+path becomes completely silent after a 10 ms ramp. Above the stop, the lower
+half rises from -60 dB to 0 dB at the centre; the upper half reaches +12 dB.
+L and R can be muted independently or together with their link.
+If CAB POS places the other, unmuted path in the same physical speaker, that
+speaker may still sound: OUTPUT GAIN mutes a path, not a speaker. Link L/R and
+turn the knob to MUTE to silence both paths.
 
 **The tone stack follows the selected NAM block.** With a **NAM 1** selector
 active, BASS / MID / TREBLE / PRESENCE drive BLOCK NAM 1's own four filters;
 with a **NAM 2** selector active they drive the main tone stack. Each set keeps
 its own values, and switching selectors recalls them. In the plug-in and in
 STEREO the plate prints which one you are editing.
+
+In STEREO, INPUT GAIN and OUTPUT GAIN show `(L)` or `(R)` beside their labels.
+Each path-dependent front-panel control has its own **L–chain–R** switch,
+except TUNER. Select L or R, set its value, then light that parameter's link:
+the current value is copied to the other path, and later editor changes to
+that parameter update both. Turn the link off to edit paths independently;
+their current values remain in place. Each parameter has a separate link.
+The link beside POWER makes its red switch turn both paths on or off together;
+it does not link audio, gain or tone. INPUT CALI has its own link beside its
+indicator. Tone links follow the selected NAM block on each path, including
+the viewed NAM slot in PLUS. TUNER listens only to the selected path and has
+no link. Link choices are saved with the DAW project; rack
+effect links remain separate.
+
+| Control | STEREO scope |
+| --- | --- |
+| INPUT GAIN, GATE, MASTER VOL, OUTPUT GAIN, POWER, INPUT CALI | Selected L or R path; each has its own optional link |
+| BASS, MID, TREBLE, PRESENCE | Selected NAM slot on the selected path; each has its own optional link |
+| IR BLEND, IR VOL | Selected IR L or IR R cabinet; each has its own optional link |
+| TUNER | Selected path only; no link and no mixing of two notes |
+| PAN, OUT | Both processed paths together; independent of the L/R path tab |
+| CAB POS IR L / IR R | Independent placement of each complete cabinet path |
+
+The L/R links are editor gestures. The DAW still exposes its own `L_` and `R_`
+parameters for host automation; automating one of those parameters addresses
+that side directly.
+
+**RESET NAM**, beside NAM MODELS, offers **NAM ONLY** (selected NAM tone and
+the path's MASTER VOL / OUTPUT GAIN) or **ENTIRE PATH** (all front-panel
+controls on the selected path, plus its NAM tones and slot levels in PLUS).
+The confirmation spells out that loaded NAMs, IRs and effect order are kept.
+Lit links also carry reset values to the other path. An IR slot cannot be
+reset as a NAM, so the button is disabled while an IR slot is selected in PLUS.
+
+### Session tools: A/B and history
+
+The gold-edged **SESSION TOOLS** button beside IR FILES opens a closable window
+without covering the rack. **STORE A/B** capture two complete plug-in rigs;
+**HEAR A/B** recall their NAMs, IRs, effects, levels, routing, stereo placement
+and NORMAL / PLUS chains. No automatic loudness matching is applied. **UNDO**
+and **REDO** move through up to 40 recent rig changes; continuous knob drags
+are grouped after they settle. A/B recalls are undoable. These temporary
+working copies belong to the open editor and are not written into the DAW
+project or `.bnpp` files. This history is separate from the DAW's own undo
+history and its parameter automation. File changes use the existing output
+fade.
+
+![Session tools in the plug-in](manual/img/dialog-session-tools.png)
 
 ---
 
@@ -276,10 +364,12 @@ side's settings to keep. BLOCK NAM 1, BLOCK NAM 2 and IR cannot be linked.
 
 ## 10. Tuner and Input Cali
 
-**TUNER** works exactly as in the standalone: it listens to the untouched DI
-before the gate and the NAM blocks, covers roughly 65-700 Hz, reads centred
-within ±5 cents, and offers STANDARD, DROP D, D STANDARD, Eb and OPEN G. Play
-one isolated string at a useful level.
+**TUNER** listens to the untouched input before the gate and NAM blocks, covers
+roughly 65-700 Hz and reads centred within ±5 cents. **CHROMATIC** reports the
+detected note regardless of guitar tuning; it does not assign a string or
+target note. Compare its reading with the note you intend for the string. Play
+one isolated string at a useful level. In STEREO it monitors the selected L or
+R path, never both notes mixed; each path keeps its own tuner on/off state.
 
 **INPUT CALI** uses the engine's reference and the capture's `input_level_dbu`
 metadata (assuming +12 dBu when a capture has none), clamped to ±24 dB. The
@@ -305,8 +395,9 @@ The **TONE3000** button opens the same library window as the standalone.
   auditioned.
 - **RESTORE PREVIOUS MODEL** puts back what the block held before the window was
   opened; closing the window keeps the last audition.
-- **SEARCH FULL CATALOGUE** opens TONE3000's own picker inside the plug-in; when
-  you choose a tone the picker closes by itself and the download starts.
+- **SEARCH FULL CATALOGUE** opens TONE3000's picker inside the plug-in
+  (EmbeddedBrowser) or in the system browser (ExternalBrowser). Choose a tone
+  to start its download; the embedded picker closes automatically.
 
 On Windows the embedded browser uses WebView2. Inside a DAW the plug-in stores
 its WebView2 data in a per-user folder, so a host installed in Program Files
@@ -344,6 +435,8 @@ its left-path representation into the selected plug-in path.
 | Power, Input Cali, Tuner | `L_` and `R_` |
 | Stereo (MONO / STEREO) | one, global |
 | Pan (only acts in STEREO) | one, global |
+| Global Output (OUT) | one, global |
+| Cabinet Position L / R (CAB POS, only acts in STEREO) | one per processed path |
 
 Rack order, effect algorithms and effect parameters are part of the saved state,
 not host automation. PLUS mode, topology, per-block files, tone, levels and bypass are saved in state, without adding host automation parameters. DI playback adds no controls, parameters or state to the plugin. Loading a file is a load, not a continuous parameter.
@@ -367,10 +460,11 @@ project.
 | Physical MAIN / PRE / DI / WET output routing | Route inside the DAW |
 | DUAL MONO / SPLIT L/R input switch | Decided by the track's routing |
 | Interface input reference slider for Input Cali | Not exposed; calibrate outside or use the standalone |
-| Eleven selectable skins | Always Astra / Obsidian |
+| Fifteen selectable skins, including the green, blue and graphite finishes | Always Astra / Obsidian |
 | Its own saved session between launches | State comes from the host project |
 | Update checking | Not included |
 | IN / DI player, CONFIG DI, transport and DI file state | Not included. Play and route DI audio tracks in the DAW |
+| REC take review, DI / PROCESSED WAV / MP3 export and metronomes | Not included. Record, count in and monitor the metronome in the DAW |
 
 Everything else - engine, rack, effects, links, tuner, browsers, TONE3000,
 information card, `.bnpp` presets - is the same code.
@@ -401,7 +495,7 @@ information card, `.bnpp` presets - is the same code.
 | Signal paths | 2 independent (L / R) |
 | NORMAL | 2 NAM and 1 rack IR per path; 8 effects per path |
 | PLUS | 2 NAM + 2 IR per lane, up to 2 lanes per path; general rack IR remains separate |
-| Internal version | 1.8.0 (numeric version 0x10800); VST3 and AU metadata derive from the same project version |
+| Internal version | 1.8.5 (numeric version 0x10805); VST3 and AU metadata derive from the same project version |
 | Sample rates / buffers | Whatever the host provides; oversized host buffers are split internally |
 | NAM architectures | A1, A2 Standard, A2 Nano - automatic |
 | Start-up / re-prepare fade | 60 ms from silence |
@@ -593,3 +687,10 @@ while the harmonizer is on.
 Play single notes: thirds and fifths follow melodies, riffs and solos. For thirds and fifths, use single-note playing. Polyphonic or unclear input can make pitch detection unreliable; the detector may suppress the harmony. Detection uses the clean
 guitar signal, before gain, NAM and effects. The HARMONIZER settings are saved
 with the PITCH block and follow an L / R link.
+
+**Latency:** the original guitar remains on the immediate dry path. The
+HARMONIZER adds a separate voice whose pitch analysis and splice window cause
+a short, variable delay; **Low Latency** shortens that voice delay. The plug-in
+reports **0 samples of fixed whole-plug-in latency** to the DAW. Delaying the
+entire plug-in to compensate the variable harmony voice would also misalign
+the dry guitar and the other effects.

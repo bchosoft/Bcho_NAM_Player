@@ -1,12 +1,14 @@
-# Bcho NAM Player 1.8.0
+![Bcho NAM Player 1.8.5](docs/Standalone_Cover.png)
 
-**[English](#english)** · **[Español](#español)** · [Downloads / Descargas](https://github.com/bchosoft/Bcho_NAM_Player/releases/tag/v1.8.0) · [Support on Ko-fi](https://ko-fi.com/bchosoft)
+# Bcho NAM Player 1.8.5
 
-![Bcho NAM Player 1.8.0](docs/Caratula_BNAMP.png)
+**[English](#english)** · **[Español](#español)** · [Downloads / Descargas](https://github.com/bchosoft/Bcho_NAM_Player/releases/tag/v1.8.5) · [Support on Ko-fi](https://ko-fi.com/bchosoft)
 
 ---
 
 ## English
+
+**Version 1.8.5: Windows 10/11 x64 only.** Standalone and VST3 are available with EmbeddedBrowser or ExternalBrowser. macOS and Linux packages for this version will follow later; earlier releases remain available in the release history.
 
 ### Overview
 
@@ -14,7 +16,20 @@ Bcho NAM Player is a guitar processor built around **Neural Amp Modeler** captur
 
 It has **two complete, independent signal paths - L and R**. Each path owns its own BLOCK NAM 1, BLOCK NAM 2, cabinet IR, eight-effect rack with free block order, gate, tone stack, master level, IR blend, IR cabinet volume, **input gain**, output gain, power, input calibration and tuner. In **MONO** one path plays; in **STEREO** both run side by side.
 
-### What's new in 1.8.0
+### What's new in 1.8.5
+
+- **Classic Black / Purple Metal skin:** standalone option with the existing black Levant tolex and reflective purple metal plates and knobs. Choose it in Settings; the plug-in keeps its fixed Astra finish.
+- **Three more standalone skins:** Forest Green / Gunmetal, Midnight Blue / Silver and Graphite / Electric Blue change the tolex, metal plates and knobs without changing control positions.
+- **Standalone recording:** capture raw DI and processed MAIN, review and trim the take, then export WAV or MP3 on Windows. Stereo DI exports as two mono files and the processed signal as one stereo file. The plug-in continues to rely on the DAW for recording.
+- **Independent metronomes:** practice, recording count-in and click during recording have separate switches, with shared tempo and meter (65 BPM, 4/4 by default). The click is monitor-only and never enters an export.
+- **Global OUT:** one final level for both processed channels, 0 dB by default, available in standalone and as an automatable plug-in parameter.
+- **CAB POS:** independent stereo placement of the left and right processed cabinet paths. Their default hard-left/hard-right positions reproduce the previous release. The existing PAN remains a separate balance control. PLUS IRs in one lane still run in series; CAB POS moves each complete L/R path.
+- **Reliable edits:** selecting another standalone NAM capture preserves its tone and level controls. The DI LOOP button now lights when enabled.
+- **Linked controls and reset:** STEREO INPUT GAIN / OUTPUT GAIN show the selected L/R path. Each path-dependent front-panel control has its own L/R link, and RESET NAM offers a confirmed NAM-only or full-path reset without removing files.
+- **Visible DI loop:** drag `[` and `]` on the standalone POSITION timeline to set the same boundaries as LOOP IN / LOOP OUT.
+- **Browser choices:** EmbeddedBrowser opens TONE3000 inside the app; ExternalBrowser uses the system browser. Audio processing is identical.
+
+### Previously in 1.8.0
 
 - **Standalone DI player.** Switch between the audio interface and one or two mono WAV, AIFF or FLAC guitar tracks. MONO and DUAL MONO share one DI; SPLIT L/R can use a different DI for each path. The integrated player provides load, remove, levels, seek, loop and transport controls. Returning from IN to DI never starts playback automatically. The plug-in continues to use the DAW's audio and has no DI file player.
 - **PLUS NAM chain.** Switch between the original NORMAL rack and a NAM chain with up to two NAMs and two IRs per lane, in series or in two parallel lanes, with an A/B mix. The chain and NORMAL settings are preserved separately.
@@ -38,9 +53,6 @@ It has **two complete, independent signal paths - L and R**. Each path owns its 
 | Platform | Standalone | Plug-in |
 | --- | --- | --- |
 | Windows 10/11 x64 | Portable `.exe` (ASIO, Windows Audio, DirectSound) | VST3 |
-| macOS 11+ Apple Silicon (`arm64`) | `.app` | VST3 and AU |
-| macOS 11+ Intel (`x86_64`) | `.app` | VST3 and AU |
-| Linux x86_64 | AppImage | VST3 |
 
 Match the plug-in package to your DAW's architecture. AAX is not included. macOS builds are ad-hoc signed and not Apple-notarized.
 
@@ -91,17 +103,12 @@ Connect your TONE3000 account once; the player keeps an encrypted refresh token 
 **Standalone** - extract the ZIP and keep its files together.
 
 - Windows: run `Bcho NAM Player.exe`; install your interface's ASIO driver for the lowest latency.
-- macOS: open `Bcho NAM Player.app` (right-click → **Open** the first time if Gatekeeper asks).
-- Linux: `chmod +x` the AppImage and run it.
 
 **Plug-in** - close the DAW, copy the **whole bundle**, restart and rescan.
 
 | System | Copy to |
 | --- | --- |
 | Windows VST3 | `C:\Program Files\Common Files\VST3\Bcho NAM Player.vst3` |
-| macOS VST3 | `~/Library/Audio/Plug-Ins/VST3/Bcho NAM Player.vst3` |
-| macOS AU | `~/Library/Audio/Plug-Ins/Components/Bcho NAM Player.component` |
-| Linux VST3 | `~/.vst3/Bcho NAM Player.vst3` |
 
 ### Using the standalone in five steps
 
@@ -115,27 +122,17 @@ Start at a low monitoring level. With every block bypassed the dry signal passes
 
 ### Downloads
 
-All files for this version: **[Bcho NAM Player v1.8.0](https://github.com/bchosoft/Bcho_NAM_Player/releases/tag/v1.8.0)**
+All files for this version: **[Bcho NAM Player v1.8.5](https://github.com/bchosoft/Bcho_NAM_Player/releases/tag/v1.8.5)**
 
-The filenames below are the exact assets published in the release. Windows and macOS provide both browser variants; Linux keeps the system-browser build only.
+The four Windows ZIP filenames below are the exact application packages published in this release. Both browser variants use the same audio engine.
 
 | Package | File |
 | --- | --- |
-| Windows standalone — EmbeddedBrowser (recommended with Edge/WebView2) | [BchoNAMPlayer-v1.8.0-Windows-x64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-Windows-x64-Standalone-EmbeddedBrowser.zip) |
-| Windows VST3 — EmbeddedBrowser (recommended with Edge/WebView2) | [BchoNAMPlayer-v1.8.0-Windows-x64-VST3-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-Windows-x64-VST3-EmbeddedBrowser.zip) |
-| Windows standalone (external browser) | [BchoNAMPlayer-v1.8.0-Windows-x64-Standalone-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-Windows-x64-Standalone-ExternalBrowser.zip) |
-| Windows VST3 (external browser) | [BchoNAMPlayer-v1.8.0-Windows-x64-VST3-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-Windows-x64-VST3-ExternalBrowser.zip) |
-| macOS Apple Silicon standalone (embedded browser) | [BchoNAMPlayer-v1.8.0-macOS-arm64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-arm64-Standalone-EmbeddedBrowser.zip) |
-| macOS Apple Silicon VST3 + AU (embedded browser) | [BchoNAMPlayer-v1.8.0-macOS-arm64-Plugins-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-arm64-Plugins-EmbeddedBrowser.zip) |
-| macOS Apple Silicon standalone (external browser) | [BchoNAMPlayer-v1.8.0-macOS-arm64-Standalone-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-arm64-Standalone-ExternalBrowser.zip) |
-| macOS Apple Silicon VST3 + AU (external browser) | [BchoNAMPlayer-v1.8.0-macOS-arm64-Plugins-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-arm64-Plugins-ExternalBrowser.zip) |
-| macOS Intel standalone (embedded browser) | [BchoNAMPlayer-v1.8.0-macOS-x86_64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-x86_64-Standalone-EmbeddedBrowser.zip) |
-| macOS Intel VST3 + AU (embedded browser) | [BchoNAMPlayer-v1.8.0-macOS-x86_64-Plugins-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-x86_64-Plugins-EmbeddedBrowser.zip) |
-| macOS Intel standalone (external browser) | [BchoNAMPlayer-v1.8.0-macOS-x86_64-Standalone-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-x86_64-Standalone-ExternalBrowser.zip) |
-| macOS Intel VST3 + AU (external browser) | [BchoNAMPlayer-v1.8.0-macOS-x86_64-Plugins-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-x86_64-Plugins-ExternalBrowser.zip) |
-| Linux standalone (AppImage) | [BchoNAMPlayer-v1.8.0-Linux-x86_64-Standalone.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-Linux-x86_64-Standalone.zip) |
-| Linux VST3 | [BchoNAMPlayer-v1.8.0-Linux-x86_64-VST3.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-Linux-x86_64-VST3.zip) |
-| Checksums | [SHA256SUMS.txt](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/SHA256SUMS.txt) |
+| Windows standalone — EmbeddedBrowser (recommended with Edge/WebView2) | [BchoNAMPlayer-v1.8.5-Windows-x64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.5/BchoNAMPlayer-v1.8.5-Windows-x64-Standalone-EmbeddedBrowser.zip) |
+| Windows VST3 — EmbeddedBrowser (recommended with Edge/WebView2) | [BchoNAMPlayer-v1.8.5-Windows-x64-VST3-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.5/BchoNAMPlayer-v1.8.5-Windows-x64-VST3-EmbeddedBrowser.zip) |
+| Windows standalone (external browser) | [BchoNAMPlayer-v1.8.5-Windows-x64-Standalone-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.5/BchoNAMPlayer-v1.8.5-Windows-x64-Standalone-ExternalBrowser.zip) |
+| Windows VST3 (external browser) | [BchoNAMPlayer-v1.8.5-Windows-x64-VST3-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.5/BchoNAMPlayer-v1.8.5-Windows-x64-VST3-ExternalBrowser.zip) |
+| Checksums | [SHA256SUMS.txt](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.5/SHA256SUMS.txt) |
 
 Every ZIP includes its English and Spanish PDF manual in a `manuals` folder. The manuals are also online: [standalone](docs/USER_MANUAL.en.md) · [plug-in](docs/PLUGIN_MANUAL.en.md), and as PDF in [docs/manuals](docs/manuals).
 
@@ -153,13 +150,28 @@ This public repository contains documentation and release downloads, **not the a
 
 ## Español
 
+**Versión 1.8.5: solo Windows 10/11 x64.** Standalone y VST3 están disponibles con EmbeddedBrowser o ExternalBrowser. Las versiones de macOS y Linux se publicarán más adelante; las versiones anteriores siguen disponibles en el historial de releases.
+
 ### Descripción general
 
 Bcho NAM Player es un procesador de guitarra construido alrededor de capturas **Neural Amp Modeler**, **respuestas impulsionales** de pantalla y un rack de efectos de estudio. Está disponible como **aplicación standalone** portable y como **plugin** de efecto de audio (VST3 en Windows, macOS y Linux, y AU en macOS).
 
 Tiene **dos rutas de señal completas e independientes, L y R**. Cada ruta tiene su propio BLOCK NAM 1, BLOCK NAM 2, IR de pantalla, rack de ocho efectos con orden libre, puerta de ruido, sección de tonos, volumen máster, IR blend, volumen de pantalla, **ganancia de entrada**, ganancia de salida, encendido, calibración de entrada y afinador. En **MONO** suena una ruta; en **STEREO** funcionan las dos a la vez.
 
-### Novedades de la 1.8.0
+### Novedades de la 1.8.5
+
+- **Skin Classic Black / Purple Metal:** opción del standalone con el mismo tolex negro Levant y placas y mandos de metal púrpura con reflejos. Se elige en Settings; el plugin conserva su acabado Astra.
+- **Tres skins más para standalone:** Forest Green / Gunmetal, Midnight Blue / Silver y Graphite / Electric Blue cambian tolex, placas y mandos sin alterar la posición de los controles.
+- **Grabación en el standalone:** captura la DI física sin procesar y la salida MAIN procesada, permite revisar y recortar la toma y exportar WAV o MP3 en Windows. En estéreo, la DI se exporta en dos archivos mono y el sonido procesado en uno estéreo. El plugin sigue usando el DAW para grabar.
+- **Metrónomos independientes:** práctica, precuenta y clic durante la grabación tienen interruptores distintos y comparten tempo y compás (65 BPM y 4/4 inicialmente). El clic solo suena durante la escucha y nunca entra en la exportación.
+- **OUT general:** un nivel final para ambos canales procesados, a 0 dB de inicio, disponible en standalone y como parámetro automatizable del plugin.
+- **CAB POS:** posición estéreo independiente de las rutas procesadas de pantalla L y R. Por defecto permanecen completamente a izquierda y derecha, como en la versión anterior. PAN sigue siendo un balance independiente. Las IR de una misma línea PLUS siguen en serie; CAB POS mueve la ruta L o R completa.
+- **Ajustes fiables:** elegir otra captura NAM en standalone conserva el tono y los niveles de la ruta. LOOP del reproductor DI se ilumina al activarse.
+- **Controles enlazados y reset:** INPUT GAIN / OUTPUT GAIN indican la ruta L/R seleccionada en STEREO. Cada control dependiente de la ruta tiene su propio enlace L/R, y RESET NAM permite restablecer el NAM o todo el panel de la ruta con confirmación, sin borrar archivos.
+- **Bucle DI visible:** arrastra `[` y `]` sobre la barra POSITION del standalone; sus límites se sincronizan con LOOP IN / LOOP OUT.
+- **Navegadores:** EmbeddedBrowser abre TONE3000 dentro de la app; ExternalBrowser usa el navegador del sistema. El sonido es idéntico.
+
+### Anteriormente en la 1.8.0
 
 - **Reproductor DI en el standalone.** Elige entre la interfaz de audio y una o dos pistas de guitarra mono WAV, AIFF o FLAC. MONO y DUAL MONO comparten una DI; SPLIT L/R admite una DI distinta por ruta. El reproductor integrado permite cargar, quitar, ajustar niveles, desplazarse, definir bucles y controlar el transporte. Al volver de IN a DI, la reproducción no se inicia automáticamente. El plugin sigue usando el audio del DAW y no incorpora reproductor de archivos DI.
 - **Cadena NAM en modo PLUS.** Alterna entre el rack NORMAL y una cadena de hasta dos NAM y dos IR por línea, en serie o en dos líneas paralelas, con mezcla A/B. Los ajustes de NORMAL y PLUS se conservan por separado.
@@ -183,9 +195,6 @@ Tiene **dos rutas de señal completas e independientes, L y R**. Cada ruta tiene
 | Plataforma | Standalone | Plugin |
 | --- | --- | --- |
 | Windows 10/11 x64 | `.exe` portable (ASIO, Windows Audio, DirectSound) | VST3 |
-| macOS 11+ Apple Silicon (`arm64`) | `.app` | VST3 y AU |
-| macOS 11+ Intel (`x86_64`) | `.app` | VST3 y AU |
-| Linux x86_64 | AppImage | VST3 |
 
 Usa el paquete de plugin que coincida con la arquitectura de tu DAW. No se incluye AAX. Las versiones de macOS tienen firma ad-hoc y no están notarizadas por Apple.
 
@@ -236,17 +245,12 @@ Conecta tu cuenta de TONE3000 una vez; el reproductor guarda un token de refresc
 **Standalone**: descomprime el ZIP y mantén juntos sus archivos.
 
 - Windows: ejecuta `Bcho NAM Player.exe`; instala el driver ASIO de tu interfaz para la latencia más baja.
-- macOS: abre `Bcho NAM Player.app` (clic derecho → **Abrir** la primera vez si Gatekeeper lo pide).
-- Linux: da permiso con `chmod +x` al AppImage y ejecútalo.
 
 **Plugin**: cierra el DAW, copia el **paquete completo**, reinicia y vuelve a escanear.
 
 | Sistema | Copiar en |
 | --- | --- |
 | Windows VST3 | `C:\Program Files\Common Files\VST3\Bcho NAM Player.vst3` |
-| macOS VST3 | `~/Library/Audio/Plug-Ins/VST3/Bcho NAM Player.vst3` |
-| macOS AU | `~/Library/Audio/Plug-Ins/Components/Bcho NAM Player.component` |
-| Linux VST3 | `~/.vst3/Bcho NAM Player.vst3` |
 
 ### El standalone en cinco pasos
 
@@ -260,27 +264,17 @@ Empieza con un nivel de escucha bajo. Con todos los bloques en bypass, pasa la s
 
 ### Descargas
 
-Todos los archivos de esta versión: **[Bcho NAM Player v1.8.0](https://github.com/bchosoft/Bcho_NAM_Player/releases/tag/v1.8.0)**
+Todos los archivos de esta versión: **[Bcho NAM Player v1.8.5](https://github.com/bchosoft/Bcho_NAM_Player/releases/tag/v1.8.5)**
 
-Los nombres siguientes son exactamente los archivos publicados en la release. Windows y macOS ofrecen las dos variantes de navegador; Linux conserva únicamente la versión que usa el navegador del sistema.
+Los cuatro ZIP de Windows siguientes son exactamente los paquetes de aplicaciones publicados en esta release. Ambas variantes de navegador utilizan el mismo motor de audio.
 
 | Paquete | Archivo |
 | --- | --- |
-| Windows standalone — EmbeddedBrowser (recomendado con Edge/WebView2) | [BchoNAMPlayer-v1.8.0-Windows-x64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-Windows-x64-Standalone-EmbeddedBrowser.zip) |
-| Windows VST3 — EmbeddedBrowser (recomendado con Edge/WebView2) | [BchoNAMPlayer-v1.8.0-Windows-x64-VST3-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-Windows-x64-VST3-EmbeddedBrowser.zip) |
-| Windows standalone — ExternalBrowser (navegador del sistema) | [BchoNAMPlayer-v1.8.0-Windows-x64-Standalone-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-Windows-x64-Standalone-ExternalBrowser.zip) |
-| Windows VST3 — ExternalBrowser (navegador del sistema) | [BchoNAMPlayer-v1.8.0-Windows-x64-VST3-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-Windows-x64-VST3-ExternalBrowser.zip) |
-| macOS Apple Silicon standalone — EmbeddedBrowser | [BchoNAMPlayer-v1.8.0-macOS-arm64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-arm64-Standalone-EmbeddedBrowser.zip) |
-| macOS Apple Silicon VST3 + AU — EmbeddedBrowser | [BchoNAMPlayer-v1.8.0-macOS-arm64-Plugins-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-arm64-Plugins-EmbeddedBrowser.zip) |
-| macOS Apple Silicon standalone — ExternalBrowser | [BchoNAMPlayer-v1.8.0-macOS-arm64-Standalone-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-arm64-Standalone-ExternalBrowser.zip) |
-| macOS Apple Silicon VST3 + AU — ExternalBrowser | [BchoNAMPlayer-v1.8.0-macOS-arm64-Plugins-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-arm64-Plugins-ExternalBrowser.zip) |
-| macOS Intel standalone — EmbeddedBrowser | [BchoNAMPlayer-v1.8.0-macOS-x86_64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-x86_64-Standalone-EmbeddedBrowser.zip) |
-| macOS Intel VST3 + AU — EmbeddedBrowser | [BchoNAMPlayer-v1.8.0-macOS-x86_64-Plugins-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-x86_64-Plugins-EmbeddedBrowser.zip) |
-| macOS Intel standalone — ExternalBrowser | [BchoNAMPlayer-v1.8.0-macOS-x86_64-Standalone-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-x86_64-Standalone-ExternalBrowser.zip) |
-| macOS Intel VST3 + AU — ExternalBrowser | [BchoNAMPlayer-v1.8.0-macOS-x86_64-Plugins-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-macOS-x86_64-Plugins-ExternalBrowser.zip) |
-| Linux standalone (AppImage) | [BchoNAMPlayer-v1.8.0-Linux-x86_64-Standalone.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-Linux-x86_64-Standalone.zip) |
-| Linux VST3 | [BchoNAMPlayer-v1.8.0-Linux-x86_64-VST3.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/BchoNAMPlayer-v1.8.0-Linux-x86_64-VST3.zip) |
-| Sumas de verificación | [SHA256SUMS.txt](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.0/SHA256SUMS.txt) |
+| Windows standalone — EmbeddedBrowser (recomendado con Edge/WebView2) | [BchoNAMPlayer-v1.8.5-Windows-x64-Standalone-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.5/BchoNAMPlayer-v1.8.5-Windows-x64-Standalone-EmbeddedBrowser.zip) |
+| Windows VST3 — EmbeddedBrowser (recomendado con Edge/WebView2) | [BchoNAMPlayer-v1.8.5-Windows-x64-VST3-EmbeddedBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.5/BchoNAMPlayer-v1.8.5-Windows-x64-VST3-EmbeddedBrowser.zip) |
+| Windows standalone — ExternalBrowser (navegador del sistema) | [BchoNAMPlayer-v1.8.5-Windows-x64-Standalone-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.5/BchoNAMPlayer-v1.8.5-Windows-x64-Standalone-ExternalBrowser.zip) |
+| Windows VST3 — ExternalBrowser (navegador del sistema) | [BchoNAMPlayer-v1.8.5-Windows-x64-VST3-ExternalBrowser.zip](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.5/BchoNAMPlayer-v1.8.5-Windows-x64-VST3-ExternalBrowser.zip) |
+| Sumas de verificación | [SHA256SUMS.txt](https://github.com/bchosoft/Bcho_NAM_Player/releases/download/v1.8.5/SHA256SUMS.txt) |
 
 Cada ZIP incluye su manual PDF en inglés y español en la carpeta `manuals`. Los manuales también están en línea: [standalone](docs/USER_MANUAL.es.md) · [plugin](docs/PLUGIN_MANUAL.es.md), y en PDF en [docs/manuals](docs/manuals).
 

@@ -1,6 +1,6 @@
-# Bcho NAM Player 1.8.0 - Manual del plugin VST3 / AU
+# Bcho NAM Player 1.8.5 - Manual del plugin VST3 / AU
 
-Referencia del plugin 1.8.0: instalación, rutas, NORMAL / PLUS, archivos NAM/IR,
+Referencia del plugin 1.8.5: instalación, rutas, NORMAL / PLUS, archivos NAM/IR,
 controles, parámetros de efectos, HARMONIZER, presets y automatización. Los
 apéndices incluyen las tablas completas. El reproductor DI exclusivo del
 standalone no forma parte del plugin.
@@ -50,6 +50,21 @@ tu DAW.
 
 ## 2. Instalación
 
+### Elegir EmbeddedBrowser o ExternalBrowser
+
+La versión 1.8.5 ofrece dos variantes para **Standalone** y para **VST3** en Windows x64:
+
+| Variante del ZIP | Catálogo y conexión de TONE3000 | Requisito del navegador |
+| --- | --- | --- |
+| EmbeddedBrowser | Abre las páginas de conexión y SEARCH FULL CATALOGUE dentro de la aplicación | Microsoft WebView2 |
+| ExternalBrowser | Abre esas páginas en el navegador predeterminado del sistema | No necesita WebView2 |
+
+La biblioteca de TONE3000 sigue accesible desde el botón TONE3000 en ambas variantes. El motor de audio, controles, modelos NAM, IR y presets son los mismos; la diferencia afecta al navegador de conexión y catálogo. Los archivos locales funcionan sin conexión en ambas.
+
+Elige un ZIP **Standalone** para ejecutar la aplicación, o **VST3** para usarla en tu DAW. Las dos variantes VST3 tienen el mismo nombre e identidad de plugin: instala solo una a la vez. Para cambiarla, cierra el DAW, sustituye la carpeta completa `Bcho NAM Player.vst3` y vuelve a escanear los plugins. No combines los archivos de los dos paquetes. Puedes conservar las dos standalone en carpetas distintas. No borres tus modelos, IR o presets al sustituir una variante.
+
+La imagen de portada es una captura de la standalone; el manual del plugin describe los controles disponibles en el DAW. Los ejemplos de navegador integrado se refieren a EmbeddedBrowser; en ExternalBrowser esos pasos se completan en el navegador del sistema.
+
 Cierra antes el DAW y copia el **paquete completo**, no solo el binario de su
 interior.
 
@@ -93,7 +108,7 @@ desactives globalmente las protecciones del sistema.
 La disposición es la del standalone menos lo que gestiona el host:
 
 - **Tira del rack**: botones de preset, los once bloques reordenables, el
-  afinador y su pantalla, el selector de afinación, el conmutador MONO / STEREO y
+  afinador, su pantalla y el indicador CHROMATIC, el conmutador MONO / STEREO y
   el engranaje de ajustes.
 - **Cabeza del amplificador**: vúmetro de entrada, INPUT GAIN, INPUT CALI; los
   siete mandos principales con los selectores de NAM e IR encima; los navegadores
@@ -140,6 +155,24 @@ Ningún lado sube nunca por encima de su nivel en el centro. Doble clic devuelve
 el fader al centro; la rueda del ratón lo mueve en pasos finos.
 
 En el plugin PAN es un parámetro automatizable (`Pan`) y se guarda con el proyecto.
+
+**OUT** es el volumen general al final de la cadena (-60 a +12 dB; 0 dB de inicio). Ajusta los dos canales procesados por igual sin alterar su balance. Doble clic devuelve el control a 0 dB. En el standalone actúa sobre MAIN y WET, pero no sobre las tomas de referencia PRE y DI. En el plugin actúa sobre la salida estéreo final.
+
+### Posición de pantallas
+
+**CAB POS** sitúa las dos rutas procesadas de pantalla en el campo estéreo
+final. Su deslizador **IR L** mueve la ruta izquierda y **IR R** la derecha.
+Inicialmente están totalmente a izquierda y derecha. Mueve IR L a CENTER para
+oír esa pantalla por ambos altavoces mientras IR R permanece a la derecha;
+centra las dos para oír ambas por ambos altavoces. Estos deslizadores no
+seleccionan ni mezclan archivos IR. En PLUS, dos IR de una línea van en serie:
+CAB POS sitúa el resultado conjunto, no cada IR por separado. **PAN** equilibra
+posteriormente las rutas L y R; **OUT** ajusta el nivel final de ambas;
+**OUTPUT GAIN** pertenece a la ruta seleccionada. Los movimientos se suavizan
+para evitar chasquidos. Ambas posiciones y OUT admiten automatización y se
+guardan con el proyecto del DAW.
+
+![Controles de posición de las pantallas de las rutas izquierda y derecha](manual/img/dialog-cabinet-position.png)
 
 Las pestañas `L` / `R` junto a los racks eligen qué ruta editan los controles
 compartidos; los selectores `NAM 1 L`, `NAM 2 L`, `NAM 1 R`, `NAM 2 R` e `IR L`,
@@ -190,15 +223,73 @@ todos menos GATE, que vuelve al extremo izquierdo (OFF).
 | MASTER VOL | -12 … +12 dB | 0.0 dB | Después de la cadena, antes de Output Gain |
 | IR BLEND | 0 … 100 % | 50 % | Seco frente a pantalla |
 | IR VOL | -24 … 0 dB | -12 dB | Solo la rama de pantalla |
-| OUTPUT GAIN | -12 … +12 dB | 0.0 dB | Nivel final |
+| OUTPUT GAIN | MUTE; después -60 … +12 dB | 0.0 dB | Nivel final de la ruta seleccionada; centro a ganancia unitaria |
 | POWER | Encendido / apagado | Encendido | Enmudece la ruta procesada; el interruptor brilla en rojo encendido |
 | INPUT CALI | Encendido / apagado | Apagado | Ver el Input Cali en el capítulo 10 |
+
+En el tope izquierdo, **OUTPUT GAIN** muestra **MUTE** y la ruta seleccionada
+queda completamente en silencio tras una transición de 10 ms. Por encima del
+tope, la mitad inferior sube desde -60 dB hasta 0 dB en el centro; la mitad
+superior llega a +12 dB. Puedes silenciar L y R por separado o juntos mediante
+su enlace.
+Si CAB POS sitúa la otra ruta, aún activa, en el mismo altavoz físico, ese
+altavoz puede seguir sonando: OUTPUT GAIN silencia una ruta, no el altavoz.
+Enlaza L/R y lleva el mando a MUTE para silenciar ambas rutas.
 
 **La sección de tonos sigue al bloque NAM seleccionado.** Con un selector
 **NAM 1** activo, BASS / MID / TREBLE / PRESENCE controlan los cuatro filtros
 propios de BLOCK NAM 1; con un selector **NAM 2** activo controlan la sección de
 tonos principal. Cada juego guarda sus propios valores y cambiar de selector los
 recupera. En STEREO la placa imprime cuál estás editando.
+
+En STEREO, INPUT GAIN y OUTPUT GAIN muestran `(L)` o `(R)` junto a sus rótulos.
+Cada control del panel que depende de la ruta tiene su propio interruptor
+**L–eslabones–R**, salvo TUNER. Selecciona L o R, ajusta el parámetro y enciende
+su enlace: el valor actual se copia a la otra ruta y los cambios posteriores
+desde el panel afectan a ambas. Al apagarlo, los valores actuales permanecen
+y las rutas vuelven a editarse por separado. Cada parámetro tiene un enlace
+independiente. El enlace junto a POWER hace que el interruptor rojo encienda o
+apague ambas rutas a la vez; no une el audio, los niveles ni el tono. INPUT CALI
+tiene su enlace junto al piloto. Los enlaces de tono siguen el bloque NAM
+seleccionado de cada ruta, incluida la ranura NAM visible en PLUS. TUNER solo
+escucha la ruta seleccionada y no tiene enlace. El estado
+de los enlaces se guarda con el proyecto del DAW; los enlaces de efectos del
+rack son independientes.
+
+| Control | Alcance en STEREO |
+| --- | --- |
+| INPUT GAIN, GATE, MASTER VOL, OUTPUT GAIN, POWER, INPUT CALI | Ruta L o R seleccionada; cada uno tiene un enlace opcional |
+| BASS, MID, TREBLE, PRESENCE | Ranura NAM elegida en la ruta seleccionada; cada uno tiene su enlace |
+| IR BLEND, IR VOL | Pantalla IR L o IR R seleccionada; cada uno tiene su enlace |
+| TUNER | Solo la ruta seleccionada; sin enlace ni mezcla de dos notas |
+| PAN, OUT | Ambas rutas procesadas; independientes de la pestaña L/R |
+| CAB POS IR L / IR R | Posición independiente de cada ruta de pantalla completa |
+
+Los enlaces L/R actúan sobre los gestos del panel. El DAW sigue mostrando los
+parámetros `L_` y `R_` para automatización; automatizar uno de ellos modifica
+directamente ese lado.
+
+**RESET NAM**, junto a NAM MODELS, ofrece **NAM ONLY** (tono del NAM
+seleccionado y MASTER VOL / OUTPUT GAIN de su ruta) o **ENTIRE PATH** (todos
+los controles del panel de la ruta seleccionada, más sus tonos NAM y niveles
+de ranura en PLUS). La confirmación aclara que conserva los NAM, IR y el orden
+de efectos. Los enlaces encendidos trasladan también los valores reiniciados
+a la otra ruta. El botón se desactiva si en PLUS se ha elegido una ranura IR.
+
+### Herramientas de sesión: A/B e historial
+
+El botón dorado **SESSION TOOLS**, junto a IR FILES, abre una ventana que se
+puede cerrar sin tapar el rack. **STORE A/B** guardan temporalmente dos equipos
+completos del plugin; **HEAR A/B** recuperan sus NAM, IR, efectos, niveles,
+ruteo, posición estéreo y cadenas NORMAL / PLUS. No se iguala el volumen de
+forma automática. **UNDO** y **REDO** recorren hasta 40 cambios recientes; el
+arrastre continuo de un mando se agrupa al terminar. Los cambios A/B también
+se pueden deshacer. Estas copias de trabajo pertenecen al editor abierto y no
+se escriben en el proyecto del DAW ni en los archivos `.bnpp`. El historial es
+independiente del historial y la automatización del DAW. Los cambios de archivo
+usan la rampa de salida existente.
+
+![Herramientas de sesión en el plugin](manual/img/dialog-session-tools.png)
 
 ---
 
@@ -287,10 +378,13 @@ completa: [capítulo 13 del standalone](USER_MANUAL.es.md#13-enlazar-efectos-ent
 
 ## 10. Afinador e Input Cali
 
-**TUNER** funciona igual que en el standalone: escucha la DI sin tocar, antes de
-la puerta y de los bloques NAM, cubre de unos 65 a 700 Hz, indica centrado dentro
-de ±5 cents y ofrece STANDARD, DROP D, D STANDARD, Eb y OPEN G. Toca una sola
-cuerda aislada con buen nivel.
+**TUNER** escucha la entrada sin procesar, antes de la puerta y los bloques NAM,
+cubre de unos 65 a 700 Hz e indica centrado dentro de ±5 cents. **CHROMATIC**
+indica la nota detectada con independencia de la afinación de la guitarra; no
+asigna cuerda ni nota objetivo. Compara la lectura con la nota que buscas para
+esa cuerda y toca una sola cuerda aislada con buen nivel. En STEREO escucha la
+ruta L o R seleccionada, nunca una mezcla de ambas notas; cada ruta conserva
+su propio estado de encendido del afinador.
 
 **INPUT CALI** usa la referencia del motor y los metadatos `input_level_dbu` de
 la captura (asumiendo +12 dBu cuando no los tiene), limitado a ±24 dB. El plugin
@@ -316,8 +410,9 @@ El botón **TONE3000** abre la misma ventana de biblioteca que el standalone.
   impulsionales y no se preescuchan.
 - **RESTORE PREVIOUS MODEL** devuelve lo que tenía el bloque antes de abrir la
   ventana; al cerrarla se queda la última preescucha.
-- **SEARCH FULL CATALOGUE** abre el buscador propio de TONE3000 dentro del
-  plugin; al elegir un tone, el buscador se cierra solo y empieza la descarga.
+- **SEARCH FULL CATALOGUE** abre el buscador de TONE3000 dentro del plugin
+  (EmbeddedBrowser) o en el navegador del sistema (ExternalBrowser). Elige un
+  tone para iniciar su descarga; el buscador integrado se cierra automáticamente.
 
 En Windows el navegador integrado usa WebView2. Dentro de un DAW, el plugin
 guarda sus datos de WebView2 en una carpeta por usuario, así que un host
@@ -359,6 +454,8 @@ ruta:
 | Power, Input Cali, Tuner | `L_` y `R_` |
 | Stereo (MONO / STEREO) | uno, global |
 | Pan (solo actúa en STEREO) | uno, global |
+| Global Output (OUT) | uno, global |
+| Cabinet Position L / R (CAB POS, solo actúa en STEREO) | uno por ruta procesada |
 
 El orden del rack, los algoritmos y los parámetros de efecto forman parte del
 estado guardado, no de la automatización del host. Cargar un archivo es una
@@ -383,10 +480,11 @@ proyecto.
 | Ruteo físico MAIN / PRE / DI / WET | Se rutea dentro del DAW |
 | Conmutador de entrada DUAL MONO / SPLIT L/R | Lo decide el ruteo de la pista |
 | Deslizador de referencia de interfaz para Input Cali | No se expone; calibra fuera o usa el standalone |
-| Once acabados seleccionables | Siempre Astra / Obsidian |
+| Quince acabados seleccionables, incluidos los acabados verde, azul y grafito | Siempre Astra / Obsidian |
 | Su propia sesión guardada entre arranques | El estado viene del proyecto del host |
 | Comprobación de actualizaciones | No se incluye |
 | Reproductor IN / DI, CONFIG DI, transporte y estado de archivos DI | No se incluyen. Reproduce y dirige las pistas DI en el DAW |
+| REC, revisión de tomas, exportación DI / PROCESSED en WAV / MP3 y metrónomos | No se incluyen. Graba, haz la precuenta y monitoriza el metrónomo en el DAW |
 
 Todo lo demás -motor, rack, efectos, enlaces, afinador, navegadores, TONE3000,
 ficha de información, presets `.bnpp`- es el mismo código.
@@ -417,7 +515,7 @@ ficha de información, presets `.bnpp`- es el mismo código.
 | Rutas de señal | 2 independientes (L / R) |
 | NORMAL | 2 NAM y 1 IR general por ruta; 8 efectos por ruta |
 | PLUS | 2 NAM + 2 IR por línea, hasta 2 líneas por ruta; el IR general sigue separado |
-| Versión interna | 1.8.0 (valor numérico 0x10800); VST3 y AU derivan sus metadatos de la misma versión del proyecto |
+| Versión interna | 1.8.5 (valor numérico 0x10805); VST3 y AU derivan sus metadatos de la misma versión del proyecto |
 | Frecuencias y búferes | Los que dé el host; los búferes excesivos se dividen internamente |
 | Arquitecturas NAM | A1, A2 Standard, A2 Nano, automáticas |
 | Fundido de arranque / repreparación | 60 ms desde silencio |
@@ -614,3 +712,10 @@ acordes confunden cualquier detección de nota, así que simplemente suenan sin
 armonía. La detección usa la señal limpia de la guitarra, antes de la ganancia, el
 NAM y los efectos. Los ajustes de HARMONIZER se guardan con el bloque PITCH y
 siguen un enlace L / R.
+
+**Latencia:** la guitarra original permanece en la ruta seca inmediata. El
+HARMONIZER añade otra voz con un pequeño retardo variable debido a la detección
+de nota y al empalme de la señal; **Low Latency** acorta ese retardo de la voz.
+El plugin comunica **0 muestras de latencia fija global** al DAW. Retrasar todo
+el plugin para compensar la voz variable desalinearía la guitarra seca y los
+demás efectos.

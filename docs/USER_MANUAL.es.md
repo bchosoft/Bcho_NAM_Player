@@ -1,7 +1,7 @@
-# Bcho NAM Player 1.8.0 - Manual de usuario (standalone)
+# Bcho NAM Player 1.8.5 - Manual de usuario (standalone)
 
 Referencia completa de la aplicación standalone para Windows, macOS y Linux.
-Esta guía describe los controles, archivos, recorridos de señal y recuperación de sesión de la versión 1.8.0. Para el plugin
+Esta guía describe los controles, archivos, recorridos de señal y recuperación de sesión de la versión 1.8.5. Para el plugin
 VST3 / AU, consulta el [manual del plugin](PLUGIN_MANUAL.es.md).
 
 ---
@@ -15,6 +15,8 @@ VST3 / AU, consulta el [manual del plugin](PLUGIN_MANUAL.es.md).
 5. [Audio Setup: dispositivo, latencia y ruteo](#5-audio-setup-dispositivo-latencia-y-ruteo)
 6. [Recorrido de la señal](#6-recorrido-de-la-señal)
    - [Reproductor IN / DI y transporte](#in--di-elegir-la-fuente-solo-standalone)
+   - [Grabar y exportar una toma](#grabar-y-exportar-una-toma-solo-standalone)
+   - [Metrónomos de práctica y grabación](#metrónomos-de-práctica-y-grabación-solo-standalone)
 7. [El rack: bloques, orden y el ojo](#7-el-rack-bloques-orden-y-el-ojo)
 8. [BLOCK NAM 1 y BLOCK NAM 2](#8-block-nam-1-y-block-nam-2)
 9. [Respuestas impulsionales de pantalla](#9-respuestas-impulsionales-de-pantalla)
@@ -71,6 +73,21 @@ dos a la vez.
 
 ## 2. Instalación y primer arranque
 
+### Elegir EmbeddedBrowser o ExternalBrowser
+
+La versión 1.8.5 ofrece dos variantes para **Standalone** y para **VST3** en Windows x64:
+
+| Variante del ZIP | Catálogo y conexión de TONE3000 | Requisito del navegador |
+| --- | --- | --- |
+| EmbeddedBrowser | Abre las páginas de conexión y SEARCH FULL CATALOGUE dentro de la aplicación | Microsoft WebView2 |
+| ExternalBrowser | Abre esas páginas en el navegador predeterminado del sistema | No necesita WebView2 |
+
+La biblioteca de TONE3000 sigue accesible desde el botón TONE3000 en ambas variantes. El motor de audio, controles, modelos NAM, IR y presets son los mismos; la diferencia afecta al navegador de conexión y catálogo. Los archivos locales funcionan sin conexión en ambas.
+
+Elige un ZIP **Standalone** para ejecutar la aplicación, o **VST3** para usarla en tu DAW. Las dos variantes VST3 tienen el mismo nombre e identidad de plugin: instala solo una a la vez. Para cambiarla, cierra el DAW, sustituye la carpeta completa `Bcho NAM Player.vst3` y vuelve a escanear los plugins. No combines los archivos de los dos paquetes. Puedes conservar las dos standalone en carpetas distintas. No borres tus modelos, IR o presets al sustituir una variante.
+
+La imagen de portada es una captura de la standalone; el manual del plugin describe los controles disponibles en el DAW. Los ejemplos de navegador integrado se refieren a EmbeddedBrowser; en ExternalBrowser esos pasos se completan en el navegador del sistema.
+
 Descarga el paquete de tu sistema desde la
 [última versión pública](https://github.com/bchosoft/Bcho_NAM_Player/releases/latest),
 descomprímelo y mantén juntos todos los archivos y carpetas.
@@ -109,7 +126,7 @@ La ventana tiene tres muebles, de arriba abajo:
 
 **1 - La tira del rack.** Bahía de presets a la izquierda, los bloques de
 proceso reordenables en el centro, el botón y la pantalla del afinador, el
-selector de afinación y, a la derecha, el conmutador MONO / STEREO y el engranaje
+indicador CHROMATIC y, a la derecha, el conmutador MONO / STEREO y el engranaje
 de ajustes.
 
 **2 - La cabeza del amplificador.** Vúmetro de entrada, INPUT GAIN e INPUT CALI a
@@ -248,7 +265,7 @@ De izquierda a derecha: **retroceder 5 segundos, PLAY, PAUSE, STOP y avanzar
 | Botón de retorno al inicio | Volver al principio sin cambiar el estado de reproducción o pausa |
 | POSITION | Desplazarse con el deslizador o introducir segundos |
 | LOOP | Activar o desactivar la repetición de ambas pistas |
-| LOOP IN / LOOP OUT | Seleccionar los límites comunes mediante deslizadores o tiempos numéricos |
+| LOOP IN / LOOP OUT | Seleccionar los límites comunes mediante deslizadores o tiempos numéricos; con LOOP activo también puedes arrastrar los corchetes dorados `[` y `]` de POSITION |
 
 La duración total es la de la pista más larga. Una pista terminada o vacía
 produce silencio; nunca recupera por sí sola la entrada física. Ambas pistas
@@ -268,6 +285,78 @@ posición y bucle. Al arrancar de nuevo la fuente es IN y la DI está pausada.
 Conserva los archivos en su ubicación o vuelve a cargarlos. Los archivos DI y
 su transporte quedan fuera de los presets `.bnpp`. El plugin no tiene reproductor,
 selector de fuente, transporte, parámetros ni estado DI: usa las pistas del DAW.
+
+### Grabar y exportar una toma (solo standalone)
+
+Con la fuente en **IN**, la franja de tolex con marco dorado que usa el transporte
+DI muestra **● REC**. Púlsalo para grabar a la vez la entrada física y el
+sonido final MAIN procesado. Durante la grabación, el botón parpadea en rojo y
+muestra **■ STOP**. STOP termina la toma y abre la ventana de revisión. Los
+selectores IN / DI y MONO / STEREO quedan bloqueados durante la toma para que
+no cambie su número de canales. La escritura a disco trabaja en segundo plano;
+no se hace desde la llamada de audio. Cambiar de dispositivo termina la toma
+y abre su revisión. Asegúrate de tener espacio libre.
+
+![REC y COUNT-IN en el marco dorado del tolex](manual/img/zone-record-controls.png)
+
+![Ventana para revisar y exportar la grabación](manual/img/dialog-recording.png)
+
+La señal **DI** se captura antes de INPUT GAIN, INPUT CALI y todos los efectos.
+En MONO es una pista mono; en STEREO + DUAL MONO se conserva la entrada
+compartida en dos canales mono idénticos y en STEREO + SPLIT L/R se graba cada
+entrada física por separado. La exportación DI en STEREO genera dos archivos
+mono, `-DI-L` y `-DI-R`, compatibles con el reproductor DI. **PROCESSED**
+contiene el resultado MAIN después de efectos, NAM, IR, posición de cabina,
+PAN y OUT: se exporta en un único archivo estéreo si se usa STEREO, o mono en
+MONO. No hay normalización automática. Las otras rutas físicas opcionales no
+se suman a PROCESSED.
+
+La ventana muestra una onda en MONO y dos en STEREO. **PLAY**, **PAUSE**,
+**STOP**, **|<** y **>|** permiten escuchar la toma procesada, pausarla,
+detenerla y volver al inicio, o desplazarse cinco segundos atrás o adelante.
+Haz clic o arrastra el cabezal blanco para situarlo. Los marcadores dorados
+**[** y **]** incluyen inicialmente toda la toma; arrástralos para elegir un
+tramo. **LOOP** repite ese tramo al reproducir. La exportación contiene
+exactamente el tramo marcado, esté LOOP activado o no. La escucha sale por el
+par MAIN configurado y reemplaza la señal MAIN en directo durante la
+reproducción; al cerrar la ventana, la escucha se detiene.
+
+Marca **DI**, **PROCESSED** o ambos, y **WAV**, **MP3** o ambos. Debe haber al
+menos una señal y un formato. Escribe el nombre base de los archivos o déjalo
+vacío para utilizar fecha y hora. **FOLDER** elige la carpeta. **EXPORT**
+genera los archivos en segundo plano y la línea de estado muestra el
+resultado. Tras una exportación correcta, **SHOW FILE** abre la carpeta con
+uno de los archivos seleccionado. WAV es PCM de 24 bits a la frecuencia del
+dispositivo. En Windows, MP3 usa el codificador integrado en el sistema y no
+requiere instalar otra aplicación; si la frecuencia del dispositivo no es
+compatible se convierte a 48 kHz para el MP3. La exportación no borra la
+grabación temporal.
+
+### Metrónomos de práctica y grabación (solo standalone)
+
+Los tres interruptores tienen cometidos distintos. **METRO**, debajo del
+selector IN, activa el clic de práctica para tocar sin grabar: no inicia REC.
+**COUNT-IN**, al lado de REC, pide una precuenta antes de empezar la toma.
+**CLICK DURING REC**, en Settings, decide si se siguen oyendo los pulsos
+durante la grabación. Son independientes: puede haber precuenta con METRO y
+CLICK DURING REC apagados. Al elegir DI se apaga el clic de práctica y su
+botón deja sitio a CONFIG DI. Los clics solo se oyen al monitorizar y no
+aparecen en DI ni en PROCESSED.
+
+![METRO de práctica debajo del selector IN](manual/img/zone-practice-metro.png)
+
+Settings comparte **BPM** y **TIME SIGNATURE** entre los metrónomos de práctica
+y grabación. Los valores iniciales son **65 BPM** y **4/4**. Se puede elegir
+2/4, 3/4, 4/4, 5/4, 6/8 o 7/8. El primer pulso de cada compás destaca con
+un golpe de baquetas de madera más fuerte y agudo. **COUNT-IN BARS** permite
+elegir de 1 a 8 compases completos de precuenta; comienza en 1. No se escribe
+audio de la toma durante la precuenta. Si COUNT-IN está apagado, la grabación
+empieza inmediatamente; si CLICK DURING REC está apagado, no se oye clic
+después de la precuenta. El metrónomo se mezcla solo en la escucha, después
+de ambos puntos de captura. El tempo, compás, número de compases de precuenta
+y opción de clic durante la grabación se guardan en la sesión standalone,
+nunca en los presets del plugin. METRO no se enciende solo al volver a abrir
+la aplicación.
 
 ### Orden de procesamiento y tomas de salida
 
@@ -477,15 +566,71 @@ todos menos GATE, que vuelve al extremo izquierdo (OFF).
 | MASTER VOL | -12 … +12 dB | 0.0 dB | Después de la cadena, antes de Output Gain |
 | IR BLEND | 0 … 100 % | 50 % | Seco frente a pantalla |
 | IR VOL | -24 … 0 dB | -12 dB | Solo la rama de pantalla |
-| OUTPUT GAIN | -12 … +12 dB | 0.0 dB | Nivel final |
+| OUTPUT GAIN | MUTE; después -60 … +12 dB | 0.0 dB | Nivel final de MAIN en la ruta seleccionada; centro a ganancia unitaria |
 | POWER | Encendido / apagado | Encendido | Enmudece la ruta procesada; el interruptor brilla en rojo encendido |
 | INPUT CALI | Encendido / apagado | Apagado | Ver el [capítulo 15](#15-input-cali-calibración-automática-de-entrada) |
+
+En el tope izquierdo, **OUTPUT GAIN** indica **MUTE** y la ruta MAIN
+seleccionada queda completamente en silencio tras una transición breve de
+10 ms. Por encima del tope, la mitad inferior sube desde -60 dB hasta 0 dB
+en el centro; la mitad superior llega a +12 dB. Puedes silenciar L y R por
+separado o juntos mediante su enlace. Las salidas físicas auxiliares PRE,
+DIRECT y WET del standalone son tomas de referencia y no dependen del
+OUTPUT GAIN de MAIN.
+Si CAB POS sitúa la otra ruta, aún activa, en el mismo altavoz físico, ese
+altavoz puede seguir sonando: OUTPUT GAIN silencia la ruta seleccionada, no el
+altavoz. Enlaza L/R y lleva el mando a MUTE para silenciar ambas rutas MAIN.
 
 **La sección de tonos sigue al bloque NAM seleccionado.** Con un selector
 **NAM 1** activo, BASS / MID / TREBLE / PRESENCE controlan los cuatro filtros
 propios de BLOCK NAM 1; con un selector **NAM 2** activo controlan la sección de
 tonos principal. Cada juego guarda sus propios valores y cambiar de selector los
 recupera. En STEREO la placa imprime cuál estás editando.
+
+En STEREO, INPUT GAIN y OUTPUT GAIN muestran `(L)` o `(R)` junto a sus rótulos
+para identificar la ruta que estás editando. Cada control que depende de la
+ruta tiene su propio pequeño interruptor **L–eslabones–R**, salvo TUNER. Apagado
+mantiene L y R independientes. Selecciona L o R, ajusta el parámetro y enciende
+su enlace: el valor actual se copia a la otra ruta. Los cambios posteriores de
+ese parámetro desde el panel afectan a ambas; al apagar el enlace, cada ruta
+conserva su valor y vuelve a editarse por separado. Cada enlace es independiente:
+puedes enlazar INPUT GAIN y dejar OUTPUT GAIN separado. El enlace junto al
+interruptor rojo POWER hace que este encienda o apague ambas rutas a la vez; no
+une sus sonidos ni sus niveles. INPUT CALI tiene su propio enlace junto al
+piloto. Los enlaces de tono siguen el bloque NAM seleccionado de cada ruta,
+incluida la ranura NAM visible en PLUS. TUNER solo escucha la ruta seleccionada
+y no tiene enlace. Se guardan en la sesión standalone y
+en los presets `.bnpp`. Los enlaces de efectos del rack siguen actuando sobre
+efectos completos.
+
+**RESET NAM**, junto al rótulo NAM MODELS, pide confirmación. **NAM ONLY**
+devuelve a sus valores iniciales el tono del NAM seleccionado y MASTER VOL /
+OUTPUT GAIN de su ruta. **ENTIRE PATH** restablece todos los controles del
+panel de la ruta L o R seleccionada; en PLUS también restablece los tonos NAM y
+los niveles de sus ranuras. Ninguna opción borra archivos NAM o IR ni cambia el
+orden de efectos. Los controles cuyo enlace L/R esté encendido también
+actualizan la otra ruta. El botón queda desactivado cuando en PLUS se ha
+seleccionado una ranura IR en lugar de un NAM.
+
+### Herramientas de sesión: A/B e historial
+
+**SESSION TOOLS** es el pequeño botón con borde dorado a la derecha de IR FILES.
+Abre una ventana que se puede cerrar sin tapar los controles principales.
+**STORE A** y **STORE B** guardan temporalmente dos equipos completos: archivos
+NAM e IR, efectos, niveles, ruteo, posiciones estéreo y cadenas NORMAL / PLUS.
+**HEAR A** y **HEAR B** recuperan uno u otro para comparar con la misma guitarra
+o reproducción DI. La fuente DI, sus archivos, transporte y bucle no forman
+parte de estas copias del equipo. El nivel se recupera tal cual, sin igualar
+automáticamente el volumen ni normalizarlo.
+
+**UNDO** y **REDO** recorren hasta 40 cambios recientes del equipo, incluidos
+mandos, enlaces, orden de bloques y archivos cargados. El arrastre continuo de
+un mando se agrupa cuando termina. Cambiar entre A y B también entra en el
+historial: UNDO permite volver al sonido anterior. Estas copias de trabajo solo
+duran mientras la aplicación está abierta y no se incluyen en los presets
+`.bnpp`. Los cambios de archivo usan la transición suave de salida existente.
+
+![Herramientas de sesión: guardar y escuchar dos equipos, deshacer y rehacer](manual/img/dialog-session-tools.png)
 
 ![Columna de entrada: vúmetro, INPUT GAIN e INPUT CALI con su LED](manual/img/zone-input-column.jpg)
 ![Columna de salida: vúmetro, OUTPUT GAIN y POWER](manual/img/zone-output-column.jpg)
@@ -670,6 +815,10 @@ armonía. La detección usa la señal limpia de la guitarra, antes de la gananci
 NAM y los efectos. Los ajustes de HARMONIZER se guardan con el bloque PITCH y
 siguen un enlace L / R.
 
+La guitarra seca permanece inmediata mientras la voz armonizada añadida usa un
+pequeño retardo variable para detectar y desplazar la nota. **Low Latency**
+acorta ese retardo de la voz sin cambiar el tiempo de la guitarra original.
+
 ---
 
 ## 12. MONO y STEREO: dos equipos completos
@@ -715,6 +864,27 @@ el fader al centro; la rueda del ratón lo mueve en pasos finos.
 En el standalone PAN actúa sobre las salidas principal y WET (las tomas PRE y DI
 quedan intactas) y se guarda con el estado de la aplicación y en los presets.
 
+**OUT** es el volumen general al final de la cadena (-60 a +12 dB; 0 dB de inicio). Ajusta los dos canales procesados por igual sin alterar su balance. Doble clic devuelve el control a 0 dB. En el standalone actúa sobre MAIN y WET, pero no sobre las tomas de referencia PRE y DI. En el plugin actúa sobre la salida estéreo final.
+
+### Posición de pantallas
+
+**CAB POS** abre la ventana de posición de pantallas en STEREO. **IR L** sitúa
+en el campo estéreo el resultado completo de la ruta izquierda; **IR R** hace lo
+mismo con la derecha. Al inicio, L está totalmente a la izquierda y R totalmente
+a la derecha. Por ejemplo, mueve IR L a CENTER para oír esa pantalla por ambos
+altavoces mientras IR R permanece a la derecha. Si centras ambas, escucharás
+ambas pantallas por ambos altavoces. Estos deslizadores no cargan ni mezclan
+archivos IR. En PLUS, las dos IR de una misma línea van en serie y CAB POS sitúa
+el resultado conjunto de esa línea.
+
+**PAN** equilibra posteriormente las rutas completas L y R; no mueve una sola
+pantalla. **OUT** ajusta el nivel final de ambas a la vez; **OUTPUT GAIN** afecta
+a la ruta seleccionada y puede enlazarse L/R. Los movimientos de CAB POS tienen
+una rampa para evitar chasquidos. Sus posiciones y OUT se guardan en la sesión
+standalone y en los presets `.bnpp`.
+
+![Controles de posición de las pantallas de las rutas izquierda y derecha](manual/img/dialog-cabinet-position.png)
+
 **Los selectores.**
 
 ![NAM 1 L · NAM 2 L · NAM 1 R · NAM 2 R e IR L · IR R](manual/img/zone-selectors.jpg)
@@ -725,14 +895,17 @@ quedan intactas) y se guarda con el estado de la aplicación y en los presets.
 | `IR L` `IR R` | La pantalla sobre la que actúan IR BLEND e IR VOL |
 | Pestañas `L` / `R` | La ruta sobre la que actúa cualquier otro control compartido |
 
-**Qué sigue cada control**
+### Qué sigue cada control
 
 | Control | Sigue a |
 | --- | --- |
-| INPUT GAIN, GATE, MASTER VOL, OUTPUT GAIN, POWER, INPUT CALI, TUNER | la **ruta** seleccionada |
+| INPUT GAIN, GATE, MASTER VOL, OUTPUT GAIN, POWER, INPUT CALI | la **ruta** seleccionada; cada uno tiene un enlace L/R opcional |
 | BASS, MID, TREBLE, PRESENCE | el **bloque NAM** seleccionado de esa ruta (NAM 1 tiene el suyo) |
 | IR BLEND, IR VOL | la **pantalla** seleccionada |
-| Afinación de referencia, acabado, Audio Setup, ruteo, actualizaciones | toda la aplicación |
+| TUNER | solo la ruta seleccionada; sin enlace L/R ni mezcla de dos notas |
+| PAN, OUT | ambas rutas procesadas; no siguen la pestaña de ruta |
+| CAB POS IR L / IR R | posición estéreo independiente de cada ruta de pantalla completa |
+| Acabado, Audio Setup, ruteo, actualizaciones | toda la aplicación |
 
 En MONO solo se muestran los dos selectores izquierdos, y el rótulo IR VOL pierde
 el sufijo `(L)` / `(R)`.
@@ -771,7 +944,7 @@ derecha, para ajustarlo una sola vez.
 
 ## 14. Afinador
 
-![La fila del afinador: el botón TUNER, la pantalla de LED y el selector de afinación](manual/img/zone-tuner-row.jpg)
+![La fila del afinador: el botón TUNER, la pantalla de LED y el indicador CHROMATIC](manual/img/zone-tuner-row.jpg)
 
 Pulsa **TUNER**; las letras se iluminan en verde y el botón se ve pulsado. La
 pantalla muestra la nota detectada con una indicación de LED a izquierda y
@@ -783,8 +956,11 @@ derecha para bajo, centrado o alto.
   a 192 kHz.
 - Dentro de **±5 cents** la pantalla indica centrado y se pone verde; más allá de
   unos 40 cents se pone roja.
-- **TUNING** ofrece **STANDARD**, **DROP D**, **D STANDARD**, **Eb** y
-  **OPEN G**.
+- **CHROMATIC** indica la nota detectada con independencia de la afinación de la
+  guitarra. No asigna una cuerda ni una nota objetivo: compara la pantalla con
+  la nota que quieras obtener en esa cuerda.
+- En STEREO, selecciona la ruta L o R que quieras afinar. El afinador no mezcla
+  las dos entradas; su encendido sigue siendo independiente para cada ruta.
 - Toca una sola cuerda aislada con buen nivel y deja que la nota anterior se
   apague.
 
@@ -847,7 +1023,7 @@ listado y descarga posterior intenta renovar el token en silencio. Si la autoriz
 | Cerrar la ventana | Conserva la última captura preescuchada |
 | PREV / NEXT | Paginación |
 | El indicador giratorio y la línea de estado | Muestran el progreso: *Downloading tone (n / m)* y después *Playing &lt;captura&gt;* |
-| SEARCH FULL CATALOGUE | Abre el buscador propio de TONE3000, con búsqueda y audición, dentro del reproductor. Al elegir un tone el buscador se cierra solo y empieza la descarga |
+| SEARCH FULL CATALOGUE | Abre el buscador de TONE3000 dentro del reproductor (EmbeddedBrowser) o en el navegador del sistema (ExternalBrowser). Selecciona un tone para iniciar su descarga; el buscador integrado se cierra automáticamente |
 | SIGN OUT | Olvida la cuenta en este ordenador |
 
 Las descargas se guardan en tu carpeta de descargas de TONE3000, una carpeta por
@@ -885,7 +1061,7 @@ preset pueda moverse entre ordenadores.
 
 **LOAD PRESET** lo restaura. Un preset escrito por el reproductor de una sola
 ruta, o por NAM PLAYER DUAL, se carga en la **ruta seleccionada**. Un preset
-escrito aquí incluye una representación compatible de la ruta izquierda. Un reproductor antiguo no puede reproducir funciones que no implemente, como la cadena PLUS actual; usa 1.8.0 para recuperar la configuración completa.
+escrito aquí incluye una representación compatible de la ruta izquierda. Un reproductor antiguo no puede reproducir funciones que no implemente, como la cadena PLUS actual; usa 1.8.5 para recuperar la configuración completa.
 
 > Para guardar desde NORMAL, carga BLOCK NAM 2 en la ruta izquierda. PLUS también permite guardar con un archivo cargado en su cadena izquierda. Los archivos DI nunca se incrustan.
 
@@ -928,13 +1104,28 @@ Pulsa el engranaje a la derecha del rack.
 | SUPPORT PROJECT ON KO-FI | Abre `ko-fi.com/bchosoft` en tu navegador |
 | CLOSE | Cierra la ventana |
 
-**Los once acabados**: Astra / Obsidian · Tribal / Etched Titanium · Skulls /
+**Los quince acabados**: Astra / Obsidian · Tribal / Etched Titanium · Skulls /
 Bone & Carbon · Hippie / Sunset Paisley · Graffiti / Electric Ink · Purple
 Velvet / Amethyst · Stainless Steel / Precision · Ripped Black Denim / Roadworn ·
-Blue Denim / Indigo · Spiderwebs / Black Widow · Classic Black / Levant Tolex.
+Blue Denim / Indigo · Spiderwebs / Black Widow · Classic Black / Levant Tolex ·
+Classic Black / Purple Metal · Forest Green / Gunmetal · Midnight Blue / Silver ·
+Graphite / Electric Blue. El acabado púrpura conserva el mismo tolex negro
+Levant y sustituye las placas y los mandos metálicos dorados por metal púrpura
+con reflejos. Forest Green combina tolex verde oscuro, placas de metal gris y
+mandos anodizados azules. Midnight Blue lleva tolex azul marino, metal plateado
+claro y mandos plateados. Graphite combina tolex carbón, metal gris oscuro y
+mandos de cromo ahumado con anillos azules.
 Todos usan la misma geometría, así que ningún control se mueve; solo cambian
 materiales, diseño de mandos y contraste de los rótulos. El plugin usa siempre
 Astra / Obsidian.
+
+![Acabado Classic Black / Purple Metal](manual/img/standalone-purple-metal.png)
+
+![Acabado Forest Green / Gunmetal](manual/img/standalone-forest-green.png)
+
+![Acabado Midnight Blue / Silver](manual/img/standalone-midnight-blue.png)
+
+![Acabado Graphite / Electric Blue](manual/img/standalone-graphite-blue.png)
 
 ![El aviso de actualización](manual/img/dialog-update.png)
 
